@@ -1,4 +1,4 @@
 package com.group18.controller;
 
-public class Controller {
+public class GameController {
 }
