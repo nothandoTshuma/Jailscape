@@ -1,19 +1,5 @@
 package com.group18.service;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-/**
- * This service will be responsible of retrieving the message of the day,
- * at any particular time of day.
- * @author danielturato
- */
 public class MessageOfTheDayService {
 
     /**
