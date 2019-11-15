@@ -93,6 +93,17 @@ public class MessageOfTheDayService {
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
+
+        return handleResponse(connection);
+    }
+
+    /**
+     * Handles the response of a GET request on the MessageOfTheDay service
+     * @param connection The connection, containing the required response
+     * @return The response of the GET request
+     * @throws IOException A possible error that could occur, during the extraction of the response
+     */
+    private static String handleResponse(HttpURLConnection connection) throws IOException {
         int responseCode = connection.getResponseCode();
 
         if (responseCode == HttpURLConnection.HTTP_OK) {
