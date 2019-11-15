@@ -70,9 +70,9 @@ public class MessageOfTheDayService {
                 solvedPuzzle.append('Z');
             } else if (currentLetter == 'Z' && shiftValue == 1) {
                 solvedPuzzle.append('A');
+            } else {
+                solvedPuzzle.append((char) (currentLetter + shiftValue));
             }
-
-            solvedPuzzle.append((char) (currentLetter + shiftValue));
 
             shiftValue = shiftValue == 1 ? -1 : 1;
         }
