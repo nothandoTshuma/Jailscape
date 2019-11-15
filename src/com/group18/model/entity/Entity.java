@@ -3,11 +3,13 @@ package com.group18.model.entity;
 import com.group18.core.Direction;
 import com.group18.model.cell.Cell;
 
+import java.io.Serializable;
+
 /**
  * Represents a general Entity in which all subclasses will inherit from
  * @author danielturato nothandotshuma riyagupta
  */
-public abstract class Entity implements Cloneable {
+public abstract class Entity implements Cloneable, Serializable {
     /**
      * Stores the entities current cell position
      */
