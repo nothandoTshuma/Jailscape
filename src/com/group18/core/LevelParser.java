@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class LevelParser {
     private ArrayList<String> level = new ArrayList<>();
 
@@ -13,8 +14,8 @@ public class LevelParser {
     }
 
     private void scanFile(String filename) {
-        try(Scanner scanner = new Scanner(new File(filename));){
-            while(scanner.hasNext()){
+        try (Scanner scanner = new Scanner(new File(filename));){
+            while (scanner.hasNext()){
                 level.add(scanner.next());
             }
         } catch (FileNotFoundException e) {
