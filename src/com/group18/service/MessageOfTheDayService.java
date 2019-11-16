@@ -10,12 +10,12 @@ public class MessageOfTheDayService {
     /**
      * URL in which when a GET request is called on, will return a random puzzle
      */
-    public static final String PUZZLE_URL = "http://cswebcat.swan.ac.uk/puzzle";
+    private static final String PUZZLE_URL = "http://cswebcat.swan.ac.uk/puzzle";
 
     /**
      * URL in which when a GET request is called on, will return the final message of the day
      */
-    public static final String MESSAGE_URL = "http://cswebcat.swan.ac.uk/message";
+    private static final String MESSAGE_URL = "http://cswebcat.swan.ac.uk/message";
 
 
     /**
@@ -100,7 +100,7 @@ public class MessageOfTheDayService {
                 response.append(scanner.nextLine());
             }
 
-            LOGGER.fine("Successfully retrieved response of: " + response.toString());
+            LOGGER.log(Level.INFO, "Successfully retrieved response of: " + response.toString());
             return response.toString();
 
         } else {
