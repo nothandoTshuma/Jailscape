@@ -114,7 +114,7 @@ public class MessageOfTheDayService {
                 response.append(scanner.nextLine());
             }
 
-            LOGGER.fine("Successfully retrieved response of: " + response.toString());
+            LOGGER.log(Level.INFO, "Successfully retrieved response of: " + response.toString());
             return response.toString();
 
         } else {
