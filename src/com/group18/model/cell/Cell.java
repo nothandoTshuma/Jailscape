@@ -14,7 +14,7 @@ import java.util.List;
  * Used to represent an individual cell on a board of cells. Any cell type will inherit from this class.
  * @author danielturato
  */
-public abstract class Cell implements Cloneable {
+public abstract class Cell {
 
     /**
      * Each cell is assigned a Level and can only have 1 level at one time.
