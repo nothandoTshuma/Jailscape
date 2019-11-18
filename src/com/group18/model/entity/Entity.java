@@ -1,6 +1,6 @@
 package com.group18.model.entity;
 
-import com.group18.core.Direction;
+import com.group18.model.Direction;
 import com.group18.model.cell.Cell;
 
 import java.io.Serializable;

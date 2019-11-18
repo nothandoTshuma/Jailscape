@@ -1,4 +1,4 @@
-package com.group18.core;
+package com.group18.model;
 
 /**
  * Enum representing the direction in which entities can move in the game

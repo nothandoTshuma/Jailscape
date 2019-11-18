@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class MessageOfTheDayService {
 
     /**
-     * Logger used to log usual messages
+     * Logger used to log messages to the console
      */
     private static final Logger LOGGER = Logger.getLogger("MessageOfTheDayService");
 
