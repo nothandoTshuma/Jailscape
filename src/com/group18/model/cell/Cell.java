@@ -117,12 +117,8 @@ public abstract class Cell {
      * @return Boolean value representing if the cell has a certain class type
      */
      boolean hasEntity(Class<? extends Entity> e) {
-        for (Entity entity : this.currentEntities) {
-            if (entity.getClass().isInstance(e)) {
-                return true;
-            }
-        }
+        return this.currentEntities.stream()
+                                   .anyMatch(e::isInstance);
 
-        return false;
     }
 }
