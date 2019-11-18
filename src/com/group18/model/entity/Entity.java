@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Represents a general Entity in which all subclasses will inherit from
  * @author danielturato nothandotshuma riyagupta
  */
-public abstract class Entity implements Cloneable, Serializable {
+public abstract class Entity implements Serializable {
     /**
      * Stores the entities current cell position
      */
