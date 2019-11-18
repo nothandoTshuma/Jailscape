@@ -3,7 +3,9 @@ package com.group18.model.cell;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Coordinate;
 import com.group18.model.Level;
+import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
+import com.group18.model.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +29,13 @@ public abstract class Cell implements Cloneable {
     /**
      * All the current entities on this cell
      */
-    private List<Entity> currentEntities;
+    List<Entity> currentEntities;
 
 
     /**
      * Used to setup basic fields that each Cell needs.
      */
-    protected Cell() {
+    Cell() {
         this.currentEntities = new ArrayList<>();
     }
 
@@ -78,33 +80,49 @@ public abstract class Cell implements Cloneable {
     }
 
     /**
-     * Set all the current entities on the cell
-     * @param currentEntities The new entities
+     * Used to place a user on to this cell. Subclasses will provide their implementation.
+     * @param user The user to be placed
+     * @throws InvalidMoveException Possible exception if it's not a valid placement
      */
-    public void setCurrentEntities(List<Entity> currentEntities) {
-        this.currentEntities = currentEntities;
-    }
+    public abstract void placePlayer(User user) throws InvalidMoveException;
 
-    public void placePlayer() throws InvalidMoveException {
-        //TODO:drt - User class needs implementation
-    }
+    /**
+     * Used to place a enemy on to this cell. Subclasses will provide their implementation.
+     * @param enemy The enemy to be placed
+     * @throws InvalidMoveException Possible exception if it's not a valid placement.
+     */
+    public abstract void placeEnemy(Enemy enemy) throws InvalidMoveException;
 
-    public void placeEnemy() throws InvalidMoveException {
-        //TODO:drt - Enemy class needs implementation
-    }
+    /**
+     * Used to check if this cell has a player on itself.
+     * @return Boolean value representing if the player is on this cell.
+     */
+    public abstract boolean hasPlayer();
 
-    public boolean hasPlayer() {
-        //TODO:drt - User class needs implementation
-        return false;
-    }
+    /**
+     * Used to check if this cell has a enemy on itself
+     * @return Boolean value representing if the player is on this cell
+     */
+    public abstract boolean hasEnemy();
 
-    public boolean hasEnemy() {
-        //TODO:drt - Enemy class needs implementation
-        return false;
-    }
+    /**
+     * Used to check if this cell has both an enemy and a player on itself
+     * @return Boolean value representing if a player & enemy is on this cell.
+     */
+    public abstract boolean hasPlayerAndEnemy();
 
-    public boolean hasPlayerAndEnemy() {
-        //TODO:drt - User & Enemy classes need implementation
+    /**
+     * Checks if this cell has an entity of a certain type
+     * @param e The entity type check
+     * @return Boolean value representing if the cell has a certain class type
+     */
+     boolean hasEntity(Class<? extends Entity> e) {
+        for (Entity entity : this.currentEntities) {
+            if (entity.getClass().isInstance(e)) {
+                return true;
+            }
+        }
+
         return false;
     }
 }
