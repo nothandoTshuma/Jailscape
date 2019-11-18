@@ -1,12 +1,12 @@
 package com.group18.model.cell;
 
 import com.group18.exception.InvalidMoveException;
+import com.group18.model.Coordinate;
 import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public abstract class Cell {
     /**
      * The cell's current position (x,y) in relation to all other cells on the board
      */
-    private Point coordinates;
+    private Coordinate coordinate;
 
     /**
      * All the current entities on this cell
@@ -37,17 +37,6 @@ public abstract class Cell {
      */
     Cell() {
         this.currentEntities = new ArrayList<>();
-    }
-
-    /**
-     * Used to set basic fields for all Cell's
-     * @param level The level the cell is associated with
-     * @param coordinates It's (x,y) position in relation to all cells on involved with the Level
-     */
-    Cell(Level level, Point coordinates) {
-        this();
-        this.level = level;
-        this.coordinates = coordinates;
     }
 
     /**
@@ -70,17 +59,16 @@ public abstract class Cell {
      * Get the cells (x,y) position coordinates
      * @return The cell's current position
      */
-    public Point getPosition() {
-        return coordinates;
+    public Coordinate getPosition() {
+        return coordinate;
     }
 
     /**
-     * Move the coordinates position of this cell
-     * @param x The new X coordinate
-     * @param y The new Y coordinate
+     * Set the cells current coordinate
+     * @param coordinate The new position
      */
-    public void moveCoordinates(int x, int y) {
-        this.coordinates.move(x, y);
+    public void setPosition(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
     /**
@@ -89,26 +77,6 @@ public abstract class Cell {
      */
     public List<Entity> getCurrentEntities() {
         return currentEntities;
-    }
-
-    /**
-     * Removes an entity currently on the this cell
-     * @param entity The entity to be removed.
-     */
-    public void removeEntity(Entity entity) {
-        this.currentEntities.remove(entity);
-    }
-
-    /**
-     * Checks if this cell has an entity of a certain type
-     * @param e The entity type check
-     * @return Boolean value representing if the cell has a certain class type
-     */
-    boolean hasEntity(Class<? extends Entity> e) {
-        return this.currentEntities.stream()
-                .anyMatch(e::isInstance);
-
-
     }
 
     /**
@@ -139,11 +107,22 @@ public abstract class Cell {
 
     /**
      * Used to check if this cell has both an enemy and a player on itself
-     * @return Boolean value representing if a player and enemy is on this cell.
+     * @return Boolean value representing if a player & enemy is on this cell.
      */
     public abstract boolean hasPlayerAndEnemy();
 
+    /**
+     * Checks if this cell has an entity of a certain type
+     * @param e The entity type check
+     * @return Boolean value representing if the cell has a certain class type
+     */
+     boolean hasEntity(Class<? extends Entity> e) {
+        for (Entity entity : this.currentEntities) {
+            if (entity.getClass().isInstance(e)) {
+                return true;
+            }
+        }
 
-
-
+        return false;
+    }
 }

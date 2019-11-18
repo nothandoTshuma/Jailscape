@@ -3,7 +3,6 @@ package com.group18.model.entity;
 import com.group18.model.Direction;
 import com.group18.model.cell.Cell;
 
-import java.beans.*;
 import java.io.Serializable;
 
 /**
@@ -30,7 +29,7 @@ public abstract class Entity implements Serializable {
     }
 
     /**
-     * Sets the current entities cell.
+     * Sets the current entities cell
      * @param currentCell The new cell to be set
      */
     public void setCurrentCell(Cell currentCell) {
@@ -52,5 +51,4 @@ public abstract class Entity implements Serializable {
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
-
 }
