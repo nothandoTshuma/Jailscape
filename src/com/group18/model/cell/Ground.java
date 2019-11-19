@@ -1,6 +1,8 @@
 package com.group18.model.cell;
 
 import com.group18.exception.InvalidMoveException;
+import com.group18.model.Coordinate;
+import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
@@ -16,10 +18,19 @@ public class Ground extends Cell {
     //TODO:drt - Allow items to be stored on this cell
 
     /**
-     * Creates a basic ground cell, calling super on Cell's constructor.
+     * Creates a basic Ground cell, not linking a level or coordinate
      */
     public Ground() {
         super();
+    }
+
+    /**
+     * Creates a new Ground cell
+     * @param level The level this cell is associated with
+     * @param coordinate It's coordinate in relation to all cells with this Level
+     */
+    public Ground(Level level, Coordinate coordinate) {
+        super(level, coordinate);
     }
 
     /**
