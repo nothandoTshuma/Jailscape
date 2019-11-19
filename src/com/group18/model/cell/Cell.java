@@ -40,6 +40,17 @@ public abstract class Cell {
     }
 
     /**
+     * Used to set basic fields for all Cell's
+     * @param level The level the cell is associated with
+     * @param coordinate It's (x,y) position in relation to all cells on involved with the Level
+     */
+    Cell(Level level, Coordinate coordinate) {
+        this();
+        this.level = level;
+        this.coordinate = coordinate;
+    }
+
+    /**
      * Get the level the cell is assigned to
      * @return The level
      */
