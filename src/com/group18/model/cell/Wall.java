@@ -1,6 +1,8 @@
 package com.group18.model.cell;
 
 import com.group18.exception.InvalidMoveException;
+import com.group18.model.Coordinate;
+import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.User;
 
@@ -15,6 +17,15 @@ public class Wall extends Cell {
      */
     public Wall() {
         super();
+    }
+
+    /**
+     * Creates a new Wall Cell
+     * @param level The level the cell is associated with
+     * @param coordinate The coordinate of this cell in relation to others for this level.
+     */
+    public Wall(Level level, Coordinate coordinate)  {
+        super(level, coordinate);
     }
 
     /**
