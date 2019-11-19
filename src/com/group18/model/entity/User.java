@@ -1,14 +1,9 @@
 package com.group18.model.entity;
 
-import com.group18.exception.InvalidLevelException;
-import com.group18.model.item.Collectable;
-import com.group18.model.Colour;
-import com.group18.model.item.ElementItem;
-import com.group18.model.item.Key;
+import com.group18.model.Collectable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,23 +26,19 @@ public class User extends Entity {
     /**
      * Instantiates an arraylist to store the user's inventory.
      */
-    private final List<Collectable> inventory;
+    private final ArrayList<Collectable> inventory = new ArrayList<>();
     /**
      * Instantiates a hashmap to store the top 3 quickest times the user has played.
      */
-    private final Map<Integer, Long[]> quickestTimes;
+    private final Map<Integer, Long[]> quickestTimes = new HashMap<>();
 
     /**
      * Constructor to create a new user.
-     * @param username The username the user wants
+     * @param username
      */
     public User(String username) {
         this.username = username;
-        this.inventory = new ArrayList<>();
-        this.quickestTimes = new HashMap<>();
         this.highestLevel = 1;
-
-        quickestTimes.put(highestLevel, new Long[3]);
     }
 
     /**
@@ -69,52 +60,39 @@ public class User extends Entity {
      * Returns a list of the inventory the user has earned.
      * @return inventory
      */
-    public List<Collectable> getInventory() {
+    public ArrayList<Collectable> getInventory() {
         return inventory;
     }
 
     /**
      * Adds to the inventory, each time a user earns a collectable item.
-     * @param item The item that the User wants to collect
+     * @param item
      */
     public void addItem(Collectable item) {
         inventory.add(item);
     }
 
     /**
-     * Checks if this user has a key of a specific colour
-     * @param colour The colour of key
-     * @return Boolean value suggesting if this user has a key of a specific colour
+     *
+     * @param Colour
+     * @return
      */
-    public boolean hasKey(Colour colour) {
-        boolean hasKey = false;
-
-        for (Collectable item : this.inventory) {
-            if (item instanceof Key) {
-                hasKey = ((Key) item).getColour() == colour;
-            }
-        }
-
-        return hasKey;
+    public boolean hasKey(colour Colour) {
+        //TODO add the rest of the code here..
+        return false;
     }
 
     /**
-     * Remove a key of a specific colour from the user's inventory
-     * @param colour The colour of the key that needs to be consumed
+     *
+     * @param Colour
      */
-    public void consumeKey(Colour colour) {
-        for (Collectable item : this.inventory) {
-            if (item instanceof Key) {
-                if (((Key) item).getColour() == colour) {
-                    this.inventory.remove(item);
-                }
-            }
-        }
+    public void consumeKey(colour Colour) {
+        //TODO add the rest of the code here..
     }
 
     /**
      * Checks if an item is of type Collectable.
-     * @param i The item, the user needs to check upon
+     * @param i
      * @return boolean value depending on whether it is collectable or not.
      */
     public boolean hasItem(Class<? extends Collectable> i) {
@@ -126,26 +104,12 @@ public class User extends Entity {
        return false;
     }
 
-    public boolean hasElementItem(ElementItem elementItem) {
-        for (Collectable item : this.inventory) {
-            if (item == elementItem) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     /**
      * Adds the new top 3 quickest times to the hashmap.
-     * @param time The new time from the level
-     * @param level The level the generated time came from
+     * @param time
+     * @param level
      */
-    public void addQuickestTime(Long time, int level) throws InvalidLevelException {
-        if (level > this.highestLevel || level > 0) {
-            throw new InvalidLevelException();
-        }
-
+    public void addQuickestTime(Long time, int level) {
         Long[] levelArray = getQuickestTimesFor(level);
         if (levelArray[2] > time){
             levelArray[2] = time;
@@ -160,20 +124,16 @@ public class User extends Entity {
      * Returns the user's quickest times.
      * @return quickestTimes
      */
-    public Map <Integer, Long[]> getAllQuickestTimes() {
+    public Map <Integer,Long[]> getAllQuickestTimes() {
         return quickestTimes;
     }
 
     /**
      * Gets the top 3 quickest quickest times for a level.
-     * @param level The level the user wants to get the quickest times for
+     * @param level
      * @return quickestTimes
      */
-    public Long[] getQuickestTimesFor(int level) throws InvalidLevelException {
-        if (level > this.highestLevel || level > 0) {
-            throw new InvalidLevelException();
-        }
-
+    public Long[] getQuickestTimesFor(int level) {
         return this.quickestTimes.get(level);
     }
 
@@ -189,7 +149,7 @@ public class User extends Entity {
      * Increments the level each time the user passes a stage.
      */
     public void incrementLevel() {
-        quickestTimes.put(++highestLevel, new Long[3]);
+        highestLevel++;
     }
 
     /**
