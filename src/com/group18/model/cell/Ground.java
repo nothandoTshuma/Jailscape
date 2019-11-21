@@ -1,21 +1,26 @@
 package com.group18.model.cell;
 
 import com.group18.exception.InvalidMoveException;
-import com.group18.model.Coordinate;
+import com.group18.model.Actionable;
+import com.group18.model.Collectable;
 import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
+import java.awt.*;
 import java.util.List;
 
 /**
  * Represents a ground cell in the game. Any enemy or player can move on to this cell.
  * @author danielturato
  */
-public class Ground extends Cell {
+public class Ground extends Cell implements Actionable {
 
-    //TODO:drt - Allow items to be stored on this cell
+    /**
+     * An collectable item which can be stored on this cell.
+     */
+    private Collectable item;
 
     /**
      * Creates a basic Ground cell, not linking a level or coordinate
@@ -25,12 +30,28 @@ public class Ground extends Cell {
     }
 
     /**
+     * Set the item that's currently on the cell
+     * @param item The new item
+     */
+    public void setItem(Collectable item) {
+        this.item = item;
+    }
+
+    /**
+     * Gets the item currently on this cell
+     * @return The current item on this cell
+     */
+    public Collectable getItem() {
+        return item;
+    }
+
+    /**
      * Creates a new Ground cell
      * @param level The level this cell is associated with
-     * @param coordinate It's coordinate in relation to all cells with this Level
+     * @param coordinates It's coordinates in relation to all cells with this Level
      */
-    public Ground(Level level, Coordinate coordinate) {
-        super(level, coordinate);
+    public Ground(Level level, Point coordinates) {
+        super(level, coordinates);
     }
 
     /**
@@ -85,11 +106,31 @@ public class Ground extends Cell {
     }
 
     /**
-     * Checks if this cell has both a player & enemy on it
-     * @return Boolean value suggesting if the cell has both a player & enemy on it.
+     * Checks if this cell has both a player and enemy on it
+     * @return Boolean value suggesting if the cell has both a player and enemy on it.
      */
     @Override
     public boolean hasPlayerAndEnemy() {
         return hasPlayer() && hasEnemy();
+    }
+
+    /**
+     * Check to see if this cell contains an item
+     * @return Boolean value suggesting an item is on this cell
+     */
+    public boolean hasItem() {
+        return this.item != null;
+    }
+
+    /**
+     * If a user is on this cell, an action is toggled to pick up the current item on this cell
+     * @param entity The entity the action is toggled upon
+     */
+    @Override
+    public void toggleAction(Entity entity) {
+        if (entity instanceof User && hasItem()) {
+            ((User) entity).addItem(this.item);
+            setItem(null);
+        }
     }
 }
