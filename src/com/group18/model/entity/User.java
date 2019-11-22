@@ -1,9 +1,11 @@
 package com.group18.model.entity;
 
 import com.group18.model.Collectable;
+import com.group18.model.Colour;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,19 +28,23 @@ public class User extends Entity {
     /**
      * Instantiates an arraylist to store the user's inventory.
      */
-    private final ArrayList<Collectable> inventory = new ArrayList<>();
+    private final List<Collectable> inventory;
     /**
      * Instantiates a hashmap to store the top 3 quickest times the user has played.
      */
-    private final Map<Integer, Long[]> quickestTimes = new HashMap<>();
+    private final Map<Integer, Long[]> quickestTimes;
 
     /**
      * Constructor to create a new user.
-     * @param username
+     * @param username The username the user wants
      */
     public User(String username) {
         this.username = username;
+        this.inventory = new ArrayList<>();
+        this.quickestTimes = new HashMap<>();
         this.highestLevel = 1;
+
+        quickestTimes.put(highestLevel, new Long[3]);
     }
 
     /**
@@ -60,13 +66,13 @@ public class User extends Entity {
      * Returns a list of the inventory the user has earned.
      * @return inventory
      */
-    public ArrayList<Collectable> getInventory() {
+    public List<Collectable> getInventory() {
         return inventory;
     }
 
     /**
      * Adds to the inventory, each time a user earns a collectable item.
-     * @param item
+     * @param item The item that the User wants to collect
      */
     public void addItem(Collectable item) {
         inventory.add(item);
@@ -74,25 +80,25 @@ public class User extends Entity {
 
     /**
      *
-     * @param Colour
-     * @return
+     * @param colour The colour of key
+     * @return Boolean value suggesting if this user has a key of a specific colour
      */
-    public boolean hasKey(colour Colour) {
+    public boolean hasKey(Colour colour) {
         //TODO add the rest of the code here..
         return false;
     }
 
     /**
      *
-     * @param Colour
+     * @param colour The colour of the key that needs to be consumed
      */
-    public void consumeKey(colour Colour) {
+    public void consumeKey(Colour colour) {
         //TODO add the rest of the code here..
     }
 
     /**
      * Checks if an item is of type Collectable.
-     * @param i
+     * @param i The item, the user needs to check upon
      * @return boolean value depending on whether it is collectable or not.
      */
     public boolean hasItem(Class<? extends Collectable> i) {
@@ -106,10 +112,11 @@ public class User extends Entity {
 
     /**
      * Adds the new top 3 quickest times to the hashmap.
-     * @param time
-     * @param level
+     * @param time The new time from the level
+     * @param level The level the generated time came from
      */
     public void addQuickestTime(Long time, int level) {
+        //TODO:dt What if the level is not in the map? Throw exception maybe?
         Long[] levelArray = getQuickestTimesFor(level);
         if (levelArray[2] > time){
             levelArray[2] = time;
@@ -124,16 +131,17 @@ public class User extends Entity {
      * Returns the user's quickest times.
      * @return quickestTimes
      */
-    public Map <Integer,Long[]> getAllQuickestTimes() {
+    public Map <Integer, Long[]> getAllQuickestTimes() {
         return quickestTimes;
     }
 
     /**
      * Gets the top 3 quickest quickest times for a level.
-     * @param level
+     * @param level The level the user wants to get the quickest times for
      * @return quickestTimes
      */
     public Long[] getQuickestTimesFor(int level) {
+        //TODO:dt What if the level is not in the map? Throw exception maybe?
         return this.quickestTimes.get(level);
     }
 
@@ -149,7 +157,7 @@ public class User extends Entity {
      * Increments the level each time the user passes a stage.
      */
     public void incrementLevel() {
-        highestLevel++;
+        quickestTimes.put(++highestLevel, new Long[3]);
     }
 
     /**

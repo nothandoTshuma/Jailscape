@@ -2,45 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="740576d5-0a1c-4dc1-a230-069727ff0e80" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-        <option value="Interface" />
-        <option value="Enum" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="MERGE" />
-  </component>
-  <component name="IgnoredFileRootStore">
-    <option name="generatedRoots">
-      <set>
-        <option value="C:\Users\Nothando\Desktop\Everything\university\year 2\cs-230\A2\Jailscape\.idea" />
-      </set>
-    </option>
-  </component>
-  <component name="ProjectId" id="1TeepAoMvjOwzBZgpzexcM5quPB" />
-  <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.group18.model" />
-    </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.group18.model.entity" />
-      <recent name="com.group18.core" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -58,45 +26,18 @@
     <configuration />
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="64927f91-9550-4493-8677-ab716456c3ee" name="Default Changelist" comment="" />
-      <created>1573825168770</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1573825168770</updated>
-    </task>
-    <task id="LOCAL-00001" summary="Implemented User class.">
-      <created>1574176064329</created>
+    <task id="LOCAL-00001" summary="Enums, Element and TokenDoor classes">
+      <created>1574429988518</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1574176064329</updated>
+      <updated>1574429988518</updated>
     </task>
-    <task id="LOCAL-00002" summary="Implemented User class.">
-      <created>1574176266731</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1574176266731</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implemented User class." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented User class." />
+    <MESSAGE value="Enums, Element and TokenDoor classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Enums, Element and TokenDoor classes" />
   </component>
 </project>

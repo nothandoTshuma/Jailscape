@@ -1,12 +1,12 @@
 package com.group18.model.cell;
 
 import com.group18.exception.InvalidMoveException;
-import com.group18.model.Coordinate;
 import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public abstract class Cell {
     /**
      * The cell's current position (x,y) in relation to all other cells on the board
      */
-    private Coordinate coordinate;
+    private Point coordinates;
 
     /**
      * All the current entities on this cell
@@ -42,12 +42,12 @@ public abstract class Cell {
     /**
      * Used to set basic fields for all Cell's
      * @param level The level the cell is associated with
-     * @param coordinate It's (x,y) position in relation to all cells on involved with the Level
+     * @param coordinates It's (x,y) position in relation to all cells on involved with the Level
      */
-    Cell(Level level, Coordinate coordinate) {
+    Cell(Level level, Point coordinates) {
         this();
         this.level = level;
-        this.coordinate = coordinate;
+        this.coordinates = coordinates;
     }
 
     /**
@@ -70,16 +70,17 @@ public abstract class Cell {
      * Get the cells (x,y) position coordinates
      * @return The cell's current position
      */
-    public Coordinate getPosition() {
-        return coordinate;
+    public Point getPosition() {
+        return coordinates;
     }
 
     /**
-     * Set the cells current coordinate
-     * @param coordinate The new position
+     * Move the coordinates position of this cell
+     * @param x The new X coordinate
+     * @param y The new Y coordinate
      */
-    public void setPosition(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void moveCoordinates(int x, int y) {
+        this.coordinates.move(x, y);
     }
 
     /**
@@ -118,7 +119,7 @@ public abstract class Cell {
 
     /**
      * Used to check if this cell has both an enemy and a player on itself
-     * @return Boolean value representing if a player & enemy is on this cell.
+     * @return Boolean value representing if a player and enemy is on this cell.
      */
     public abstract boolean hasPlayerAndEnemy();
 
@@ -130,6 +131,7 @@ public abstract class Cell {
      boolean hasEntity(Class<? extends Entity> e) {
         return this.currentEntities.stream()
                                    .anyMatch(e::isInstance);
+
 
     }
 

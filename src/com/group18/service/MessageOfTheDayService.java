@@ -17,19 +17,19 @@ import java.util.logging.Logger;
 public class MessageOfTheDayService {
 
     /**
-     * Logger used to log messages to the console
-     */
-    private static final Logger LOGGER = Logger.getLogger("MessageOfTheDayService");
-
-    /**
      * URL in which when a GET request is called on, will return a random puzzle
      */
-    private static final String PUZZLE_URL = "http://cswebcat.swan.ac.uk/puzzle";
+    public static final String PUZZLE_URL = "http://cswebcat.swan.ac.uk/puzzle";
 
     /**
      * URL in which when a GET request is called on, will return the final message of the day
      */
-    private static final String MESSAGE_URL = "http://cswebcat.swan.ac.uk/message";
+    public static final String MESSAGE_URL = "http://cswebcat.swan.ac.uk/message";
+
+    /**
+     * Logger used to log messages to the console
+     */
+    private static final Logger LOGGER = Logger.getLogger("MessageOfTheDayService");
 
 
     /**
