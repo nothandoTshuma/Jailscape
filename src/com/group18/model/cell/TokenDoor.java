@@ -8,17 +8,17 @@ import com.group18.model.entity.User;
  * represents the door which requires tokens to pass through
  * @author RIYA GUPTA
  */
-public class TokenDoor extends Wall implements Door, Actionable {
+public class TokenDoor extends Wall implements Actionable {
     /**
      * represents number of tokens
      */
     private final int tokens;
 
     /**
-     * Creates a new TokenDoor
-     * @param tokens The number of tokens needed to open this door.
+     * returns number of tokens
      */
-    public TokenDoor(int tokens) {
+    public TokenDoor(int tokens)
+    {
         this.tokens = tokens;
     }
 
@@ -33,14 +33,13 @@ public class TokenDoor extends Wall implements Door, Actionable {
     }
 
 
-    @Override
-    public void toggleAction(Entity entity) {
-        if (entity instanceof User) {
-            User user = (User) entity;
-
-            if (user.getTokens() >= this.tokens) {
-                //TODO - trigger animations & sounds
-            }
-        }
+    /**
+     *
+     * @param entity
+     */
+    public void toggleAction(Entity entity)
+    {
+       //TODO later
     }
+
 }
