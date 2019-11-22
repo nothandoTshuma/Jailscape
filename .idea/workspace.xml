@@ -26,6 +26,18 @@
     <configuration />
   </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="Enums, Element and TokenDoor classes">
+      <created>1574429988518</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1574429988518</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Enums, Element and TokenDoor classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Enums, Element and TokenDoor classes" />
   </component>
 </project>
