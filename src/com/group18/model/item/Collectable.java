@@ -1,4 +1,4 @@
-package com.group18.model;
+package com.group18.model.item;
 
 import com.group18.model.entity.User;
 
