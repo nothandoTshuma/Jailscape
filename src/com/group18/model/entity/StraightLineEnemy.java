@@ -40,11 +40,11 @@ public class StraightLineEnemy extends Enemy {
             return IDLE;
         }
 
-        // If the direction they last moved in was okay, keep moving in that direction
+        // If the direction they last moved in was valid, attempt to keep moving in that direction
         if (level.validMove(this, currentDirection)) {
             return currentDirection;
         } else {
-            // Try and switch direction
+            // Try and switch direction if they can't move in their previous direction
             Direction newDirection = switchDirection();
             if (level.validMove(this, newDirection)) {
                 return newDirection;
