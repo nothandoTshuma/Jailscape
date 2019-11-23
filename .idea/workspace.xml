@@ -2,24 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="740576d5-0a1c-4dc1-a230-069727ff0e80" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/group18/exception/InvalidDirectionException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/group18/model/cell/Door.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/group18/model/entity/StraightLineEnemy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/group18/model/entity/WallFollowingEnemy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/Collectable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/item/Collectable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/Colour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/Colour.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/Direction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/ElementItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/item/ElementItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/ElementType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/ElementType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/Key.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/item/Key.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/Level.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/Level.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/cell/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/cell/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/cell/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/cell/Element.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/cell/Ground.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/cell/Ground.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/cell/TokenDoor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/cell/TokenDoor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/entity/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/entity/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/model/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/model/entity/StraightLineEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/model/entity/StraightLineEnemy.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/group18/model/entity/StraightLineEnemy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="590">
-              <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
+            <state relative-caret-position="136">
+              <caret line="32" column="7" lean-forward="true" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#595#596#0" expanded="true" />
@@ -47,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/group18/model/entity/Enemy.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/group18/model/entity/WallFollowingEnemy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="56" selection-start-line="15" selection-start-column="56" selection-end-line="15" selection-end-column="56" />
+            <state relative-caret-position="748">
+              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -62,10 +47,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/group18/model/Level.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11">
-              <caret line="119" column="35" lean-forward="true" selection-start-line="119" selection-start-column="35" selection-end-line="119" selection-end-column="35" />
+            <state relative-caret-position="-1655">
+              <caret line="3" column="35" lean-forward="true" selection-start-line="3" selection-start-column="35" selection-end-line="3" selection-end-column="35" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="e#2962#2963#0" expanded="true" />
                 <element signature="e#2990#2991#0" expanded="true" />
                 <element signature="e#3450#3451#0" expanded="true" />
@@ -107,12 +91,13 @@
         <option value="$PROJECT_DIR$/src/com/group18/model/entity/Enemy.java" />
         <option value="$PROJECT_DIR$/src/com/group18/model/Level.java" />
         <option value="$PROJECT_DIR$/src/com/group18/model/entity/StraightLineEnemy.java" />
+        <option value="$PROJECT_DIR$/src/com/group18/model/entity/WallFollowingEnemy.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-36" />
-    <option name="y" value="-13" />
+    <option name="x" value="-97" />
+    <option name="y" value="-8" />
     <option name="width" value="1612" />
     <option name="height" value="876" />
   </component>
@@ -155,6 +140,15 @@
               <item name="com" type="462c0819:PsiDirectoryNode" />
               <item name="group18" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Jailscape" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Jailscape" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="group18" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -217,19 +211,35 @@
       <option name="presentableId" value="Default" />
       <updated>1574467039794</updated>
       <workItem from="1574467041281" duration="2717000" />
-      <workItem from="1574523865802" duration="8388000" />
+      <workItem from="1574523865802" duration="14190000" />
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implemented StraightLineEnemy &amp; started implementation for Level">
+      <created>1574546325741</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1574546325741</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20412000" />
+    <option name="totallyTimeSpent" value="26214000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="135" y="341" width="1612" height="876" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23840207" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19722815" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -241,12 +251,12 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32917964" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32917964" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32917964" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32917964" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -292,7 +302,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Enums, Element and TokenDoor classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Enums, Element and TokenDoor classes" />
+    <MESSAGE value="Implemented StraightLineEnemy &amp; started implementation for Level" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented StraightLineEnemy &amp; started implementation for Level" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/group18/model/Actionable.java">
@@ -443,10 +454,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/group18/model/entity/Enemy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/group18/model/entity/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="646">
+          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
           <folding>
             <element signature="e#1046#1047#0" expanded="true" />
             <element signature="e#1078#1079#0" expanded="true" />
@@ -456,12 +477,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/group18/model/Level.java">
+    <entry file="file://$PROJECT_DIR$/src/com/group18/model/entity/StraightLineEnemy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11">
-          <caret line="119" column="35" lean-forward="true" selection-start-line="119" selection-start-column="35" selection-end-line="119" selection-end-column="35" />
+        <state relative-caret-position="136">
+          <caret line="32" column="7" lean-forward="true" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#595#596#0" expanded="true" />
+            <element signature="e#641#642#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/group18/model/Level.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1655">
+          <caret line="3" column="35" lean-forward="true" selection-start-line="3" selection-start-column="35" selection-end-line="3" selection-end-column="35" />
+          <folding>
             <element signature="e#2962#2963#0" expanded="true" />
             <element signature="e#2990#2991#0" expanded="true" />
             <element signature="e#3450#3451#0" expanded="true" />
@@ -470,24 +502,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/group18/model/entity/Enemy.java">
+    <entry file="file://$PROJECT_DIR$/src/com/group18/model/entity/WallFollowingEnemy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="56" selection-start-line="15" selection-start-column="56" selection-end-line="15" selection-end-column="56" />
+        <state relative-caret-position="748">
+          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/group18/model/entity/StraightLineEnemy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="590">
-          <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#595#596#0" expanded="true" />
-            <element signature="e#641#642#0" expanded="true" />
           </folding>
         </state>
       </provider>
