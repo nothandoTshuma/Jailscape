@@ -1,4 +1,7 @@
-package com.group18.model;
+package com.group18.model.item;
+
+import com.group18.model.Colour;
+import com.group18.model.item.Collectable;
 
 import static com.group18.model.Colour.*;
 
@@ -6,7 +9,7 @@ import static com.group18.model.Colour.*;
  * Represents all types of keys
  * @author Riya Gupta
  */
-public enum Key {
+public enum Key implements Collectable {
     RED_KEY(RED),
     GREEN_KEY(GREEN),
     BLUE_KEY(BLUE),
