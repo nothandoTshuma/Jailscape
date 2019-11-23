@@ -6,7 +6,7 @@ import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
-import java.awt.*;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +92,26 @@ public abstract class Cell {
     }
 
     /**
+     * Removes an entity currently on the this cell
+     * @param entity The entity to be removed.
+     */
+    public void removeEntity(Entity entity) {
+        this.currentEntities.remove(entity);
+    }
+
+    /**
+     * Checks if this cell has an entity of a certain type
+     * @param e The entity type check
+     * @return Boolean value representing if the cell has a certain class type
+     */
+    boolean hasEntity(Class<? extends Entity> e) {
+        return this.currentEntities.stream()
+                .anyMatch(e::isInstance);
+
+
+    }
+
+    /**
      * Used to place a user on to this cell. Subclasses will provide their implementation.
      * @param user The user to be placed
      * @throws InvalidMoveException Possible exception if it's not a valid placement
@@ -123,17 +143,7 @@ public abstract class Cell {
      */
     public abstract boolean hasPlayerAndEnemy();
 
-    /**
-     * Checks if this cell has an entity of a certain type
-     * @param e The entity type check
-     * @return Boolean value representing if the cell has a certain class type
-     */
-     boolean hasEntity(Class<? extends Entity> e) {
-        return this.currentEntities.stream()
-                                   .anyMatch(e::isInstance);
 
-
-    }
 
 
 }
