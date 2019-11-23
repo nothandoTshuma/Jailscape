@@ -9,8 +9,6 @@ import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -26,23 +24,11 @@ public class Level   {
     private final Cell[][] board;
 
     /**
-     * The width of the board
-     */
-    private final int boardWidth;
-
-    /**
-     * The height of the board
-     */
-    private final int boardHeight;
-
-    /**
      * Creates a new level
      * @param board The board for this level.
      */
     public Level(Cell[][] board) {
         this.board = board;
-        this.boardHeight = board.length;
-        this.boardWidth = board[0].length;
     }
 
     /**
@@ -88,48 +74,8 @@ public class Level   {
             }
 
         } else {
-            throw new InvalidMoveException(String.format("Moving in a %s direction is not valid", direction));
+            throw new InvalidMoveException();
         }
-    }
-
-    /**
-     * Get adjacent cells from a certain Point
-     * @param point The point in which you want to find adjacent cells from
-     * @return A list of adjacent cells
-     */
-    public List<Cell> getAdjacentCells(Point point) {
-        List<Cell> adjacentCells = new ArrayList<>();
-        int cellX = (int) point.getX();
-        int cellY = (int) point.getY();
-
-        if (!(cellX+1 > boardWidth)) {
-            adjacentCells.add(getCell(cellY, cellX+1));
-        }
-
-        if(!(cellX-1 < 0)) {
-            adjacentCells.add(getCell(cellY, cellX-1));
-        }
-
-        if (!(cellY+1 > boardHeight)) {
-            adjacentCells.add(getCell(cellY+1, cellX));
-        }
-
-        if (!(cellY-1 < 0)) {
-            adjacentCells.add(getCell(cellY-1, cellX));
-        }
-
-        return adjacentCells;
-    }
-
-    /**
-     * Get adjacent cells from a certain cell
-     * @param cell The cell in which you want to find adjacent cells from
-     * @return A list of adjacent cells
-     */
-    public List<Cell> getAdjacentCells(Cell cell) {
-        Point cellPosition = cell.getPosition();
-
-        return getAdjacentCells(cellPosition);
     }
 
     public void moveEnemy(Enemy enemy, Direction direction) {}
@@ -139,19 +85,11 @@ public class Level   {
     }
 
     /**
-     * Get the whole board of cells
-     * @return The board of cells in the Game.
-     */
-    public Cell[][] getBoard() {
-        return this.board;
-    }
-
-    /**
      * Get a cell, given a pair of coordinates
      * @param point The point in which the cell is located
      * @return The cell instance at the given Point.
      */
-    private Cell getCell(Point point) {
+    public Cell getCell(Point point) {
         int x = (int) point.getX();
         int y = (int) point.getY();
 
@@ -159,13 +97,11 @@ public class Level   {
     }
 
     /**
-     * Get the cell at a specific point
-     * @param row The row the cell is at
-     * @param column The column the cell is at
-     * @return The cell at the specific row & column
+     * Get the whole board of cells
+     * @return The board of cells in the Game.
      */
-    private Cell getCell(int row, int column) {
-        return getCell(new Point(row, column));
+    public Cell[][] getBoard() {
+        return this.board;
     }
 
     private void removeCell(Point point) {}
@@ -187,13 +123,15 @@ public class Level   {
 
             if (cell instanceof Wall) {
                 if (cell instanceof Door) {
+                    //TODO:drt - Can they unlock the door
+                } else {
+                    return false;
                 }
             }
 
             return true;
         }
 
-        //TODO:drt - enemies can not walk on other cells too
         return !(cell instanceof Wall);
     }
 
@@ -203,17 +141,17 @@ public class Level   {
      * @param direction The entities direction they wish to move in
      * @return The new Point position the entity will end up at.
      */
-    private Point calculateNewPosition(Point oldPosition, Direction direction) {
+    public Point calculateNewPosition(Point oldPosition, Direction direction) {
         int oldX = (int) oldPosition.getX();
         int oldY = (int) oldPosition.getY();
         Point newPosition = new Point(oldX, oldY);
 
         switch (direction) {
             case UP:
-                newPosition.translate(0,-1);
+                newPosition.translate(0,1);
                 break;
             case DOWN:
-                newPosition.translate(0,1);
+                newPosition.translate(0,-1);
                 break;
             case LEFT:
                 newPosition.translate(-1,0);
@@ -229,12 +167,5 @@ public class Level   {
         return newPosition;
     }
 
-    /**
-     * Updates the state in the game controller
-     * @param state The new state of the game
-     */
-    public void updateState(State state) {
-        //TODO update state in game controller
-    }
 
 }

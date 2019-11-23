@@ -26,8 +26,9 @@ public class Element extends Ground implements Actionable {
     public void toggleAction(Entity entity) {
         if(entity instanceof User) {
             User user = (User) entity;
-            if (!(user.hasItem(elementType.getElementItem()))) {
-                //TODO need to implement later
+
+            if (!(user.hasElementItem(this.elementType.getElementItem()))) {
+                //TODO - needs implementation
             }
         }
     }

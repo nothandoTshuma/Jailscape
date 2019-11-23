@@ -1,6 +1,8 @@
 package com.group18.model;
 
-import static com.group18.model.ElementItem.*;
+import com.group18.model.item.ElementItem;
+
+import static com.group18.model.item.ElementItem.*;
 
 /**
  * Represents different types of Elements
