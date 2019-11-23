@@ -1,7 +1,8 @@
 package com.group18.model.entity;
 
-import com.group18.model.Collectable;
+import com.group18.model.item.Collectable;
 import com.group18.model.Colour;
+import com.group18.model.item.ElementItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,6 +109,16 @@ public class User extends Entity {
             }
         }
        return false;
+    }
+
+    public boolean hasElementItem(ElementItem elementItem) {
+        for (Collectable item : this.inventory) {
+            if (item == elementItem) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
