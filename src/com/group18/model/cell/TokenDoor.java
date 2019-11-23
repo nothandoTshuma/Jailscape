@@ -15,10 +15,10 @@ public class TokenDoor extends Wall implements Actionable {
     private final int tokens;
 
     /**
-     * returns number of tokens
+     * Creates a new TokenDoor
+     * @param tokens The number of tokens needed to open this door.
      */
-    public TokenDoor(int tokens)
-    {
+    public TokenDoor(int tokens) {
         this.tokens = tokens;
     }
 
@@ -33,13 +33,8 @@ public class TokenDoor extends Wall implements Actionable {
     }
 
 
-    /**
-     *
-     * @param entity
-     */
-    public void toggleAction(Entity entity)
-    {
-       //TODO later
-    }
+    @Override
+    public void toggleAction(Entity entity) {
 
+    }
 }
