@@ -2,7 +2,7 @@ package com.group18.model.cell;
 
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Actionable;
-import com.group18.model.Collectable;
+import com.group18.model.item.Collectable;
 import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
