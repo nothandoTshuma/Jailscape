@@ -9,6 +9,8 @@ import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,11 +26,23 @@ public class Level   {
     private final Cell[][] board;
 
     /**
+     * The width of the board
+     */
+    private final int boardWidth;
+
+    /**
+     * The height of the board
+     */
+    private final int boardHeight;
+
+    /**
      * Creates a new level
      * @param board The board for this level.
      */
     public Level(Cell[][] board) {
         this.board = board;
+        this.boardHeight = board.length;
+        this.boardWidth = board[0].length;
     }
 
     /**
@@ -78,6 +92,46 @@ public class Level   {
         }
     }
 
+    /**
+     * Get adjacent cells from a certain Point
+     * @param point The point in which you want to find adjacent cells from
+     * @return A list of adjacent cells
+     */
+    public List<Cell> getAdjacentCells(Point point) {
+        List<Cell> adjacentCells = new ArrayList<>();
+        int cellX = (int) point.getX();
+        int cellY = (int) point.getY();
+
+        if (!(cellX+1 > boardWidth)) {
+            adjacentCells.add(getCell(cellY, cellX+1));
+        }
+
+        if(!(cellX-1 < 0)) {
+            adjacentCells.add(getCell(cellY, cellX-1));
+        }
+
+        if (!(cellY+1 > boardHeight)) {
+            adjacentCells.add(getCell(cellY+1, cellX));
+        }
+
+        if (!(cellY-1 < 0)) {
+            adjacentCells.add(getCell(cellY-1, cellX-1));
+        }
+
+        return adjacentCells;
+    }
+
+    /**
+     * Get adjacent cells from a certain cell
+     * @param cell The cell in which you want to find adjacent cells from
+     * @return A list of adjacent cells
+     */
+    public List<Cell> getAdjacentCells(Cell cell) {
+        Point cellPosition = cell.getPosition();
+
+        return getAdjacentCells(cellPosition);
+    }
+
     public void moveEnemy(Enemy enemy, Direction direction) {}
 
     public boolean isEnemyClose(User user) {
@@ -94,6 +148,16 @@ public class Level   {
         int y = (int) point.getY();
 
         return this.board[y][x];
+    }
+
+    /**
+     * Get the cell at a specific point
+     * @param row The row the cell is at
+     * @param column The column the cell is at
+     * @return The cell at the specific row & column
+     */
+    public Cell getCell(int row, int column) {
+        return getCell(new Point(row, column));
     }
 
     /**
@@ -132,6 +196,7 @@ public class Level   {
             return true;
         }
 
+        //TODO:drt - enemies can not walk on other cells too
         return !(cell instanceof Wall);
     }
 
@@ -148,10 +213,10 @@ public class Level   {
 
         switch (direction) {
             case UP:
-                newPosition.translate(0,1);
+                newPosition.translate(0,-1);
                 break;
             case DOWN:
-                newPosition.translate(0,-1);
+                newPosition.translate(0,1);
                 break;
             case LEFT:
                 newPosition.translate(-1,0);
