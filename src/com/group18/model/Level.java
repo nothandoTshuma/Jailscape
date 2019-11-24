@@ -139,11 +139,19 @@ public class Level   {
     }
 
     /**
+     * Get the whole board of cells
+     * @return The board of cells in the Game.
+     */
+    public Cell[][] getBoard() {
+        return this.board;
+    }
+
+    /**
      * Get a cell, given a pair of coordinates
      * @param point The point in which the cell is located
      * @return The cell instance at the given Point.
      */
-    public Cell getCell(Point point) {
+    private Cell getCell(Point point) {
         int x = (int) point.getX();
         int y = (int) point.getY();
 
@@ -156,16 +164,8 @@ public class Level   {
      * @param column The column the cell is at
      * @return The cell at the specific row & column
      */
-    public Cell getCell(int row, int column) {
+    private Cell getCell(int row, int column) {
         return getCell(new Point(row, column));
-    }
-
-    /**
-     * Get the whole board of cells
-     * @return The board of cells in the Game.
-     */
-    public Cell[][] getBoard() {
-        return this.board;
     }
 
     private void removeCell(Point point) {}
@@ -206,7 +206,7 @@ public class Level   {
      * @param direction The entities direction they wish to move in
      * @return The new Point position the entity will end up at.
      */
-    public Point calculateNewPosition(Point oldPosition, Direction direction) {
+    private Point calculateNewPosition(Point oldPosition, Direction direction) {
         int oldX = (int) oldPosition.getX();
         int oldY = (int) oldPosition.getY();
         Point newPosition = new Point(oldX, oldY);
