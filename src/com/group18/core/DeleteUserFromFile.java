@@ -13,8 +13,8 @@ public class DeleteUserFromFile {
 
     private void deleteLine() {
         try {
-            File inputFile= new File("C:\\Users\\fraser\\IdeaProjects\\Jailscape\\src\\resources\\UserNames.txt");
-            File tempFile= new File("C:\\Users\\fraser\\IdeaProjects\\Jailscape\\src\\resources\\tempFile.txt");
+            File inputFile= new File("./src/resources/UserNames.txt");
+            File tempFile= new File("./src/resources/tempFile.txt");
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
             String currentLine;

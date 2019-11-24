@@ -14,7 +14,7 @@ public class AddUserName {
     }
 
     private void getUserNames(){
-        File file = new File("C:\\Users\\fraser\\IdeaProjects\\Jailscape\\src\\resources\\UserNames.txt");
+        File file = new File("./src/resources/UserNames.txt");
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()){
@@ -38,7 +38,7 @@ public class AddUserName {
 
     public void writeUserName(String userName) {
         try {
-            BufferedWriter output = new BufferedWriter(new FileWriter("C:\\Users\\fraser\\IdeaProjects\\Jailscape\\src\\resources\\UserNames.txt", true));
+            BufferedWriter output = new BufferedWriter(new FileWriter("./src/resources/UserNames.txt", true));
             output.append(userName);
             output.close();
         } catch (IOException e) {

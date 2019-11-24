@@ -52,7 +52,7 @@ public class UserSelectionController {
 
     private void loadData(){
         observableList.removeAll(observableList);
-        LevelParser parser = new LevelParser("C:\\Users\\fraser\\IdeaProjects\\Jailscape\\src\\resources\\UserNames.txt");
+        LevelParser parser = new LevelParser("./src/resources/UserNames.txt");
         ArrayList<String> list = parser.getLevel();
         for (int i = 0; i < list.size(); i++) {
             observableList.add(list.get(i));
