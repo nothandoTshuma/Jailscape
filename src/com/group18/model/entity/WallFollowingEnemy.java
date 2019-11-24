@@ -24,13 +24,14 @@ public class WallFollowingEnemy extends Enemy {
      */
     @Override
     public Direction getNextDirection(User user, Level level) {
+        // Collect all valid possible directions this enemy can move in
         List<Direction> validDirections =
                 Arrays.stream(Direction.values())
                         .filter(direction -> level.validMove(this, direction))
                         .filter(direction -> direction != IDLE)
                         .collect(Collectors.toList());
 
-        // If there were no valid moves, this enemy is stuck
+        // If there were no valid directions, this enemy is stuck
         if (validDirections.size() == 0) {
             return IDLE;
         }
