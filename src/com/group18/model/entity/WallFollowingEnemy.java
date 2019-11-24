@@ -41,14 +41,15 @@ public class WallFollowingEnemy extends Enemy {
         // would take this enemy away from a wall.
         eliminateInvalidDirections(validDirections, level);
 
-        // If valid directions still contain 3 possible valid directions
-        // the enemy must be at a 4 way single path crossroads in which they can choose any path.
-        if (validDirections.size() == 3) {
+        // If valid directions still contain 4 or 3 possible valid directions
+        // then choose a random direction different from their previous direction
+        if (validDirections.size() >= 3) {
+            validDirections.remove(reverseDirection(this.getDirection()));
             Random random = new Random();
-            return validDirections.get(random.nextInt(3));
+            return validDirections.get(random.nextInt(validDirections.size()-1));
         }
 
-        // However, if valid directions is below 3 then we can re-calculate a valid position
+        // However, if valid directions is now below 3 then we can re-calculate a valid position
         // from those left.
         return getValidDirection(validDirections);
     }
