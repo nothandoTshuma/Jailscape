@@ -25,9 +25,9 @@ public class UserSelectionController {
     @FXML Button deleteButton;
     @FXML Button exitButton;
 
-    ObservableList observableList = FXCollections.observableArrayList();
+    private ObservableList observableList = FXCollections.observableArrayList();
 
-    private String choosenUserName;
+    private String chosenUserName;
 
     public void initialize(){
         goButton.setOnAction(e -> {
@@ -62,7 +62,7 @@ public class UserSelectionController {
 
     private void handleGoButtonAction(){
        if (usersListView.getSelectionModel().getSelectedItem() != null) {
-           choosenUserName = usersListView.getSelectionModel().getSelectedItem();
+           chosenUserName = usersListView.getSelectionModel().getSelectedItem();
            try {
                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/resources/MainMenu.fxml"));
                BorderPane editRoot = fxmlLoader.load();
@@ -91,8 +91,8 @@ public class UserSelectionController {
 
     private void handleDeleteButtonAction(){
         if (usersListView.getSelectionModel().getSelectedItem() != null) {
-            choosenUserName = usersListView.getSelectionModel().getSelectedItem();
-            DeleteUserFromFile deleteUserFromFile = new DeleteUserFromFile(choosenUserName);
+            chosenUserName = usersListView.getSelectionModel().getSelectedItem();
+            DeleteUserFromFile deleteUserFromFile = new DeleteUserFromFile(chosenUserName);
             usersListView.getItems().clear();
             loadData();
         }
@@ -103,7 +103,4 @@ public class UserSelectionController {
         System.exit(0);
     }
 
-    public String getChoosenUserName(){
-        return choosenUserName;
-    }
 }
