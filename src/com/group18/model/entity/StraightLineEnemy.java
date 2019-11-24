@@ -13,7 +13,7 @@ import static com.group18.model.Direction.*;
 public class StraightLineEnemy extends Enemy {
 
     /**
-     * The orientation in which this enemies moves in
+     * The orientation in which this enemy moves in
      */
     private Orientation orientation;
 
