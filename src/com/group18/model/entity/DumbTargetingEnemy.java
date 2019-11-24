@@ -58,6 +58,7 @@ public class DumbTargetingEnemy extends Enemy {
             return calculateHorizontalDirection(xDistance, level);
         }
 
+
         // Here, we must be on a completely different X & Y axis to the User.
         // Therefore, we check which axis has the shortest distance to the User
         // Then return a suitable direction, moving along that axis.
@@ -71,22 +72,22 @@ public class DumbTargetingEnemy extends Enemy {
 
 
     /**
-     * Calculate the vertical direction that is needed based on an Y axis value
-     * @param distance The Y value distance
+     * Calculate the vertical direction that is needed based on an X axis value
+     * @param distance The X value distance
      * @param level The level in which this enemy is associated with
      * @return A suitable direction moving along the vertical plane
      */
     private Direction calculateVerticalDirection(int distance, Level level) {
         if (distance < 0) {
-            return level.validMove(this, UP) ? UP : IDLE;
+            return level.validMove(this, DOWN) ? DOWN : IDLE;
         }
 
-        return level.validMove(this, DOWN) ? DOWN : IDLE;
+        return level.validMove(this, UP) ? UP : IDLE;
     }
 
     /**
-     * Calculate the horizontal direction that is needed based on a X axis value
-     * @param distance The X value distance
+     * Calculate the horizontal direction that is needed based on a Y axis value
+     * @param distance The Y value distance
      * @param level The level in which this enemy is associated with
      * @return A suitable direction moving along the horizontal plane
      */
