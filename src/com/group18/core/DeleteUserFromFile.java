@@ -20,7 +20,8 @@ public class DeleteUserFromFile {
             String currentLine;
             while((currentLine = reader.readLine()) != null) {
                 String trimmedLine = currentLine.trim();
-                if(!(trimmedLine.equals(userName))) {
+                String[] userNameSplitList = trimmedLine.split(",");
+                if(!(userNameSplitList[0].equals(userName))) {
                     writer.write(currentLine + System.getProperty("line.separator"));
                 }
             }

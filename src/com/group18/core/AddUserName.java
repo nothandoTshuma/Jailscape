@@ -1,5 +1,6 @@
 package com.group18.core;
 
+import java.util.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 public class AddUserName {
     private String userName;
     private ArrayList<String> userNameList = new ArrayList<>();
+    private final String FIRST_LEVEL = ",1";
 
     public AddUserName(String userName) {
         getUserNames();
@@ -18,7 +20,8 @@ public class AddUserName {
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()){
-                userNameList.add(scanner.nextLine());
+                String[] userNameSplitList = scanner.nextLine().split(",");
+                userNameList.add(userNameSplitList[0]);
             }
             scanner.close();
         } catch (FileNotFoundException e) {
@@ -36,10 +39,10 @@ public class AddUserName {
         return exists;
     }
 
-    public void writeUserName(String userName) {
+    public void writeUserName() {
         try {
             BufferedWriter output = new BufferedWriter(new FileWriter("./src/resources/UserNames.txt", true));
-            output.append(userName);
+            output.append(userName + FIRST_LEVEL + "\n");
             output.close();
         } catch (IOException e) {
             e.printStackTrace();

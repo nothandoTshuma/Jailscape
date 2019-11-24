@@ -6,10 +6,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class LevelParser {
+public class UserNameParser {
     private ArrayList<String> level = new ArrayList<>();
 
-    public LevelParser(String filename) {
+    public UserNameParser(String filename) {
         scanFile(filename);
     }
 
@@ -17,7 +17,8 @@ public class LevelParser {
         try {
             Scanner scanner = new Scanner(new File(filename));
             while (scanner.hasNext()) {
-                level.add(scanner.next());
+                String[] userNameSplitList = scanner.nextLine().split(",");
+                level.add(userNameSplitList[0]);
             }
             scanner.close();
         } catch (FileNotFoundException e) {

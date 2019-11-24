@@ -2,9 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/group18/controller/LevelsMenuController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/group18/controller/MenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/CreateUserMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/CreateUserMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/group18/controller/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/MainMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/group18/controller/UserSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/UserSelectionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/core/AddUserName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/core/AddUserName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/core/DeleteUserFromFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/core/DeleteUserFromFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/core/LevelParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/core/UserNameParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/HighScoreMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/HighScoreMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/LevelsMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/LevelsMenu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resources/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/MainMenu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resources/UserNames.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/UserNames.txt" afterDir="false" />
     </list>
@@ -172,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574602942442</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Created MainMenu action handlers.">
+      <created>1574609329944</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1574609329944</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,6 +213,7 @@
     <MESSAGE value="Created LevelParser file." />
     <MESSAGE value="." />
     <MESSAGE value="Fixed file path names." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed file path names." />
+    <MESSAGE value="Created MainMenu action handlers." />
+    <option name="LAST_COMMIT_MESSAGE" value="Created MainMenu action handlers." />
   </component>
 </project>

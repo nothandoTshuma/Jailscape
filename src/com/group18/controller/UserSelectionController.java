@@ -2,7 +2,7 @@ package com.group18.controller;
 import com.group18.Main;
 
 import com.group18.core.DeleteUserFromFile;
-import com.group18.core.LevelParser;
+import com.group18.core.UserNameParser;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class UserSelectionController {
+public class UserSelectionController extends MenuController {
     @FXML ListView<String> usersListView;
     @FXML Button goButton;
     @FXML Button createButton;
@@ -26,7 +26,6 @@ public class UserSelectionController {
     @FXML Button exitButton;
 
     private ObservableList observableList = FXCollections.observableArrayList();
-
     private String chosenUserName;
 
     public void initialize(){
@@ -45,14 +44,12 @@ public class UserSelectionController {
         exitButton.setOnAction(e -> {
             handleExitButtonAction();
         });
-
         loadData();
     }
 
-
     private void loadData(){
         observableList.removeAll(observableList);
-        LevelParser parser = new LevelParser("./src/resources/UserNames.txt");
+        UserNameParser parser = new UserNameParser("./src/resources/UserNames.txt");
         ArrayList<String> list = parser.getLevel();
         for (int i = 0; i < list.size(); i++) {
             observableList.add(list.get(i));
@@ -63,30 +60,12 @@ public class UserSelectionController {
     private void handleGoButtonAction(){
        if (usersListView.getSelectionModel().getSelectedItem() != null) {
            chosenUserName = usersListView.getSelectionModel().getSelectedItem();
-           try {
-               FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/resources/MainMenu.fxml"));
-               BorderPane editRoot = fxmlLoader.load();
-               Scene editScene = new Scene(editRoot, 600, 400);
-               Stage editStage = Main.getPrimaryStage();
-               editStage.setScene(editScene);
-               editStage.setTitle("Main Menu");
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
+           loadFXMLScene("/resources/MainMenu.fxml", "Main Menu");
        }
     }
 
     private void handleCreateButtonAction(){
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/resources/CreateUserMenu.fxml"));
-            BorderPane editRoot = fxmlLoader.load();
-            Scene editScene = new Scene(editRoot, 600, 400);
-            Stage editStage = Main.getPrimaryStage();
-            editStage.setScene(editScene);
-            editStage.setTitle("Create User");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadFXMLScene("/resources/CreateUserMenu.fxml", "Create User");
     }
 
     private void handleDeleteButtonAction(){

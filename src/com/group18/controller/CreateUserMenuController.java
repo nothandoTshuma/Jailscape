@@ -1,19 +1,12 @@
 package com.group18.controller;
 
-import com.group18.Main;
 import com.group18.core.AddUserName;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class CreateUserMenuController {
+public class CreateUserMenuController extends MenuController{
     @FXML TextField userNameTextField;
     @FXML Button createButton;
     @FXML Button backButton;
@@ -35,8 +28,8 @@ public class CreateUserMenuController {
             userName = userNameTextField.getCharacters().toString();
             AddUserName addUserName = new AddUserName(userName);
             if (!(addUserName.isUserNameExists())) {
-                addUserName.writeUserName("\n" + userName);
-                loadUserSelectionMenu();
+                addUserName.writeUserName();
+                loadFXMLScene("/resources/UserSelectionMenu.fxml", "User Selection");
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Login");
@@ -48,20 +41,6 @@ public class CreateUserMenuController {
     }
 
     private void handleBackButtonAction(){
-        loadUserSelectionMenu();
+        loadFXMLScene("/resources/UserSelectionMenu.fxml", "User Selection");
     }
-
-    private void loadUserSelectionMenu() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/resources/UserSelectionMenu.fxml"));
-            BorderPane editRoot = fxmlLoader.load();
-            Scene editScene = new Scene(editRoot, 600, 400);
-            Stage editStage = Main.getPrimaryStage();
-            editStage.setScene(editScene);
-            editStage.setTitle("User Selection");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
