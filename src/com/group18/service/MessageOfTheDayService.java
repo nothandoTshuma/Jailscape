@@ -38,13 +38,13 @@ public class MessageOfTheDayService {
      */
     public static String getMessageOfTheDay() {
         try {
-            String puzzle = sendGETRequest(PUZZLE_URL, Optional.empty());
+            String puzzle = sendGETRequest(PUZZLE_URL);
             String solvedPuzzle = solvePuzzle(puzzle);
 
             String queryParams =
                     String.format("solution=%s", URLEncoder.encode(solvedPuzzle, "UTF-8"));
 
-            return sendGETRequest(MESSAGE_URL, Optional.of(queryParams));
+            return sendGETRequest(MESSAGE_URL, queryParams);
 
         } catch (IOException ex) {
             LOGGER.log(Level.WARNING,"Unable to retrieve the message of the day", ex);
@@ -83,18 +83,29 @@ public class MessageOfTheDayService {
     /**
      * This method is used to send all GET requests needed to get the MessageOfTheDay
      * @param endpoint The endpoint used for the request
-     * @param queryParams The optional query params to be used on the endpoint
      * @return The response returned from the request
      * @throws IOException A possible error that could occur during the request
      */
-    private static String sendGETRequest(String endpoint, Optional<String> queryParams) throws IOException {
-        URL url = queryParams.isPresent() ?
-                new URL(endpoint + "?" + queryParams.get()) : new URL(endpoint);
+    private static String sendGETRequest(String endpoint) throws IOException {
+        URL url = new URL(endpoint);
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
 
         return handleResponse(connection);
+    }
+
+    /**
+     * The is method used to send a GET request that includes query parameters
+     * @param endpoint The endpoint used for the request
+     * @param queryParams The query params added to the endpoint
+     * @return The response returned from the request
+     * @throws IOException A possible error that could occur during the request
+     */
+    private static String sendGETRequest(String endpoint, String queryParams) throws IOException {
+        endpoint = endpoint + "?" + queryParams;
+
+        return sendGETRequest(endpoint);
     }
 
     /**
