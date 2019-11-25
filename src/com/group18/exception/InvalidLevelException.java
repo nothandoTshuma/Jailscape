@@ -1,16 +1,16 @@
 package com.group18.exception;
 
 /**
- * An exception thrown when there is an invalid direction inputted
+ * An exception thrown when there is an invalid level inputted
  * @author danielturato nothandotshuma riyagupta
  */
-public class InvalidDirectionException extends Exception {
+public class InvalidLevelException extends Exception {
 
     /**
-     * Creates a new InvalidDirectionException
+     * Creates a new InvalidLevelException
      * @param message The message associated with the exception
      */
-    public InvalidDirectionException(String message) {
+    public InvalidLevelException(String message) {
         super(message);
     }
 
