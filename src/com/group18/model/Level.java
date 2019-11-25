@@ -88,7 +88,7 @@ public class Level   {
             }
 
         } else {
-            throw new InvalidMoveException();
+            throw new InvalidMoveException(String.format("Moving in a %s direction is not valid", direction));
         }
     }
 
@@ -187,9 +187,6 @@ public class Level   {
 
             if (cell instanceof Wall) {
                 if (cell instanceof Door) {
-                    //TODO:drt - Can they unlock the door
-                } else {
-                    return false;
                 }
             }
 
@@ -232,5 +229,12 @@ public class Level   {
         return newPosition;
     }
 
+    /**
+     * Updates the state in the game controller
+     * @param state The new state of the game
+     */
+    public void updateState(State state) {
+        //TODO update state in game controller
+    }
 
 }

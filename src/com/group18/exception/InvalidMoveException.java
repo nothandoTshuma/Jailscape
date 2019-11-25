@@ -1,16 +1,16 @@
 package com.group18.exception;
 
 /**
- * An exception thrown when there is an invalid direction inputted
+ * An exception thrown when an entity attempts to make an invalid move
  * @author danielturato nothandotshuma riyagupta
  */
-public class InvalidDirectionException extends Exception {
+public class InvalidMoveException extends Exception {
 
     /**
-     * Creates a new InvalidDirectionException
+     * Creates a new InvalidMoveException
      * @param message The message associated with the exception
      */
-    public InvalidDirectionException(String message) {
+    public InvalidMoveException(String message) {
         super(message);
     }
 
