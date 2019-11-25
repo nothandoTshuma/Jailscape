@@ -1,20 +1,14 @@
 package com.group18.controller;
-import com.group18.Main;
 
 import com.group18.core.DeleteUserFromFile;
-import com.group18.core.UserNameParser;
+import com.group18.core.FileReader;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -49,8 +43,8 @@ public class UserSelectionController extends MenuController {
 
     private void loadData(){
         observableList.removeAll(observableList);
-        UserNameParser parser = new UserNameParser("./src/resources/UserNames.txt");
-        ArrayList<String> list = parser.getLevel();
+        FileReader parser = new FileReader("./src/resources/UserNames.txt");
+        ArrayList<String> list = parser.getArray();
         for (int i = 0; i < list.size(); i++) {
             observableList.add(list.get(i));
         }

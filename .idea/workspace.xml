@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/group18/controller/LevelsMenuController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/group18/controller/MenuController.java" afterDir="false" />
+    <list default="true" id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="created a menu controller super class and added a change user button to the main menu.">
+      <change afterPath="$PROJECT_DIR$/src/resources/Top3HighScores.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/CreateUserMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/CreateUserMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/MainMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/group18/controller/UserSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/UserSelectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/core/AddUserName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/core/AddUserName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/core/DeleteUserFromFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/core/DeleteUserFromFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/core/LevelParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/core/UserNameParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/HighScoreMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/HighScoreMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/LevelsMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/LevelsMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/MainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/core/UserNameParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/core/FileReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resources/UserNames.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/UserNames.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -121,7 +112,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="7113ac6c-d44f-410e-8d2b-6d42b917a281" name="Default Changelist" comment="" />
+      <changelist id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="" />
       <created>1573834780769</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -132,6 +123,7 @@
       <workItem from="1574350040797" duration="11185000" />
       <workItem from="1574413515575" duration="5738000" />
       <workItem from="1574443959371" duration="686000" />
+      <workItem from="1574689108723" duration="1961000" />
     </task>
     <task id="LOCAL-00001" summary="Created LevelParser file.">
       <created>1573835787017</created>
@@ -189,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574609329944</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="created a menu controller super class and added a change user button to the main menu.">
+      <created>1574626062684</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1574626062684</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,6 +213,7 @@
     <MESSAGE value="." />
     <MESSAGE value="Fixed file path names." />
     <MESSAGE value="Created MainMenu action handlers." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created MainMenu action handlers." />
+    <MESSAGE value="created a menu controller super class and added a change user button to the main menu." />
+    <option name="LAST_COMMIT_MESSAGE" value="created a menu controller super class and added a change user button to the main menu." />
   </component>
 </project>
