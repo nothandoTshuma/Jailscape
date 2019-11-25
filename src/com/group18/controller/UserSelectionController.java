@@ -43,8 +43,7 @@ public class UserSelectionController extends MenuController {
 
     private void loadData(){
         observableList.removeAll(observableList);
-        FileReader parser = new FileReader("./src/resources/UserNames.txt");
-        ArrayList<String> list = parser.getArray();
+        ArrayList<String> list = getUserNames(FileReader.getFileLines("./src/resources/UserNames.txt"));
         for (int i = 0; i < list.size(); i++) {
             observableList.add(list.get(i));
         }
@@ -74,6 +73,15 @@ public class UserSelectionController extends MenuController {
     private void handleExitButtonAction(){
         Platform.exit();
         System.exit(0);
+    }
+
+    private ArrayList<String> getUserNames(ArrayList<String> list) {
+        ArrayList<String> userNameList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            String[] tempList = list.get(i).split(",");
+            userNameList.add(tempList[0]);
+        }
+        return userNameList;
     }
 
 }

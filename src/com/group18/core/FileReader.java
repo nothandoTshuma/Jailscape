@@ -5,26 +5,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileReader {
-    private ArrayList<String> arrayList = new ArrayList<>();
 
-    public FileReader(String filename) {
-        scanFile(filename);
-    }
-
-    private void scanFile(String filename) {
+    public static ArrayList<String> getFileLines(String filename) {
+        ArrayList<String> arrayList = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(new File(filename));
             while (scanner.hasNext()) {
-                String[] userNameSplitList = scanner.nextLine().split(",");
-                arrayList.add(userNameSplitList[0]);
+                arrayList.add(scanner.nextLine());
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("Error: Can't find file: " + filename);
         }
-    }
-
-    public ArrayList<String> getArray() {
         return arrayList;
     }
+
 }

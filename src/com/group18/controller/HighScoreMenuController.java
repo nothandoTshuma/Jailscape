@@ -5,23 +5,22 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class HighScoreMenuController extends MenuController {
     @FXML Button backButton;
-    @FXML Label Level1Label;
-    @FXML Label Level2Label;
-    @FXML Label Level3Label;
-    @FXML Label Level4Label;
-    @FXML Label Level5Label;
+    @FXML Label level1Label;
+    @FXML Label level2Label;
+    @FXML Label level3Label;
+    @FXML Label level4Label;
+    @FXML Label level5Label;
 
-    private final String TOP_3_HIGHSCORES_FILE = "/resources/Top3HighScores.txt";
+    private final String TOP_3_HIGHSCORES_FILE = "./src/resources/Top3HighScores.txt";
     private ArrayList<String> highScoresList = new ArrayList<>();
 
     public void initialize() {
-        FileReader reader = new FileReader(TOP_3_HIGHSCORES_FILE);
-        highScoresList = reader.getArray();
-
+        displayHighScores();
 
         backButton.setOnAction(e -> {
             handleBackButtonAction();
@@ -31,5 +30,19 @@ public class HighScoreMenuController extends MenuController {
 
     private void handleBackButtonAction() {
         loadFXMLScene("/resources/MainMenu.fxml", "Main Menu");
+    }
+
+    private void displayHighScores() {
+        highScoresList = FileReader.getFileLines(TOP_3_HIGHSCORES_FILE);
+        String[] levelList = highScoresList.get(0).split(",");
+        level1Label.setText("Level 1: \n" + levelList[0] + " " + levelList[1] + "\n" + levelList[2] + " " + levelList[3] + "\n" + levelList[4] + " " + levelList[5]);
+        levelList = highScoresList.get(1).split(",");
+        level2Label.setText("Level 2: \n" + levelList[0] + " " + levelList[1] + "\n" + levelList[2] + " " + levelList[3] + "\n" + levelList[4] + " " + levelList[5]);
+        levelList = highScoresList.get(2).split(",");
+        level3Label.setText("Level 3: \n" + levelList[0] + " " + levelList[1] + "\n" + levelList[2] + " " + levelList[3] + "\n" + levelList[4] + " " + levelList[5]);
+        levelList = highScoresList.get(3).split(",");
+        level4Label.setText("Level 4: \n" + levelList[0] + " " + levelList[1] + "\n" + levelList[2] + " " + levelList[3] + "\n" + levelList[4] + " " + levelList[5]);
+        levelList = highScoresList.get(4).split(",");
+        level5Label.setText("Level 5: \n" + levelList[0] + " " + levelList[1] + "\n" + levelList[2] + " " + levelList[3] + "\n" + levelList[4] + " " + levelList[5]);
     }
 }
