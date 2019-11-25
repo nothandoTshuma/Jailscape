@@ -115,7 +115,7 @@ public class Level   {
         }
 
         if (!(cellY-1 < 0)) {
-            adjacentCells.add(getCell(cellY-1, cellX-1));
+            adjacentCells.add(getCell(cellY-1, cellX));
         }
 
         return adjacentCells;
