@@ -1,40 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="54bb7065-adb6-4ee7-a1ca-dbf6f99267c6" name="Default Changelist" comment="Worked on Door interface class.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/META-INF/A2-230.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/controller/GameController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/exception/InvalidDirectionException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/exception/InvalidMoveException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/Actionable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/Colour.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/Direction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/ElementType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/Level$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/Level.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/cell/Cell.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/cell/Door.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/cell/Element.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/cell/Ground.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/cell/TokenDoor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/cell/Wall.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/entity/DumbTargetingEnemy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/entity/Enemy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/entity/Entity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/entity/SmartTargetingEnemy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/entity/StraightLineEnemy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/entity/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/entity/WallFollowingEnemy$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/entity/WallFollowingEnemy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/item/Collectable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/item/ElementItem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/model/item/Key.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/com/group18/service/MessageOfTheDayService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/resources/sample.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/A2-230/sample.fxml" beforeDir="false" />
-    </list>
+    <list default="true" id="54bb7065-adb6-4ee7-a1ca-dbf6f99267c6" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,11 +181,18 @@
       <option name="project" value="LOCAL" />
       <updated>1574692397349</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Merged">
+      <created>1574704857677</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1574704857677</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="242000" />
+    <option name="totallyTimeSpent" value="360000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
@@ -318,7 +292,8 @@
     <MESSAGE value="Enums, Element and TokenDoor classes" />
     <MESSAGE value="Worked on Enemy class." />
     <MESSAGE value="Worked on Door interface class." />
-    <option name="LAST_COMMIT_MESSAGE" value="Worked on Door interface class." />
+    <MESSAGE value="Merged" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merged" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/group18/model/Level.java">
