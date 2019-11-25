@@ -1,8 +1,10 @@
 package com.group18.model.entity;
 
+import com.group18.exception.InvalidLevelException;
 import com.group18.model.item.Collectable;
 import com.group18.model.Colour;
 import com.group18.model.item.ElementItem;
+import com.group18.model.item.Key;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,21 +82,34 @@ public class User extends Entity {
     }
 
     /**
-     *
+     * Checks if this user has a key of a specific colour
      * @param colour The colour of key
      * @return Boolean value suggesting if this user has a key of a specific colour
      */
     public boolean hasKey(Colour colour) {
-        //TODO add the rest of the code here..
-        return false;
+        boolean hasKey = false;
+
+        for (Collectable item : this.inventory) {
+            if (item instanceof Key) {
+                hasKey = ((Key) item).getColour() == colour;
+            }
+        }
+
+        return hasKey;
     }
 
     /**
-     *
+     * Remove a key of a specific colour from the user's inventory
      * @param colour The colour of the key that needs to be consumed
      */
     public void consumeKey(Colour colour) {
-        //TODO add the rest of the code here..
+        for (Collectable item : this.inventory) {
+            if (item instanceof Key) {
+                if (((Key) item).getColour() == colour) {
+                    this.inventory.remove(item);
+                }
+            }
+        }
     }
 
     /**
@@ -126,8 +141,11 @@ public class User extends Entity {
      * @param time The new time from the level
      * @param level The level the generated time came from
      */
-    public void addQuickestTime(Long time, int level) {
-        //TODO:dt What if the level is not in the map? Throw exception maybe?
+    public void addQuickestTime(Long time, int level) throws InvalidLevelException {
+        if (level > this.highestLevel || level > 0) {
+            throw new InvalidLevelException();
+        }
+
         Long[] levelArray = getQuickestTimesFor(level);
         if (levelArray[2] > time){
             levelArray[2] = time;
@@ -151,8 +169,11 @@ public class User extends Entity {
      * @param level The level the user wants to get the quickest times for
      * @return quickestTimes
      */
-    public Long[] getQuickestTimesFor(int level) {
-        //TODO:dt What if the level is not in the map? Throw exception maybe?
+    public Long[] getQuickestTimesFor(int level) throws InvalidLevelException {
+        if (level > this.highestLevel || level > 0) {
+            throw new InvalidLevelException();
+        }
+
         return this.quickestTimes.get(level);
     }
 
