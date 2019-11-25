@@ -8,7 +8,7 @@ import com.group18.model.entity.User;
  * represents the door which requires tokens to pass through
  * @author RIYA GUPTA
  */
-public class TokenDoor extends Wall implements Actionable {
+public class TokenDoor extends Wall implements Door, Actionable {
     /**
      * represents number of tokens
      */
@@ -35,6 +35,12 @@ public class TokenDoor extends Wall implements Actionable {
 
     @Override
     public void toggleAction(Entity entity) {
+        if (entity instanceof User) {
+            User user = (User) entity;
 
+            if (user.getTokens() >= this.tokens) {
+                //TODO - trigger animations & sounds
+            }
+        }
     }
 }
