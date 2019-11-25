@@ -4,8 +4,6 @@ import com.group18.core.FileReader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
-import java.io.File;
 import java.util.ArrayList;
 
 public class HighScoreMenuController extends MenuController {

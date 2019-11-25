@@ -4,9 +4,6 @@
     <list default="true" id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/UserSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/UserSelectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/core/FileReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/core/FileReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/HighScoreMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/HighScoreMenu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resources/UserNames.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/UserNames.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -123,7 +120,7 @@
       <workItem from="1574350040797" duration="11185000" />
       <workItem from="1574413515575" duration="5738000" />
       <workItem from="1574443959371" duration="686000" />
-      <workItem from="1574689108723" duration="5663000" />
+      <workItem from="1574689108723" duration="7168000" />
     </task>
     <task id="LOCAL-00001" summary="Created LevelParser file.">
       <created>1573835787017</created>
@@ -195,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574692063528</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Display top 3 high scores.">
+      <created>1574695868085</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1574695868085</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,6 +226,7 @@
     <MESSAGE value="Created MainMenu action handlers." />
     <MESSAGE value="created a menu controller super class and added a change user button to the main menu." />
     <MESSAGE value="Renamed LevelParser to fileReader. Added top3Highscore.txt to store top 3 highscores." />
-    <option name="LAST_COMMIT_MESSAGE" value="Renamed LevelParser to fileReader. Added top3Highscore.txt to store top 3 highscores." />
+    <MESSAGE value="Display top 3 high scores." />
+    <option name="LAST_COMMIT_MESSAGE" value="Display top 3 high scores." />
   </component>
 </project>
