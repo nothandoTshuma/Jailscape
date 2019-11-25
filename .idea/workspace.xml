@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7113ac6c-d44f-410e-8d2b-6d42b917a281" name="Default Changelist" comment="Created LevelParser file.">
-      <change afterPath="$PROJECT_DIR$/src/com/group18/core/LevelParser.java" afterDir="false" />
+    <list default="true" id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/UserNames.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/UserNames.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,6 +64,14 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/com/group18/core" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\fraser\IdeaProjects\Jailscape\src\resources" />
+      <recent name="C:\Users\fraser\IdeaProjects\Jailscape\src\com\group18\core" />
+      <recent name="C:\Users\fraser\IdeaProjects\Jailscape\src" />
+      <recent name="C:\Users\fraser\IdeaProjects\Jailscape\src\com\group18\bin" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -74,18 +84,43 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.group18.Main" />
+      <module name="A2-230" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.group18.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="7113ac6c-d44f-410e-8d2b-6d42b917a281" name="Default Changelist" comment="" />
+      <changelist id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="" />
       <created>1573834780769</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1573834780769</updated>
       <workItem from="1573834783598" duration="2627000" />
-      <workItem from="1573837681030" duration="307000" />
+      <workItem from="1573837681030" duration="2055000" />
+      <workItem from="1573950912145" duration="142000" />
+      <workItem from="1574350040797" duration="11185000" />
+      <workItem from="1574413515575" duration="5738000" />
+      <workItem from="1574443959371" duration="686000" />
+      <workItem from="1574689108723" duration="7168000" />
     </task>
     <task id="LOCAL-00001" summary="Created LevelParser file.">
       <created>1573835787017</created>
@@ -108,7 +143,63 @@
       <option name="project" value="LOCAL" />
       <updated>1573837856478</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Created LevelParser file.">
+      <created>1573838032427</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1573838032427</updated>
+    </task>
+    <task id="LOCAL-00005" summary=".">
+      <created>1573838226094</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1573838226094</updated>
+    </task>
+    <task id="LOCAL-00006" summary=".">
+      <created>1573843919351</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1573843919351</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fixed file path names.">
+      <created>1574602942442</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1574602942442</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Created MainMenu action handlers.">
+      <created>1574609329944</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1574609329944</updated>
+    </task>
+    <task id="LOCAL-00009" summary="created a menu controller super class and added a change user button to the main menu.">
+      <created>1574626062684</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1574626062684</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Renamed LevelParser to fileReader. Added top3Highscore.txt to store top 3 highscores.">
+      <created>1574692063528</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1574692063528</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Display top 3 high scores.">
+      <created>1574695868085</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1574695868085</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,6 +221,12 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Formated LevelParser class." />
     <MESSAGE value="Created LevelParser file." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created LevelParser file." />
+    <MESSAGE value="." />
+    <MESSAGE value="Fixed file path names." />
+    <MESSAGE value="Created MainMenu action handlers." />
+    <MESSAGE value="created a menu controller super class and added a change user button to the main menu." />
+    <MESSAGE value="Renamed LevelParser to fileReader. Added top3Highscore.txt to store top 3 highscores." />
+    <MESSAGE value="Display top 3 high scores." />
+    <option name="LAST_COMMIT_MESSAGE" value="Display top 3 high scores." />
   </component>
 </project>
