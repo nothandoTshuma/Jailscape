@@ -46,7 +46,7 @@ public class WallFollowingEnemy extends Enemy {
         if (validDirections.size() >= 3) {
             validDirections.remove(reverseDirection(this.getDirection()));
             Random random = new Random();
-            return validDirections.get(random.nextInt(validDirections.size()-1));
+            return validDirections.get(random.nextInt(validDirections.size()));
         }
 
         // However, if valid directions is now below 3 then we can re-calculate a valid position
