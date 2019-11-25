@@ -9,7 +9,7 @@ import com.group18.model.entity.User;
  * Represents the coloured door which requires same coloured key same to be opened.
  * @author RIYA GUPTA
  * */
-public class ColourDoor extends Wall implements Door, Actionable {
+public class ColourDoor extends Wall implements Actionable {
      /**
      * represents the colour of the door
      */
@@ -27,19 +27,12 @@ public class ColourDoor extends Wall implements Door, Actionable {
      * @param user checks if it can open the door
      * @return boolean value suggesting if the door can be opened.
      */
-    public boolean canOpen(User user) {
+    public boolean canOpen(User user)
+    {
+
         return user.hasKey(colour);
     }
 
     public void toggleAction(Entity entity) {
-        if (entity instanceof User) {
-            User user = (User) entity;
-
-            if (canOpen(user)) {
-                user.consumeKey(colour);
-                //TODO add animations links
-            }
-        }
     }
-
 }
