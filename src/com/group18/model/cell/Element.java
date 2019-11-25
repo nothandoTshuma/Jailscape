@@ -5,6 +5,8 @@ import com.group18.model.ElementType;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
+import static com.group18.model.State.*;
+
 /**
  * Represents special cell which requires special elements for user to move.
  * @author RIYA GUPTA
@@ -28,7 +30,7 @@ public class Element extends Ground implements Actionable {
             User user = (User) entity;
 
             if (!(user.hasElementItem(this.elementType.getElementItem()))) {
-                //TODO - needs implementation
+                this.getLevel().updateState(LEVEL_LOST);
             }
         }
     }
