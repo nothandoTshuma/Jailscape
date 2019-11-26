@@ -36,7 +36,7 @@ public class Wall extends Cell {
      */
     @Override
     public void placePlayer(User user) throws InvalidMoveException {
-        throw new InvalidMoveException();
+        throw new InvalidMoveException("You can not place a user on a Wall cell");
     }
 
     /**
@@ -46,7 +46,7 @@ public class Wall extends Cell {
      */
     @Override
     public void placeEnemy(Enemy enemy) throws InvalidMoveException {
-        throw new InvalidMoveException();
+        throw new InvalidMoveException("You can not place an enemy on a Wall cell");
     }
 
     /**

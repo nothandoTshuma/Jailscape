@@ -6,6 +6,7 @@ import com.group18.model.Colour;
 import com.group18.model.item.ElementItem;
 import com.group18.model.item.Key;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -143,7 +144,7 @@ public class User extends Entity {
      */
     public void addQuickestTime(Long time, int level) throws InvalidLevelException {
         if (level > this.highestLevel || level > 0) {
-            throw new InvalidLevelException();
+            throw new InvalidLevelException("You are trying to input a time for a level this user has not yet reached.");
         }
 
         Long[] levelArray = getQuickestTimesFor(level);
@@ -171,7 +172,7 @@ public class User extends Entity {
      */
     public Long[] getQuickestTimesFor(int level) throws InvalidLevelException {
         if (level > this.highestLevel || level > 0) {
-            throw new InvalidLevelException();
+            throw new InvalidLevelException("The user has not reached this level before");
         }
 
         return this.quickestTimes.get(level);

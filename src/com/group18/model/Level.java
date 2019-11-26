@@ -1,9 +1,8 @@
 package com.group18.model;
 
+import com.group18.exception.InvalidDirectionException;
 import com.group18.exception.InvalidMoveException;
-import com.group18.model.cell.Cell;
-import com.group18.model.cell.Door;
-import com.group18.model.cell.Wall;
+import com.group18.model.cell.*;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
@@ -187,14 +186,18 @@ public class Level   {
 
             if (cell instanceof Wall) {
                 if (cell instanceof Door) {
+                    return ((Door) cell).canOpen(((User) entity));
                 }
+
+                return false;
             }
 
             return true;
         }
 
-        //TODO:drt - enemies can not walk on other cells too
-        return !(cell instanceof Wall);
+        // An enemy can not move on to a Wall, Goal, Element or Door cell.
+        return !(cell instanceof Wall || cell instanceof Goal ||
+                cell instanceof Element || cell instanceof Door);
     }
 
     /**
@@ -222,7 +225,6 @@ public class Level   {
                 newPosition.translate(1,0);
                 break;
             default:
-                //TODO:drt - Probably want to throw invalid direction error here.
                 break;
         }
 
