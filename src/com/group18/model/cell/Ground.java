@@ -71,7 +71,7 @@ public class Ground extends Cell implements Actionable {
     @Override
     public void placePlayer(User user) throws InvalidMoveException {
         if (hasPlayer()) {
-            throw new InvalidMoveException();
+            throw new InvalidMoveException("You can not have two players on the same cell");
         }
 
         this.currentEntities.add(user);
