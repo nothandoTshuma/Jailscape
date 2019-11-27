@@ -26,12 +26,6 @@ public class Graph {
      */
     private Map<Point, Set<Point>> connections;
 
-    //TODO:drt - Delete this constructor
-    public Graph(Set<Node> nodes, Map<Point, Set<Point>> connections) {
-        this.nodes = nodes;
-        this.connections = connections;
-    }
-
     /**
      * Create a new graph based on a Level
      * @param level The level this graph will generate from
