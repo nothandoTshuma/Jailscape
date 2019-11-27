@@ -13,7 +13,7 @@ import java.util.List;
  * The UserRepository holding all player level completion data.
  * Here we can save new users, retrieve users and delete users
  */
-public class UserRepository implements Serializable {
+public class UserRepository {
 
     private static final String USER_DIRECTORY = "";
 

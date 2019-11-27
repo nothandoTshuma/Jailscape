@@ -1,6 +1,6 @@
 package com.group18.model.cell;
 
-import com.group18.algorithm.Node;
+import com.group18.model.Node;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
