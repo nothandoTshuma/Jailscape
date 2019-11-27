@@ -1,4 +1,4 @@
-package com.group18.algorithm;
+package com.group18.model;
 
 import java.awt.*;
 
