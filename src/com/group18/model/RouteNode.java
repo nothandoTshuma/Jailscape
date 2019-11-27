@@ -1,4 +1,4 @@
-package com.group18.algorithm;
+package com.group18.model;
 
 /**
  * This models a Node in a graph, that has been visited in some capacity.

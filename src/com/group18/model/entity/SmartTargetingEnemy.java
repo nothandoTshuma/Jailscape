@@ -1,8 +1,8 @@
 package com.group18.model.entity;
 
-import com.group18.algorithm.Graph;
-import com.group18.algorithm.Node;
-import com.group18.algorithm.RouteNode;
+import com.group18.model.Graph;
+import com.group18.model.Node;
+import com.group18.model.RouteNode;
 import com.group18.exception.ShortestPathNotFoundException;
 import com.group18.model.Direction;
 import com.group18.model.Level;

@@ -1,6 +1,5 @@
-package com.group18.algorithm;
+package com.group18.model;
 
-import com.group18.model.Level;
 import com.group18.model.cell.Cell;
 
 import java.awt.*;
