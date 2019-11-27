@@ -14,7 +14,7 @@ public enum Key implements Collectable {
     GREEN_KEY(GREEN),
     BLUE_KEY(BLUE),
     YELLOW_KEY(YELLOW),
-    BLACK_KEY(BLACK);
+    TOKEN_KEY(BLACK);
 
     /**
      * Holds the colour of key

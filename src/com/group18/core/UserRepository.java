@@ -4,7 +4,7 @@ import com.group18.model.entity.User;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +12,21 @@ import java.util.List;
 /**
  * The UserRepository holding all player level completion data.
  * Here we can save new users, retrieve users and delete users
+ *
+ * @author danielturato
  */
 public class UserRepository {
 
+    /**
+     * The directory in which user data will be stored
+     */
     private static final String USER_DIRECTORY = "";
 
-    public static List<User> loadUsers() {
+    /**
+     * Load all possible user profiles that have been saved
+     * @return A list of user profiles
+     */
+    public static List<User> loadAllUsers() {
         File directory = new File(USER_DIRECTORY);
         File[] directoryFiles = directory.listFiles();
         List<User> users = new ArrayList<>();
@@ -34,6 +43,27 @@ public class UserRepository {
         }
 
         return users;
+    }
+
+    /**
+     * Serialize a User object
+     * @param user The user to be serialized.
+     */
+    public static void saveUser(User user) {
+        String fileName = USER_DIRECTORY + "/" + user.getUsername() + ".ser";
+
+        try {
+            FileOutputStream file = new FileOutputStream(fileName);
+            ObjectOutputStream outputStream = new ObjectOutputStream(file);
+
+            // Method for serialization of object
+            outputStream.writeObject(user);
+
+            outputStream.close();
+            file.close();
+        } catch (IOException ex) {
+            // TODO:drt - File already exists
+        }
     }
 
     /**
@@ -62,11 +92,16 @@ public class UserRepository {
         return user;
     }
 
+    /**
+     * Deletes a user, deleting the serialised file
+     * @param fileName The filename holding the user data
+     */
     public static void deleteUser(String fileName) {
-//        Path path
-//        try {
-//            Files.deleteIfExists(USER_DIRECTORY + "/" + fileName);
-//        }
+        try {
+            Files.deleteIfExists(Paths.get(USER_DIRECTORY + "/" + fileName));
+        } catch (IOException ex) {
+            // TODO:drt - handle error
+        }
     }
 
 }

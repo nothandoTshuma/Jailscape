@@ -8,6 +8,7 @@ import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * Used to represent an individual cell on a board of cells. Any cell type will inherit from this class.
  * @author danielturato
  */
-public abstract class Cell implements Node {
+public abstract class Cell implements Node, Serializable {
 
     /**
      * Each cell is assigned a Level and can only have 1 level at one time.
@@ -42,12 +43,10 @@ public abstract class Cell implements Node {
 
     /**
      * Used to set basic fields for all Cell's
-     * @param level The level the cell is associated with
      * @param coordinates It's (x,y) position in relation to all cells on involved with the Level
      */
-    Cell(Level level, Point coordinates) {
+    Cell(Point coordinates) {
         this();
-        this.level = level;
         this.coordinates = coordinates;
     }
 
