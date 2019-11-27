@@ -1,77 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="Removed not used imports">
-      <change afterPath="$PROJECT_DIR$/src/com/group18/core/CreateLevelLayout.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/Level1.txt" afterDir="false" />
+    <list default="true" id="86158b64-58ee-4219-877e-ad04c7b6b94d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/Main.java" beforeDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <excluded-from-favorite>
-      <branch-storage>
-        <map>
-          <entry type="REMOTE">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="origin/master" />
-              </list>
-            </value>
-          </entry>
-        </map>
-      </branch-storage>
-    </excluded-from-favorite>
-    <favorite-branches>
-      <branch-storage>
-        <map>
-          <entry type="REMOTE">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="origin/frontend" />
-              </list>
-            </value>
-          </entry>
-        </map>
-      </branch-storage>
-    </favorite-branches>
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
-    </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
-  </component>
-  <component name="ProjectId" id="1TeyJ9DymDLTTfmt0FTPSd5FuCH" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
-  </component>
-  <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PannableTest (1)" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\fraser\IdeaProjects\Jailscape\src\resources" />
-      <recent name="C:\Users\fraser\IdeaProjects\Jailscape\src\com\group18\core" />
-      <recent name="C:\Users\fraser\IdeaProjects\Jailscape\src" />
-      <recent name="C:\Users\fraser\IdeaProjects\Jailscape\src\com\group18\bin" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -85,173 +25,10 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.GameController">
-    <configuration name="GameController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.group18.controller.GameController" />
-      <module name="A2-230" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.group18.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.group18.Main" />
-      <module name="A2-230" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.group18.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.GameController" />
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="" />
-      <created>1573834780769</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1573834780769</updated>
-      <workItem from="1573834783598" duration="2627000" />
-      <workItem from="1573837681030" duration="2055000" />
-      <workItem from="1573950912145" duration="142000" />
-      <workItem from="1574350040797" duration="11185000" />
-      <workItem from="1574413515575" duration="5738000" />
-      <workItem from="1574443959371" duration="686000" />
-      <workItem from="1574689108723" duration="13776000" />
-      <workItem from="1574791999670" duration="295000" />
-      <workItem from="1574792330560" duration="1618000" />
-    </task>
-    <task id="LOCAL-00001" summary="Created LevelParser file.">
-      <created>1573835787017</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1573835787017</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Formated LevelParser class.">
-      <created>1573837012524</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1573837012524</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Created LevelParser file.">
-      <created>1573837856478</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1573837856478</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Created LevelParser file.">
-      <created>1573838032427</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1573838032427</updated>
-    </task>
-    <task id="LOCAL-00005" summary=".">
-      <created>1573838226094</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1573838226094</updated>
-    </task>
-    <task id="LOCAL-00006" summary=".">
-      <created>1573843919351</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1573843919351</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Fixed file path names.">
-      <created>1574602942442</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1574602942442</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Created MainMenu action handlers.">
-      <created>1574609329944</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1574609329944</updated>
-    </task>
-    <task id="LOCAL-00009" summary="created a menu controller super class and added a change user button to the main menu.">
-      <created>1574626062684</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1574626062684</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Renamed LevelParser to fileReader. Added top3Highscore.txt to store top 3 highscores.">
-      <created>1574692063528</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1574692063528</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Display top 3 high scores.">
-      <created>1574695868085</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1574695868085</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Removed not used imports">
-      <created>1574699091075</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1574699091075</updated>
-    </task>
-    <option name="localTasksCounter" value="13" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Formated LevelParser class." />
-    <MESSAGE value="Created LevelParser file." />
-    <MESSAGE value="." />
-    <MESSAGE value="Fixed file path names." />
-    <MESSAGE value="Created MainMenu action handlers." />
-    <MESSAGE value="created a menu controller super class and added a change user button to the main menu." />
-    <MESSAGE value="Renamed LevelParser to fileReader. Added top3Highscore.txt to store top 3 highscores." />
-    <MESSAGE value="Display top 3 high scores." />
-    <MESSAGE value="Removed not used imports" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed not used imports" />
   </component>
 </project>
