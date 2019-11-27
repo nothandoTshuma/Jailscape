@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="86158b64-58ee-4219-877e-ad04c7b6b94d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/group18/core/LevelLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/group18/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,11 +72,19 @@
       <option name="project" value="LOCAL" />
       <updated>1574855887114</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Started LevelLoader">
+      <created>1574858533063</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1574858533063</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Removed main" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed main" />
+    <MESSAGE value="Started LevelLoader" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started LevelLoader" />
   </component>
 </project>
