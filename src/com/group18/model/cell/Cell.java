@@ -1,5 +1,6 @@
 package com.group18.model.cell;
 
+import com.group18.algorithm.Node;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
@@ -14,7 +15,7 @@ import java.util.List;
  * Used to represent an individual cell on a board of cells. Any cell type will inherit from this class.
  * @author danielturato
  */
-public abstract class Cell {
+public abstract class Cell implements Node {
 
     /**
      * Each cell is assigned a Level and can only have 1 level at one time.
@@ -142,8 +143,6 @@ public abstract class Cell {
      * @return Boolean value representing if a player and enemy is on this cell.
      */
     public abstract boolean hasPlayerAndEnemy();
-
-
 
 
 }
