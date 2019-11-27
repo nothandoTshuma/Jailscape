@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="">
+    <list default="true" id="a5a5ca3c-42bd-47e3-add8-880e7c56b145" name="Default Changelist" comment="Removed not used imports">
+      <change afterPath="$PROJECT_DIR$/src/com/group18/core/CreateLevelLayout.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/Level1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/UserNames.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/UserNames.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/GameController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +63,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/com/group18/core" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PannableTest (1)" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -84,7 +85,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GameController">
+    <configuration name="GameController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.group18.controller.GameController" />
+      <module name="A2-230" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.group18.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.group18.Main" />
       <module name="A2-230" />
@@ -100,6 +114,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GameController" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -120,7 +135,9 @@
       <workItem from="1574350040797" duration="11185000" />
       <workItem from="1574413515575" duration="5738000" />
       <workItem from="1574443959371" duration="686000" />
-      <workItem from="1574689108723" duration="7168000" />
+      <workItem from="1574689108723" duration="13776000" />
+      <workItem from="1574791999670" duration="295000" />
+      <workItem from="1574792330560" duration="1618000" />
     </task>
     <task id="LOCAL-00001" summary="Created LevelParser file.">
       <created>1573835787017</created>
@@ -199,7 +216,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574695868085</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Removed not used imports">
+      <created>1574699091075</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1574699091075</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,6 +251,7 @@
     <MESSAGE value="created a menu controller super class and added a change user button to the main menu." />
     <MESSAGE value="Renamed LevelParser to fileReader. Added top3Highscore.txt to store top 3 highscores." />
     <MESSAGE value="Display top 3 high scores." />
-    <option name="LAST_COMMIT_MESSAGE" value="Display top 3 high scores." />
+    <MESSAGE value="Removed not used imports" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed not used imports" />
   </component>
 </project>
