@@ -1,5 +1,6 @@
 package com.group18.model;
 
+import com.group18.algorithm.Graph;
 import com.group18.exception.InvalidDirectionException;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.cell.*;
@@ -17,7 +18,7 @@ import java.util.List;
  * Will act as a link between the backend & frontend.
  * @author danielturato
  */
-public class Level   {
+public class Level {
 
     /**
      * The board for this level, holding Level.rows x Level.columns of cells.
@@ -35,6 +36,11 @@ public class Level   {
     private final int boardHeight;
 
     /**
+     * The graph representation for this level.
+     */
+    private Graph graph;
+
+    /**
      * Creates a new level
      * @param board The board for this level.
      */
@@ -42,6 +48,23 @@ public class Level   {
         this.board = board;
         this.boardHeight = board.length;
         this.boardWidth = board[0].length;
+        this.graph = new Graph(this);
+    }
+
+    public Graph getGraph() {
+        return graph;
+    }
+
+    public void resetGraph() {
+        this.graph = new Graph(this);
+    }
+
+    public int getBoardWidth() {
+        return boardWidth;
+    }
+
+    public int getBoardHeight() {
+        return boardHeight;
     }
 
     /**
