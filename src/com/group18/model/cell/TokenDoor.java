@@ -4,6 +4,8 @@ import com.group18.model.Actionable;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
+import java.awt.*;
+
 /**
  * represents the door which requires tokens to pass through
  * @author RIYA GUPTA
@@ -17,8 +19,10 @@ public class TokenDoor extends Wall implements Door, Actionable {
     /**
      * Creates a new TokenDoor
      * @param tokens The number of tokens needed to open this door.
+     * @param point The (x,y) coordinates this TokenDoor is on
      */
-    public TokenDoor(int tokens) {
+    public TokenDoor(int tokens, Point point) {
+        super(point);
         this.tokens = tokens;
     }
 

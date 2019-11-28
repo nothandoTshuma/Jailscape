@@ -47,11 +47,10 @@ public class Ground extends Cell implements Actionable {
 
     /**
      * Creates a new Ground cell
-     * @param level The level this cell is associated with
      * @param coordinates It's coordinates in relation to all cells with this Level
      */
-    public Ground(Level level, Point coordinates) {
-        super(level, coordinates);
+    public Ground(Point coordinates) {
+        super(coordinates);
     }
 
     /**
