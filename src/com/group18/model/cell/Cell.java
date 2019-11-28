@@ -6,8 +6,10 @@ import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
+import javafx.scene.image.Image;
 
-import java.awt.Point;
+import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
  * Used to represent an individual cell on a board of cells. Any cell type will inherit from this class.
  * @author danielturato
  */
-public abstract class Cell implements Node {
+public abstract class Cell implements Node, Serializable {
 
     /**
      * Each cell is assigned a Level and can only have 1 level at one time.
@@ -32,6 +34,11 @@ public abstract class Cell implements Node {
      */
     List<Entity> currentEntities;
 
+    /**
+     * This cell's image representation in the game
+     */
+    private javafx.scene.image.Image spriteImage;
+
 
     /**
      * Used to setup basic fields that each Cell needs.
@@ -42,12 +49,10 @@ public abstract class Cell implements Node {
 
     /**
      * Used to set basic fields for all Cell's
-     * @param level The level the cell is associated with
      * @param coordinates It's (x,y) position in relation to all cells on involved with the Level
      */
-    Cell(Level level, Point coordinates) {
+    Cell(Point coordinates) {
         this();
-        this.level = level;
         this.coordinates = coordinates;
     }
 
@@ -73,6 +78,14 @@ public abstract class Cell implements Node {
      */
     public Point getPosition() {
         return coordinates;
+    }
+
+    /**
+     * Set's this cell's position
+     * @param coordinates The new coordinates
+     */
+    public void setCoordinates(Point coordinates) {
+        this.coordinates = coordinates;
     }
 
     /**
@@ -144,5 +157,19 @@ public abstract class Cell implements Node {
      */
     public abstract boolean hasPlayerAndEnemy();
 
+    /**
+     * Get this cell's sprite image
+     * @return The spite image
+     */
+    public javafx.scene.image.Image getSpriteImage() {
+        return spriteImage;
+    }
 
+    /**
+     * Set this cell's sprite image
+     * @param spriteImage The new sprite image
+     */
+    public void setSpriteImage(Image spriteImage) {
+        this.spriteImage = spriteImage;
+    }
 }

@@ -3,12 +3,27 @@ package com.group18.controller;
 
 import com.group18.core.CreateLevelLayout;
 import com.group18.core.FileReader;
+import com.group18.core.LevelLoader;
+import com.group18.exception.InvalidMoveException;
+import com.group18.model.Direction;
+import com.group18.model.Level;
+import com.group18.model.State;
+import com.group18.model.cell.Cell;
+import com.group18.model.entity.Entity;
+import com.group18.model.entity.User;
+import com.group18.service.MessageOfTheDayService;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -16,9 +31,15 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class GameController extends Application {
+
+    private static State currentState;
+    private Level level;
+    private User user;
+
+
     private static int playerx;
     private static int playery;
-    private Rectangle player;
+    private ImageView player;
     private static int levelWidth;
     private static int levelHeight;
 
@@ -42,10 +63,13 @@ public class GameController extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        User user = new User("Daniel");
+        Level level = LevelLoader.loadLevel(1, user);
+        this.level = level;
 
-        pane = CreateLevelLayout.createLevel("./src/resources/Level1.txt");
-        player = new Rectangle(64, 64, 64, 64);
-        pane.getChildren().add(player);
+        Pane pane = drawCells(level);
+        this.pane = pane;
+        drawEntities(pane, level);
 
         Scene scene = new Scene(new BorderPane(pane),500,500);
         Rectangle clip = new Rectangle();
@@ -69,13 +93,72 @@ public class GameController extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+
+    }
+
+    private void drawEntities(Pane pane, Level level) {
+        Cell[][] cells = level.getBoard();
+
+        Group sprites = new Group();
+        for (int i = 0; i < levelHeight; i++) {
+            for (int j = 0; j < levelWidth; j++) {
+                Cell cell = cells[j][i];
+                if (cell.getCurrentEntities().size() > 0) {
+                    Entity entity = cell.getCurrentEntities().get(0);
+                    ImageView spriteImage = new ImageView(entity.getSpriteImage());
+                    spriteImage.setFitHeight(64);
+                    spriteImage.setFitWidth(64);
+                    spriteImage.setX(j * 64);
+                    spriteImage.setY(i * 64);
+                    sprites.getChildren().add(spriteImage);
+                    if (entity instanceof User) {
+                        this.user = (User) entity;
+                        player = spriteImage;
+                    }
+                }
+            }
+        }
+
+        pane.getChildren().add(sprites);
+    }
+
+    public Pane drawCells(Level level) {
+        Pane board = new Pane();
+        Cell[][] cells = level.getBoard();
+        int boardWidth = level.getBoardWidth();
+        int boardHeight = level.getBoardHeight();
+        setLevelSize(boardWidth, boardHeight);
+
+        Group cellGroups = new Group();
+        for (int i = 0; i < boardHeight; i++) {
+            for (int j = 0; j < boardWidth; j++) {
+                Cell cell = cells[i][j];
+                if (cell.hasPlayer()) {
+                    setPlayerPos(j, i);
+                }
+                ImageView imageView = new ImageView(cell.getSpriteImage());
+                imageView.setFitHeight(64);
+                imageView.setFitWidth(64);
+                imageView.setX(j * 64);
+                imageView.setY(i * 64);
+                cellGroups.getChildren().add(imageView);
+            }
+        }
+
+        board.getChildren().add(cellGroups);
+
+        board.setMinSize(levelWidth * 64, levelHeight * 64);
+        board.setPrefSize(levelWidth * 64, levelHeight * 64);
+        board.setMaxSize(levelWidth * 64, levelHeight * 64);
+
+        return board;
     }
 
     private void movePlayer(int deltaX, int deltaY) {
         if (!pressed) {
             pressed = true;
-            player.setX(clampRange(player.getX() + deltaX, 0, pane.getWidth() - player.getWidth()));
-            player.setY(clampRange(player.getY() + deltaY, 0, pane.getHeight() - player.getHeight()));
+            player.setX(clampRange(player.getX() + deltaX, 0, pane.getWidth() - player.getFitWidth()));
+            player.setY(clampRange(player.getY() + deltaY, 0, pane.getHeight() - player.getFitHeight()));
         }
     }
 
@@ -88,21 +171,65 @@ public class GameController extends Application {
     private void processKey(KeyCode code) {
         switch (code) {
             case LEFT:
-                movePlayer(-speed, 0);
+                try {
+                    this.level.movePlayer(this.user, Direction.LEFT);
+                    movePlayer(-speed, 0);
+                } catch (InvalidMoveException ex) {
+                    //TODO - handle they cant move on cell
+                    System.out.println("this is a wall");
+                }
                 break ;
             case RIGHT:
-                movePlayer(speed, 0);
+                try {
+                    this.level.movePlayer(this.user, Direction.RIGHT);
+                    movePlayer(speed, 0);
+                } catch (InvalidMoveException ex) {
+                    //TODO - handle they cant move on cell
+                    System.out.println("this is a wall");
+                }
                 break ;
             case UP:
-                movePlayer(0, -speed);
+                try {
+                    this.level.movePlayer(this.user, Direction.UP);
+                    movePlayer(0, -speed);
+                } catch (InvalidMoveException ex) {
+                    //TODO - handle they cant move on cell
+                    System.out.println("this is a wall");
+                }
                 break ;
             case DOWN:
-                movePlayer(0, speed);
+                try {
+                    this.level.movePlayer(this.user, Direction.DOWN);
+                    movePlayer(0, speed);
+                } catch (InvalidMoveException ex) {
+                    //TODO - handle they cant move on cell
+                    System.out.println("this is a wall");
+                }
                 break ;
             default:
                 break ;
         }
     }
+
+    /**
+     * Trigger a message alert for the user to see in the game
+     * @param message The message to be shown
+     */
+    public static void triggerAlert(String message) {
+        //TODO:drt - The game needs to be in a border pane with Hidden alert pane at the top
+    }
+
+    /**
+     * Trigger a message alert with also a change in state
+     * @param message the message to be shown to the user
+     * @param state The state that is being changed
+     */
+    public static void triggerAlert(String message, State state) {
+        //TODO:drt - Game lost or game won so we show actual alert and the game ends.
+    }
+
+
+
     public static void main(String[] args) {
         launch(args);
     }

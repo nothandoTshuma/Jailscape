@@ -22,11 +22,10 @@ public class Wall extends Cell {
 
     /**
      * Creates a new Wall Cell
-     * @param level The level the cell is associated with
      * @param coordinates The coordinate of this cell in relation to others for this level.
      */
-    public Wall(Level level, Point coordinates)  {
-        super(level, coordinates);
+    public Wall(Point coordinates)  {
+        super(coordinates);
     }
 
     /**

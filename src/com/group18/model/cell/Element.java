@@ -5,6 +5,8 @@ import com.group18.model.ElementType;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
+import java.awt.*;
+
 import static com.group18.model.State.*;
 
 /**
@@ -20,8 +22,10 @@ public class Element extends Ground implements Actionable {
     /**
      * sets the current element type
      * @param elementType represents the new element type.
+     * @param point This cells (x,y) coordinates
      */
-    public Element(ElementType elementType) {
+    public Element(ElementType elementType, Point point) {
+        super(point);
         this.elementType = elementType;
     }
 
