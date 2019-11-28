@@ -4,24 +4,39 @@ import com.group18.model.entity.User;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
+import static java.util.logging.Level.WARNING;
 
 /**
  * The UserRepository holding all player level completion data.
  * Here we can save new users, retrieve users and delete users
+ *
+ * @author danielturato
  */
 public class UserRepository {
 
+    /**
+     * The directory in which user data will be stored
+     */
     private static final String USER_DIRECTORY = "";
 
-    public static List<User> loadUsers() {
+    /**
+     * The logger which will allows us to output errors in a nice format
+     */
+    private static final Logger LOGGER = Logger.getLogger("UserRepository");
+
+    /**
+     * Load all possible user profiles that have been saved
+     * @return A list of user profiles
+     */
+    public static List<User> loadAllUsers() {
         File directory = new File(USER_DIRECTORY);
         File[] directoryFiles = directory.listFiles();
         List<User> users = new ArrayList<>();
-
         if (directoryFiles != null) {
             for (File file : directoryFiles) {
                 String fileName = file.getName();
@@ -34,6 +49,28 @@ public class UserRepository {
         }
 
         return users;
+    }
+
+    /**
+     * Serialize a User object
+     * @param user The user to be serialized.
+     */
+    public static void saveUser(User user) {
+        String fileName = USER_DIRECTORY + "/" + user.getUsername() + ".ser";
+
+        try {
+            FileOutputStream file = new FileOutputStream(fileName);
+            ObjectOutputStream outputStream = new ObjectOutputStream(file);
+
+            // Method for serialization of object
+            outputStream.writeObject(user);
+
+            outputStream.close();
+            file.close();
+        } catch (IOException ex) {
+            LOGGER.log(WARNING, "The user is trying to create a User that already exists", ex);
+            //TODO:drt - Alert user
+        }
     }
 
     /**
@@ -54,19 +91,25 @@ public class UserRepository {
             outputStream.close();
 
         } catch (IOException ex) {
-            //TODO - handle error
+            LOGGER.log(WARNING, String.format("The file %s does not exist!", ex));
         } catch (ClassNotFoundException ex) {
-            //TODO - handle error
+            LOGGER.log(WARNING, "There is no User object", ex);
         }
 
         return user;
     }
 
+    /**
+     * Deletes a user, deleting the serialised file
+     * @param fileName The filename holding the user data
+     */
     public static void deleteUser(String fileName) {
-//        Path path
-//        try {
-//            Files.deleteIfExists(USER_DIRECTORY + "/" + fileName);
-//        }
+        try {
+            Files.deleteIfExists(Paths.get(USER_DIRECTORY + "/" + fileName));
+        } catch (IOException ex) {
+            LOGGER.log(WARNING, "This user has now been delete", ex);
+            //TODO:drt - Alert the user that it's been delete
+        }
     }
 
 }

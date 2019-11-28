@@ -4,6 +4,8 @@ import com.group18.model.Actionable;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
+import java.awt.*;
+
 import static com.group18.model.State.*;
 
 /**
@@ -11,6 +13,14 @@ import static com.group18.model.State.*;
  *  @author danielturato nothandotshuma riyagupta
  */
 public class Goal extends Ground implements Actionable {
+
+    /**
+     * Creates a new Goal cell
+     * @param point This cells (x,y) coordinates
+     */
+    public Goal(Point point) {
+        super(point);
+    }
 
     /**
      * Updates the game state, if the user reaches this cell
