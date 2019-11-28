@@ -2,6 +2,7 @@ package com.group18.model.entity;
 
 import com.group18.model.Direction;
 import com.group18.model.cell.Cell;
+import javafx.scene.image.Image;
 
 import java.beans.*;
 import java.io.Serializable;
@@ -20,6 +21,11 @@ public abstract class Entity implements Serializable {
      * Stores the entities current direction
      */
     private transient Direction direction;
+
+    /**
+     * This entities sprite image
+     */
+    private Image spriteImage;
 
     /**
      * Get the current entities cell
@@ -53,4 +59,19 @@ public abstract class Entity implements Serializable {
         this.direction = direction;
     }
 
+    /**
+     * Get this entities sprite image
+     * @return The sprite image
+     */
+    public Image getSpriteImage() {
+        return spriteImage;
+    }
+
+    /**
+     * Set this entities sprite image
+     * @param spriteImage The sprite image
+     */
+    public void setSpriteImage(Image spriteImage) {
+        this.spriteImage = spriteImage;
+    }
 }
