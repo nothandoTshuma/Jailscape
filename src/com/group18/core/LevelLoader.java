@@ -84,14 +84,29 @@ public class LevelLoader {
             }
 
             setTeleporterPartners(cells);
+            Level levelObj = new Level(cells);
+            setLevelFor(cells, levelObj);
 
-            return new Level(cells);
+            return levelObj;
 
         } catch (FileNotFoundException ex) {
             LOGGER.log(WARNING, String.format("Level file %s does not exist", level), ex);
         }
 
         return null;
+    }
+
+    /**
+     * Set the level for each cell
+     * @param cells The cells in the level
+     * @param levelObj The level object
+     */
+    private static void setLevelFor(Cell[][] cells, Level levelObj) {
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
+                cells[i][j].setLevel(levelObj);
+            }
+        }
     }
 
     /**
