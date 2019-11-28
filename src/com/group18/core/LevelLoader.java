@@ -9,13 +9,16 @@ import com.group18.model.cell.*;
 import com.group18.model.entity.*;
 import com.group18.model.item.ElementItem;
 import com.group18.model.item.Key;
+import com.sun.javafx.util.Logging;
 
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import static com.group18.model.Direction.*;
+import static java.util.logging.Level.WARNING;
 
 /**
  * This class allows the loading of both default level files and level files
@@ -34,6 +37,11 @@ public class LevelLoader {
      * The directory which will hold all user-saved level files
      */
     public static final String SAVED_LEVEL_DIRECTORY =  "./savedlevels/saved-level";
+
+    /**
+     * The logger which will allows us to output errors in a nice format
+     */
+    private static final Logger LOGGER = Logger.getLogger("LevelLoader");
 
     /**
      * Load a default level file for a specified level
@@ -57,6 +65,7 @@ public class LevelLoader {
 
                 if (lineCounter == 0) {
                     cells = new Cell[line.nextInt()][line.nextInt()];
+
                 } else {
                     Point point = new Point(boardWidth, boardHeight);
                     fillCell(line, point, cells, user);
@@ -74,11 +83,38 @@ public class LevelLoader {
                 lineCounter++;
             }
 
+            setTeleporterPartners(cells);
+
+            return new Level(cells);
+
         } catch (FileNotFoundException ex) {
-            //TODO:drt - Handle error
+            LOGGER.log(WARNING, String.format("Level file %s does not exist", level), ex);
         }
 
-        return new Level(cells);
+        return null;
+    }
+
+    /**
+     * There will only ever be one teleporter per level. So after all the cells are set
+     * we iterate over the cells, and partner up the teleporters
+     * @param cells
+     */
+    private static void setTeleporterPartners(Cell[][] cells) {
+        Teleporter teleporter = null;
+
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; i++) {
+                if (cells[i][j] instanceof Teleporter) {
+                    if (teleporter == null) {
+                        teleporter = (Teleporter) cells[i][j];
+                    } else {
+                        Teleporter newPartner = (Teleporter) cells[i][j];
+                        newPartner.setPartner(teleporter);
+                        teleporter.setPartner(newPartner);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -89,7 +125,6 @@ public class LevelLoader {
      * @param user The user associated with this level
      */
     private static void fillCell(Scanner line, Point point, Cell[][] cells, User user) {
-        //TODO:drt - Figure out way for teleporters to work
         Cell cell = createNewCell(line, point);
         placeEntity(line, cell, user);
         String potentialDirection = line.next();
@@ -102,6 +137,7 @@ public class LevelLoader {
         if (!potentialItem.equals(("X"))) {
             setItem(cell, potentialItem);
         }
+
     }
 
     /**
@@ -228,7 +264,7 @@ public class LevelLoader {
                         break;
                 }
             } catch (InvalidMoveException ex) {
-                //TODO:drt - handle error
+                LOGGER.log(WARNING, "This level file involves an entity placement that's invalid", ex);
             }
         }
     }

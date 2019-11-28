@@ -7,7 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
+import static java.util.logging.Level.WARNING;
 
 /**
  * The UserRepository holding all player level completion data.
@@ -23,6 +25,11 @@ public class UserRepository {
     private static final String USER_DIRECTORY = "";
 
     /**
+     * The logger which will allows us to output errors in a nice format
+     */
+    private static final Logger LOGGER = Logger.getLogger("UserRepository");
+
+    /**
      * Load all possible user profiles that have been saved
      * @return A list of user profiles
      */
@@ -30,7 +37,6 @@ public class UserRepository {
         File directory = new File(USER_DIRECTORY);
         File[] directoryFiles = directory.listFiles();
         List<User> users = new ArrayList<>();
-
         if (directoryFiles != null) {
             for (File file : directoryFiles) {
                 String fileName = file.getName();
@@ -62,7 +68,8 @@ public class UserRepository {
             outputStream.close();
             file.close();
         } catch (IOException ex) {
-            // TODO:drt - File already exists
+            LOGGER.log(WARNING, "The user is trying to create a User that already exists", ex);
+            //TODO:drt - Alert user
         }
     }
 
@@ -84,9 +91,9 @@ public class UserRepository {
             outputStream.close();
 
         } catch (IOException ex) {
-            //TODO - handle error
+            LOGGER.log(WARNING, String.format("The file %s does not exist!", ex));
         } catch (ClassNotFoundException ex) {
-            //TODO - handle error
+            LOGGER.log(WARNING, "There is no User object", ex);
         }
 
         return user;
@@ -100,7 +107,8 @@ public class UserRepository {
         try {
             Files.deleteIfExists(Paths.get(USER_DIRECTORY + "/" + fileName));
         } catch (IOException ex) {
-            // TODO:drt - handle error
+            LOGGER.log(WARNING, "This user has now been delete", ex);
+            //TODO:drt - Alert the user that it's been delete
         }
     }
 
