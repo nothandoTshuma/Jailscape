@@ -43,4 +43,20 @@ public class Teleporter extends Ground implements Actionable {
             }
         }
     }
+
+    /**
+     * Get this teleporter's partner cell
+     * @return
+     */
+    public Teleporter getPartner() {
+        return partner;
+    }
+
+    /**
+     * Set the partner teleporter of this cell
+     * @param partner The new partner
+     */
+    public void setPartner(Teleporter partner) {
+        this.partner = partner;
+    }
 }
