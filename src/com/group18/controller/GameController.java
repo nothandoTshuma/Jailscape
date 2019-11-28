@@ -3,12 +3,16 @@ package com.group18.controller;
 
 import com.group18.core.CreateLevelLayout;
 import com.group18.core.FileReader;
+import com.group18.model.State;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -16,6 +20,10 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class GameController extends Application {
+
+    private static State currentState;
+
+
     private static int playerx;
     private static int playery;
     private Rectangle player;
@@ -42,6 +50,7 @@ public class GameController extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        currentState = State.IN_PROGRESS;
 
         pane = CreateLevelLayout.createLevel("./src/resources/Level1.txt");
         player = new Rectangle(64, 64, 64, 64);
@@ -69,6 +78,7 @@ public class GameController extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        triggerAlert("Hello World");
     }
 
     private void movePlayer(int deltaX, int deltaY) {
@@ -103,6 +113,26 @@ public class GameController extends Application {
                 break ;
         }
     }
+
+    /**
+     * Trigger a message alert for the user to see in the game
+     * @param message The message to be shown
+     */
+    public static void triggerAlert(String message) {
+        //TODO:drt - The game needs to be in a border pane with Hidden alert pane at the top
+    }
+
+    /**
+     * Trigger a message alert with also a change in state
+     * @param message the message to be shown to the user
+     * @param state The state that is being changed
+     */
+    public static void triggerAlert(String message, State state) {
+        //TODO:drt - Game lost or game won so we show actual alert and the game ends.
+    }
+
+
+
     public static void main(String[] args) {
         launch(args);
     }
