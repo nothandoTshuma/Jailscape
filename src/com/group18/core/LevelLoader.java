@@ -10,6 +10,7 @@ import com.group18.model.entity.*;
 import com.group18.model.item.ElementItem;
 import com.group18.model.item.Key;
 import com.sun.javafx.util.Logging;
+import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.io.File;
@@ -31,7 +32,7 @@ public class LevelLoader {
     /**
      * The directory which will hold all the default level files
      */
-    public static final String DEFAULT_LEVEL_DIRECTORY = "./levels/level";
+    public static final String DEFAULT_LEVEL_DIRECTORY = "./src/resources/levels/Level";
 
     /**
      * The directory which will hold all user-saved level files
@@ -83,6 +84,7 @@ public class LevelLoader {
                 lineCounter++;
             }
 
+
             setTeleporterPartners(cells);
             Level levelObj = new Level(cells);
             setLevelFor(cells, levelObj);
@@ -116,9 +118,8 @@ public class LevelLoader {
      */
     private static void setTeleporterPartners(Cell[][] cells) {
         Teleporter teleporter = null;
-
         for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[0].length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
                 if (cells[i][j] instanceof Teleporter) {
                     if (teleporter == null) {
                         teleporter = (Teleporter) cells[i][j];
@@ -141,6 +142,7 @@ public class LevelLoader {
      */
     private static void fillCell(Scanner line, Point point, Cell[][] cells, User user) {
         Cell cell = createNewCell(line, point);
+        cell.setCoordinates(point);
         placeEntity(line, cell, user);
         String potentialDirection = line.next();
 
@@ -153,6 +155,7 @@ public class LevelLoader {
             setItem(cell, potentialItem);
         }
 
+        cells[(int) point.getY()][(int) point.getX()] = cell;
     }
 
     /**
@@ -254,24 +257,29 @@ public class LevelLoader {
                     case U:
                         cell.placePlayer(user);
                         user.setCurrentCell(cell);
+                        user.setSpriteImage(new Image("resources/assets/Player/Idle/PlayerIdle_00.png"));
                         break;
-                    case STLE:
+                    case SLE:
                         StraightLineEnemy sle = new StraightLineEnemy(null);
+                        sle.setSpriteImage(new Image("resources/assets/Enemy/StraightEnemyIdle.png"));
                         cell.placeEnemy(sle);
                         sle.setCurrentCell(cell);
                         break;
                     case STE:
                         SmartTargetingEnemy ste = new SmartTargetingEnemy();
+                        ste.setSpriteImage(new Image("resources/assets/Enemy/SmartEnemyIdle.png"));
                         cell.placeEnemy(ste);
                         ste.setCurrentCell(cell);
                         break;
                     case WFE:
                         WallFollowingEnemy wfe = new WallFollowingEnemy();
+                        wfe.setSpriteImage(new Image("resources/assets/Enemy/WallEnemyIdle.png"));
                         cell.placeEnemy(wfe);
                         wfe.setCurrentCell(cell);
                         break;
                     case DTE:
                         DumbTargetingEnemy dte = new DumbTargetingEnemy();
+                        dte.setSpriteImage(new Image("resources/assets/Enemy/DumbEnemyIdle.png"));
                         cell.placeEnemy(dte);
                         dte.setCurrentCell(cell);
                         break;
@@ -292,45 +300,60 @@ public class LevelLoader {
      */
     private static Cell createNewCell(Scanner line, Point point) {
         String potentialCell = line.next();
-        CellAcronym cellType = potentialCell.substring(0,3).equals("TD")
-                               ? CellAcronym.TD : CellAcronym.valueOf(potentialCell);
+        CellAcronym cellType;
+        if (potentialCell.length() > 2) {
+            cellType = CellAcronym.TD;
+        } else {
+            cellType = CellAcronym.valueOf(potentialCell);
+        }
 
         Cell cell = null;
 
         switch (cellType) {
             case WC:
                 cell = new Wall(point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/WallCell.png"));
                 break;
             case GC:
                 cell = new Ground(point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/GroundCell.png"));
                 break;
             case FC:
                 cell = new Element(ElementType.FIRE, point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/FireCell.png"));
                 break;
             case WTC:
                 cell = new Element(ElementType.WATER, point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/WaterCell.png"));
                 break;
             case TC:
                 cell = new Teleporter(null, point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/TeleporterCell.png"));
                 break;
             case GOC:
                 cell = new Goal(point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/GoalCell.png"));
                 break;
             case GD:
                 cell = new ColourDoor(Colour.GREEN, point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/DoorGreen.png"));
                 break;
             case RD:
                 cell = new ColourDoor(Colour.RED, point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/DoorRed.png"));
                 break;
             case BD:
                 cell = new ColourDoor(Colour.BLUE, point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/DoorBlue.png"));
                 break;
             case YD:
                 cell = new ColourDoor(Colour.YELLOW, point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/DoorYellow.png"));
                 break;
             case TD:
                 int tokens = potentialCell.charAt(3);
                 cell = new TokenDoor(tokens, point);
+                cell.setSpriteImage(new Image("resources/assets/Cell/TokenDoor.png"));
             default:
                 break;
         }
@@ -360,7 +383,7 @@ public class LevelLoader {
      */
     private static enum EntityAcronym {
         U,
-        STLE,
+        SLE,
         STE,
         WFE,
         DTE;

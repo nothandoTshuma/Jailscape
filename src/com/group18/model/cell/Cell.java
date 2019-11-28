@@ -6,8 +6,9 @@ import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
+import javafx.scene.image.Image;
 
-import java.awt.Point;
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,11 @@ public abstract class Cell implements Node, Serializable {
      * All the current entities on this cell
      */
     List<Entity> currentEntities;
+
+    /**
+     * This cell's image representation in the game
+     */
+    private javafx.scene.image.Image spriteImage;
 
 
     /**
@@ -72,6 +78,14 @@ public abstract class Cell implements Node, Serializable {
      */
     public Point getPosition() {
         return coordinates;
+    }
+
+    /**
+     * Set's this cell's position
+     * @param coordinates The new coordinates
+     */
+    public void setCoordinates(Point coordinates) {
+        this.coordinates = coordinates;
     }
 
     /**
@@ -143,5 +157,19 @@ public abstract class Cell implements Node, Serializable {
      */
     public abstract boolean hasPlayerAndEnemy();
 
+    /**
+     * Get this cell's sprite image
+     * @return The spite image
+     */
+    public javafx.scene.image.Image getSpriteImage() {
+        return spriteImage;
+    }
 
+    /**
+     * Set this cell's sprite image
+     * @param spriteImage The new sprite image
+     */
+    public void setSpriteImage(Image spriteImage) {
+        this.spriteImage = spriteImage;
+    }
 }
