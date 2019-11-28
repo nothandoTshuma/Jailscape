@@ -1,5 +1,6 @@
 package com.group18.model;
 
+import com.group18.controller.GameController;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.cell.*;
 import com.group18.model.entity.Enemy;
@@ -78,6 +79,26 @@ public class Level {
         return validMoveToCell(getCell(newPosition), entity);
     }
 
+    public void moveEnemy(Enemy enemy, Direction direction) {
+        Point newPosition = calculateNewPosition(enemy.getCurrentCell().getPosition(), direction);
+
+        Cell newCell = getCell(newPosition);
+        Cell oldCell = enemy.getCurrentCell();
+
+        oldCell.removeEntity(enemy);
+        try {
+            newCell.placeEnemy(enemy);
+            enemy.setCurrentCell(newCell);
+            enemy.setDirection(direction);
+
+            if (newCell.hasPlayerAndEnemy()) {
+                GameController.triggerAlert("GAME LOST", State.LEVEL_LOST);
+            }
+        } catch (InvalidMoveException ex) {
+            //TODO:drt handle or throw from method
+        }
+    }
+
     /**
      * Here, we attempt to move a user in a direction they wish to move in
      * @param user The user who wishes to move
@@ -152,8 +173,6 @@ public class Level {
         return getAdjacentCells(cellPosition);
     }
 
-    public void moveEnemy(Enemy enemy, Direction direction) {}
-
     public boolean isEnemyClose(User user) {
         return false;
     }
@@ -180,12 +199,12 @@ public class Level {
 
     /**
      * Get the cell at a specific point
-     * @param row The row the cell is at
-     * @param column The column the cell is at
+     * @param y The y the cell is at
+     * @param x The x the cell is at
      * @return The cell at the specific row & column
      */
-    private Cell getCell(int row, int column) {
-        return getCell(new Point(row, column));
+    private Cell getCell(int y, int x) {
+        return getCell(new Point(x, y));
     }
 
     private void removeCell(Point point) {}

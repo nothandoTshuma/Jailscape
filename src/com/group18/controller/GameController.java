@@ -9,9 +9,10 @@ import com.group18.model.Direction;
 import com.group18.model.Level;
 import com.group18.model.State;
 import com.group18.model.cell.Cell;
-import com.group18.model.entity.Entity;
-import com.group18.model.entity.User;
+import com.group18.model.entity.*;
 import com.group18.service.MessageOfTheDayService;
+import com.group18.viewmodel.EnemyViewModel;
+import com.group18.viewmodel.UserViewModel;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
@@ -29,17 +30,20 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameController extends Application {
 
-    private static State currentState;
-    private Level level;
-    private User user;
+    private State currentState;
 
+    private Level level;
+
+    private UserViewModel userViewModel;
+
+    private List<EnemyViewModel> enemyViewModels = new ArrayList<>();
 
     private static int playerx;
     private static int playery;
-    private ImageView player;
     private static int levelWidth;
     private static int levelHeight;
 
@@ -58,11 +62,12 @@ public class GameController extends Application {
 
     public static void setLevelSize(int x, int y) {
         levelWidth = x;
-        levelHeight = x;
+        levelHeight = y;
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //TODO:drt - Dynamically load user from selected options.
         User user = new User("Daniel");
         Level level = LevelLoader.loadLevel(1, user);
         this.level = level;
@@ -76,12 +81,13 @@ public class GameController extends Application {
         clip.widthProperty().bind(scene.widthProperty());
         clip.heightProperty().bind(scene.heightProperty());
 
+        ImageView userImageView = this.userViewModel.getImageView();
         clip.xProperty().bind(Bindings.createDoubleBinding(
-                () -> clampRange(player.getX() - scene.getWidth() / 2, 0, pane.getWidth() - scene.getWidth()),
-                player.xProperty(), scene.widthProperty()));
+                () -> clampRange(userImageView.getX() - scene.getWidth() / 2, 0, pane.getWidth() - scene.getWidth()),
+                userImageView.xProperty(), scene.widthProperty()));
         clip.yProperty().bind(Bindings.createDoubleBinding(
-                () -> clampRange(player.getY() - scene.getHeight() / 2, 0, pane.getHeight() - scene.getHeight()),
-                player.yProperty(), scene.heightProperty()));
+                () -> clampRange(userImageView.getY() - scene.getHeight() / 2, 0, pane.getHeight() - scene.getHeight()),
+                userImageView.yProperty(), scene.heightProperty()));
 
         pane.setClip(clip);
         pane.translateXProperty().bind(clip.xProperty().multiply(-1));
@@ -105,15 +111,17 @@ public class GameController extends Application {
                 Cell cell = cells[j][i];
                 if (cell.getCurrentEntities().size() > 0) {
                     Entity entity = cell.getCurrentEntities().get(0);
-                    ImageView spriteImage = new ImageView(entity.getSpriteImage());
-                    spriteImage.setFitHeight(64);
-                    spriteImage.setFitWidth(64);
-                    spriteImage.setX(j * 64);
-                    spriteImage.setY(i * 64);
-                    sprites.getChildren().add(spriteImage);
+                    //TODO:drt - View model for enemies
                     if (entity instanceof User) {
-                        this.user = (User) entity;
-                        player = spriteImage;
+                        //TODO:drt - Don't create new user view model after implementing user loading
+                        this.userViewModel = new UserViewModel((User) entity);
+                        this.userViewModel.setImageView(j, i);
+                        sprites.getChildren().add(userViewModel.getImageView());
+                    } else {
+                        EnemyViewModel enemyViewModel = createEnemyViewModel((Enemy) entity);
+                        enemyViewModel.setImageView(j, i);
+                        enemyViewModels.add(enemyViewModel);
+                        sprites.getChildren().add(enemyViewModel.getImageView());
                     }
                 }
             }
@@ -156,10 +164,26 @@ public class GameController extends Application {
 
     private void movePlayer(int deltaX, int deltaY) {
         if (!pressed) {
+            ImageView userImageView = this.userViewModel.getImageView();
             pressed = true;
-            player.setX(clampRange(player.getX() + deltaX, 0, pane.getWidth() - player.getFitWidth()));
-            player.setY(clampRange(player.getY() + deltaY, 0, pane.getHeight() - player.getFitHeight()));
+            userImageView.setX
+                    (clampRange(userImageView.getX() + deltaX,
+                            0, pane.getWidth() - userImageView.getFitWidth()));
+
+            userImageView.setY
+                    (clampRange(userImageView.getY() + deltaY,
+                            0, pane.getHeight() - userImageView.getFitHeight()));
         }
+    }
+
+    private void moveEnemy(int deltaX, int deltaY, ImageView enemyImageView) {
+        enemyImageView.setX
+                (clampRange(enemyImageView.getX() + deltaX,
+                        0, pane.getWidth() - enemyImageView.getFitWidth()));
+
+        enemyImageView.setY
+                (clampRange(enemyImageView.getY() + deltaY,
+                        0, pane.getHeight() - enemyImageView.getFitHeight()));
     }
 
     private double clampRange(double value, double min, double max) {
@@ -168,11 +192,38 @@ public class GameController extends Application {
         return value ;
     }
 
+    private void moveEnemies() {
+        User user = this.userViewModel.getUser();
+        for (EnemyViewModel evm : this.enemyViewModels) {
+            Enemy enemy = evm.getEnemy();
+            Direction nextDirection = enemy.getNextDirection(user, level);
+            this.level.moveEnemy(enemy, nextDirection);
+
+            switch (nextDirection) {
+                case LEFT:
+                    moveEnemy(-speed, 0, evm.getImageView());
+                    break;
+                case RIGHT:
+                    moveEnemy(speed, 0, evm.getImageView());
+                    break;
+                case UP:
+                    moveEnemy(0, -speed, evm.getImageView());
+                    break;
+                case DOWN:
+                    moveEnemy(0, speed, evm.getImageView());
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     private void processKey(KeyCode code) {
+        User user = this.userViewModel.getUser();
         switch (code) {
             case LEFT:
                 try {
-                    this.level.movePlayer(this.user, Direction.LEFT);
+                    this.level.movePlayer(user, Direction.LEFT);
                     movePlayer(-speed, 0);
                 } catch (InvalidMoveException ex) {
                     //TODO - handle they cant move on cell
@@ -181,7 +232,7 @@ public class GameController extends Application {
                 break ;
             case RIGHT:
                 try {
-                    this.level.movePlayer(this.user, Direction.RIGHT);
+                    this.level.movePlayer(user, Direction.RIGHT);
                     movePlayer(speed, 0);
                 } catch (InvalidMoveException ex) {
                     //TODO - handle they cant move on cell
@@ -190,7 +241,7 @@ public class GameController extends Application {
                 break ;
             case UP:
                 try {
-                    this.level.movePlayer(this.user, Direction.UP);
+                    this.level.movePlayer(user, Direction.UP);
                     movePlayer(0, -speed);
                 } catch (InvalidMoveException ex) {
                     //TODO - handle they cant move on cell
@@ -199,7 +250,7 @@ public class GameController extends Application {
                 break ;
             case DOWN:
                 try {
-                    this.level.movePlayer(this.user, Direction.DOWN);
+                    this.level.movePlayer(user, Direction.DOWN);
                     movePlayer(0, speed);
                 } catch (InvalidMoveException ex) {
                     //TODO - handle they cant move on cell
@@ -209,6 +260,29 @@ public class GameController extends Application {
             default:
                 break ;
         }
+
+        moveEnemies();
+
+    }
+
+    private EnemyViewModel createEnemyViewModel(Enemy enemy) {
+        EnemyViewModel enemyViewModel = null;
+
+        if (enemy instanceof SmartTargetingEnemy) {
+            enemyViewModel = new EnemyViewModel(
+                    enemy, new Image("resources/assets/enemy/SmartEnemyIdle.png"));
+        } else if (enemy instanceof DumbTargetingEnemy) {
+            enemyViewModel = new EnemyViewModel(
+                    enemy, new Image("resources/assets/enemy/DumbEnemyIdle.png"));
+        } else if (enemy instanceof StraightLineEnemy) {
+            enemyViewModel = new EnemyViewModel(
+                    enemy, new Image("resources/assets/enemy/StraightEnemyIdle.png"));
+        } else if (enemy instanceof WallFollowingEnemy) {
+            enemyViewModel = new EnemyViewModel(
+                    enemy, new Image("resources/assets/enemy/WallEnemyIdle.png"));
+        }
+
+        return enemyViewModel;
     }
 
     /**
@@ -226,6 +300,9 @@ public class GameController extends Application {
      */
     public static void triggerAlert(String message, State state) {
         //TODO:drt - Game lost or game won so we show actual alert and the game ends.
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(message);
+        alert.show();
     }
 
 

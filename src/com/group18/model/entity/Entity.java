@@ -23,11 +23,6 @@ public abstract class Entity implements Serializable {
     private transient Direction direction;
 
     /**
-     * This entities sprite image
-     */
-    private Image spriteImage;
-
-    /**
      * Get the current entities cell
      * @return The entities current cell
      */
@@ -59,19 +54,4 @@ public abstract class Entity implements Serializable {
         this.direction = direction;
     }
 
-    /**
-     * Get this entities sprite image
-     * @return The sprite image
-     */
-    public Image getSpriteImage() {
-        return spriteImage;
-    }
-
-    /**
-     * Set this entities sprite image
-     * @param spriteImage The sprite image
-     */
-    public void setSpriteImage(Image spriteImage) {
-        this.spriteImage = spriteImage;
-    }
 }
