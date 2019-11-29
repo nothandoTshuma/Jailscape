@@ -77,7 +77,7 @@ GC,X,X,X,X
 GC,X,X,X,X
 GC,X,X,X,X
 GC,X,X,X,X
-GC,STE,U,X,X
+GC,WFE,U,X,X
 WC,X,X,X,X
 WC,X,X,X,X
 GC,X,X,X,X
