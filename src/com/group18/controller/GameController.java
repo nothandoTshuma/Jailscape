@@ -14,10 +14,12 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -29,6 +31,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class GameController extends Application {
@@ -205,8 +208,6 @@ public class GameController extends Application {
 
         timeline.setOnFinished(e -> {
             userImageView.setImage(new Image("resources/assets/Player/Idle/PlayerIdle.gif"));
-            System.out.println(userImageView.getX());
-            System.out.println(userImageView.getY());
         });
 
         timeline.getKeyFrames().addAll(kf, walking);
@@ -352,7 +353,8 @@ public class GameController extends Application {
         //TODO:drt - Game lost or game won so we show actual alert and the game ends.
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText(message);
-        alert.show();
+        alert.showAndWait();
+        Platform.exit();
     }
 
     public void setBoardArea(int x, int y) {
