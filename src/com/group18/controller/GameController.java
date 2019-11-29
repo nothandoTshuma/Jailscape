@@ -19,7 +19,6 @@ import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -31,7 +30,6 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 public class GameController extends Application {
@@ -200,17 +198,17 @@ public class GameController extends Application {
         KeyValue keyValueX = new KeyValue(userImageView.xProperty(), x);
         KeyValue keyValueY = new KeyValue(userImageView.yProperty(), y);
 
-        final KeyFrame walking = new KeyFrame(Duration.millis(100), e -> {
+        KeyFrame walking = new KeyFrame(Duration.millis(100), e -> {
            userImageView.setImage(new Image("resources/assets/Player/Walk/PlayerWalk.gif"));
         });
 
-        KeyFrame kf = new KeyFrame(Duration.millis(500), keyValueX, keyValueY);
+        KeyFrame movement = new KeyFrame(Duration.millis(500), keyValueX, keyValueY);
 
         timeline.setOnFinished(e -> {
             userImageView.setImage(new Image("resources/assets/Player/Idle/PlayerIdle.gif"));
         });
 
-        timeline.getKeyFrames().addAll(kf, walking);
+        timeline.getKeyFrames().addAll(movement, walking);
 
         timeline.play();
     }
@@ -231,8 +229,8 @@ public class GameController extends Application {
         Timeline timeline = new Timeline();
         KeyValue keyValueX = new KeyValue(enemyImageView.xProperty(), x);
         KeyValue keyValueY = new KeyValue(enemyImageView.yProperty(), y);
-        KeyFrame kf = new KeyFrame(Duration.millis(500), keyValueX, keyValueY);
-        timeline.getKeyFrames().add(kf);
+        KeyFrame movement = new KeyFrame(Duration.millis(500), keyValueX, keyValueY);
+        timeline.getKeyFrames().add(movement);
 
         timeline.play();
     }
