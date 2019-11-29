@@ -257,29 +257,24 @@ public class LevelLoader {
                     case U:
                         cell.placePlayer(user);
                         user.setCurrentCell(cell);
-                        user.setSpriteImage(new Image("resources/assets/Player/Idle/PlayerIdle_00.png"));
                         break;
                     case SLE:
                         StraightLineEnemy sle = new StraightLineEnemy(null);
-                        sle.setSpriteImage(new Image("resources/assets/Enemy/StraightEnemyIdle.png"));
                         cell.placeEnemy(sle);
                         sle.setCurrentCell(cell);
                         break;
                     case STE:
                         SmartTargetingEnemy ste = new SmartTargetingEnemy();
-                        ste.setSpriteImage(new Image("resources/assets/Enemy/SmartEnemyIdle.png"));
                         cell.placeEnemy(ste);
                         ste.setCurrentCell(cell);
                         break;
                     case WFE:
                         WallFollowingEnemy wfe = new WallFollowingEnemy();
-                        wfe.setSpriteImage(new Image("resources/assets/Enemy/WallEnemyIdle.png"));
                         cell.placeEnemy(wfe);
                         wfe.setCurrentCell(cell);
                         break;
                     case DTE:
                         DumbTargetingEnemy dte = new DumbTargetingEnemy();
-                        dte.setSpriteImage(new Image("resources/assets/Enemy/DumbEnemyIdle.png"));
                         cell.placeEnemy(dte);
                         dte.setCurrentCell(cell);
                         break;
