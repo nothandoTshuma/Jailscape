@@ -21,7 +21,7 @@ public class UserViewModel extends ViewModel {
      * @param user The user object
      */
     public UserViewModel(User user) {
-        super(new Image("resources/assets/Player/Idle/PlayerIdle_00.png"));
+        super(new Image("resources/assets/Player/Idle/PlayerIdle.gif"));
         this.user = user;
     }
 
