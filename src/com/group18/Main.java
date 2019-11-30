@@ -20,25 +20,21 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-
-
     private static Stage primaryStage;
 
-//    @Override
-//    public void start(Stage primaryStage) {
-////        try {
-//////            BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("/resources/UserSelectionMenu.fxml"));
-//////            Scene scene = new Scene(root, 600, 400);
-//////            this.primaryStage = primaryStage;
-//////            primaryStage.setScene(scene);
-//////            primaryStage.setTitle("User Selection");
-//////            primaryStage.show();
-//////        } catch (IOException e) {
-//////            e.printStackTrace();
-//////        }
-//    }
-
-
+    @Override
+    public void start(Stage primaryStage) {
+       try {
+           BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("/resources/UserSelectionMenu.fxml"));
+            Scene scene = new Scene(root, 600, 400);
+            this.primaryStage = primaryStage;
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("User Selection");
+            primaryStage.show();
+       } catch (IOException e) {
+           e.printStackTrace();
+        }
+    }
 
     public static Stage getPrimaryStage() {
         return primaryStage;
@@ -48,8 +44,5 @@ public class Main extends Application {
         launch(args);
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
 
-    }
 }

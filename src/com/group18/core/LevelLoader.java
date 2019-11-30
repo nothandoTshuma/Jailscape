@@ -35,11 +35,6 @@ public class LevelLoader {
     public static final String DEFAULT_LEVEL_DIRECTORY = "./src/resources/levels/Level";
 
     /**
-     * The directory which will hold all user-saved level files
-     */
-    public static final String SAVED_LEVEL_DIRECTORY =  "./savedlevels/saved-level";
-
-    /**
      * The logger which will allows us to output errors in a nice format
      */
     private static final Logger LOGGER = Logger.getLogger("LevelLoader");
@@ -307,48 +302,48 @@ public class LevelLoader {
         switch (cellType) {
             case WC:
                 cell = new Wall(point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/WallCell.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Wall")));
                 break;
             case GC:
                 cell = new Ground(point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/GroundCell.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Ground")));
                 break;
             case FC:
                 cell = new Element(ElementType.FIRE, point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/FireCell.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Element-Fire")));
                 break;
             case WTC:
                 cell = new Element(ElementType.WATER, point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/WaterCell.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Element-Water")));
                 break;
             case TC:
                 cell = new Teleporter(null, point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/TeleporterCell.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Teleporter")));
                 break;
             case GOC:
                 cell = new Goal(point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/GoalCell.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Goal")));
                 break;
             case GD:
                 cell = new ColourDoor(Colour.GREEN, point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/DoorGreen.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Green-Door")));
                 break;
             case RD:
                 cell = new ColourDoor(Colour.RED, point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/DoorRed.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Red-Door")));
                 break;
             case BD:
                 cell = new ColourDoor(Colour.BLUE, point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/DoorBlue.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Blue-Door")));
                 break;
             case YD:
                 cell = new ColourDoor(Colour.YELLOW, point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/DoorYellow.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Yellow-Door")));
                 break;
             case TD:
                 int tokens = potentialCell.charAt(3);
                 cell = new TokenDoor(tokens, point);
-                cell.setSpriteImage(new Image("resources/assets/Cell/TokenDoor.png"));
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Token-Door")));
             default:
                 break;
         }
@@ -359,7 +354,7 @@ public class LevelLoader {
     /**
      * An enum representing all the cell acronyms in the level file
      */
-    private static enum CellAcronym {
+    private enum CellAcronym {
         WC,
         GC,
         FC,
@@ -376,7 +371,7 @@ public class LevelLoader {
     /**
      * An enum representing all the entity acronyms in the level file
      */
-    private static enum EntityAcronym {
+    private enum EntityAcronym {
         U,
         SLE,
         STE,
@@ -387,7 +382,7 @@ public class LevelLoader {
     /**
      * An item representing all the item acronyms in the level file
      */
-    private static enum ItemAcronym {
+    private enum ItemAcronym {
         FBI,
         FI,
         TKI,

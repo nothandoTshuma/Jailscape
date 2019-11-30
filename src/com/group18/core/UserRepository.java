@@ -107,7 +107,7 @@ public class UserRepository {
         try {
             Files.deleteIfExists(Paths.get(USER_DIRECTORY + "/" + fileName));
         } catch (IOException ex) {
-            LOGGER.log(WARNING, "This user has now been delete", ex);
+            LOGGER.log(WARNING, "This user has now been deleted", ex);
             //TODO:drt - Alert the user that it's been delete
         }
     }
