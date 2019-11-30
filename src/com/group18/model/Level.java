@@ -10,6 +10,9 @@ import com.group18.model.entity.User;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.WARNING;
 
 
 /**
@@ -18,6 +21,18 @@ import java.util.List;
  * @author danielturato
  */
 public class Level {
+
+    /**
+     * The game controller which will control the graphical representation of each level.
+     * We can then communicate problems in the backend with the front-end
+     */
+    private static final GameController GAME_CONTROLLER = new GameController();
+
+    /**
+     * Used to log errors to the console
+     */
+    private static final Logger LOGGER = Logger.getLogger("Level");
+
 
     /**
      * The board for this level, holding Level.rows x Level.columns of cells.
@@ -79,6 +94,12 @@ public class Level {
         return validMoveToCell(getCell(newPosition), entity);
     }
 
+    /**
+     * Here, we move the enemy in the direction they calculated to move in.
+     * There direction will always be a valid one, based on calculation.
+     * @param enemy The enemy who wishes to move
+     * @param direction The direction in which the enemy wishes to move in
+     */
     public void moveEnemy(Enemy enemy, Direction direction) {
         Point newPosition = calculateNewPosition(enemy.getCurrentCell().getPosition(), direction);
 
@@ -92,10 +113,10 @@ public class Level {
             enemy.setDirection(direction);
 
             if (newCell.hasPlayerAndEnemy()) {
-                GameController.triggerAlert("GAME LOST", State.LEVEL_LOST);
+                GAME_CONTROLLER.triggerAlert("GAME LOST", State.LEVEL_LOST);
             }
         } catch (InvalidMoveException ex) {
-            //TODO:drt handle or throw from method
+            LOGGER.log(WARNING, "This enemy is attempting to move to an invalid cell", ex);
         }
     }
 
@@ -114,15 +135,21 @@ public class Level {
 
             oldCell.removeEntity(user);
 
-            // At this point, the move has been deemed valid.
-            // Therefore, the newCell must be either be a ground cell or a door which can be opened.
+            if (newCell instanceof Element) {
+                Element element = (Element) newCell;
+                ((Element) newCell).toggleAction(user);
+            }
+
             if (newCell instanceof Door) {
-                //TODO: if door is coloured, we need to consume the key colour
-                //TODO: then trigger animations/sounds registering the door is unlocked
+                Door door = (Door) newCell;
+
+                if (door instanceof ColourDoor) {
+                   ((ColourDoor) door).toggleAction(user);
+                   //TODO:drt - Replace cell
+                    //TODO:drt - Then move them on to the replaced door
+                }
+                //TODO: move them 1 space over the token door.
                 //TODO: then we to recalculate & re-verify the user can reach at least +1 in multiple directions
-                //TODO: if they can't then they shouldn't be able to open the door
-                //TODO: but if they can , then continue
-                //TODO: then move the user.
             } else {
                 newCell.placePlayer(user);
                 user.setCurrentCell(newCell);

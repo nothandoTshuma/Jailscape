@@ -1,5 +1,6 @@
 package com.group18.viewmodel;
 
+import com.group18.core.ResourceRepository;
 import com.group18.model.entity.User;
 import javafx.scene.image.Image;
 
@@ -21,7 +22,7 @@ public class UserViewModel extends ViewModel {
      * @param user The user object
      */
     public UserViewModel(User user) {
-        super(new Image("resources/assets/Player/Idle/PlayerIdle.gif"));
+        super(new Image(ResourceRepository.getResource("User-Idle")));
         this.user = user;
     }
 
