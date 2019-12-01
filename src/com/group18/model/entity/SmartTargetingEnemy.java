@@ -17,6 +17,7 @@ import static com.group18.model.Direction.*;
 
 /**
  * This enemy moves towards the User by finding the shortest viable path.
+ *
  * @author danielturato
  */
 public class SmartTargetingEnemy extends Enemy {
@@ -38,7 +39,11 @@ public class SmartTargetingEnemy extends Enemy {
         try {
             List<Node> shortestPath = findShortestPath(graph, start, target);
 
-            return calculateDirection(shortestPath.get(1).getPosition());
+            if (shortestPath.size() > 1) {
+                return calculateDirection(shortestPath.get(1).getPosition());
+            }
+
+            return IDLE;
 
         } catch (ShortestPathNotFoundException ex) {
 

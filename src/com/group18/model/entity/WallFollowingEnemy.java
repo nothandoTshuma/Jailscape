@@ -14,6 +14,7 @@ import static com.group18.model.Direction.*;
 
 /**
  * An enemy that randomly follows the path in front of them
+ *
  * @author danielturato
  */
 public class WallFollowingEnemy extends Enemy {

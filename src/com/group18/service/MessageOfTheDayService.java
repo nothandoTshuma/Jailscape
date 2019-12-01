@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 /**
  * This service will be responsible of retrieving the message of the day,
  * at any particular time of day.
+ *
  * @author danielturato
  */
 public class MessageOfTheDayService {
