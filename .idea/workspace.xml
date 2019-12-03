@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="204d656e-eb5b-49c4-af7b-0ff1a5934e16" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/resources/MessageOfTheDayDisplay.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/LeaderBoard.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/MainMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/UserSelectionMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/UserSelectionMenu.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -82,6 +80,14 @@
       <option name="presentableId" value="Default" />
       <updated>1574942191631</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added new fxml files: Alert message, main menu, message of the day display, new user, user profile and user selection menu.">
+      <created>1575383148416</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1575383148416</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -96,5 +102,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added new fxml files: Alert message, main menu, message of the day display, new user, user profile and user selection menu." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added new fxml files: Alert message, main menu, message of the day display, new user, user profile and user selection menu." />
   </component>
 </project>
