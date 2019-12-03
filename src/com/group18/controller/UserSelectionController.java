@@ -2,6 +2,8 @@ package com.group18.controller;
 
 import com.group18.core.DeleteUserFromFile;
 import com.group18.core.FileReader;
+import com.group18.core.UserRepository;
+import com.group18.model.entity.User;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +28,7 @@ public class UserSelectionController extends MenuController {
 
     private ObservableList observableList = FXCollections.observableArrayList();
     private String chosenUserName;
+    public static User user;
 
     public void initialize(){
         goButton.setOnAction(e -> {
@@ -44,9 +47,9 @@ public class UserSelectionController extends MenuController {
 
     private void loadData(){
         observableList.removeAll(observableList);
-        ArrayList<String> list = getUserNames(FileReader.getFileLines("./src/resources/UserNames.txt"));
-        for (int i = 0; i < list.size(); i++) {
-            observableList.add(list.get(i));
+        List<User> userList = UserRepository.getAll();
+        for (int i = 0; i < userList.size(); i++) {
+            observableList.add(userList.get(i).getUsername());
         }
         userListView.getItems().addAll(observableList);
     }
@@ -54,25 +57,17 @@ public class UserSelectionController extends MenuController {
     private void handleGoButtonAction(){
        if (userListView.getSelectionModel().getSelectedItem() != null) {
            chosenUserName = (String) userListView.getSelectionModel().getSelectedItem();
+           user = UserRepository.get("./src/resources/users" + chosenUserName + ".ser");
            loadFXMLScene("/resources/MainMenu.fxml", "Main Menu");
        }
     }
 
     private void handleCreateButtonAction(){
-        loadFXMLScene("/resources/CreateUserMenu.fxml", "Create User");
+        loadFXMLScene("/resources/NewUser.fxml", "Create User");
     }
 
     private void handleExitButtonAction(){
         Platform.exit();
         System.exit(0);
-    }
-
-    private ArrayList<String> getUserNames(ArrayList<String> list) {
-        ArrayList<String> userNameList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            String[] tempList = list.get(i).split(",");
-            userNameList.add(tempList[0]);
-        }
-        return userNameList;
     }
 }

@@ -8,17 +8,17 @@ import javafx.scene.control.TextField;
 
 public class CreateUserMenuController extends MenuController{
     @FXML TextField userNameTextField;
-    @FXML Button createButton;
-    @FXML Button backButton;
+    @FXML Button saveButton;
+    @FXML Button cancelButton;
 
     private String userName;
 
     public void initialize() {
-        createButton.setOnAction(e -> {
+        saveButton.setOnAction(e -> {
             handleCreateButtonAction();
         });
 
-        backButton.setOnAction(e -> {
+        cancelButton.setOnAction(e -> {
             handleBackButtonAction();
         });
     }
