@@ -7,17 +7,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserSelectionController extends MenuController {
-    @FXML ListView<String> usersListView;
-    @FXML Button goButton;
-    @FXML Button createButton;
-    @FXML Button deleteButton;
+
+
     @FXML Button exitButton;
+    @FXML Button goButton;
+    @FXML Button createProfileButton;
+    @FXML ListView userListView;
+
 
     private ObservableList observableList = FXCollections.observableArrayList();
     private String chosenUserName;
@@ -27,12 +32,8 @@ public class UserSelectionController extends MenuController {
             handleGoButtonAction();
         });
 
-        createButton.setOnAction(e -> {
+        createProfileButton.setOnAction(e -> {
             handleCreateButtonAction();
-        });
-
-        deleteButton.setOnAction(e -> {
-            handleDeleteButtonAction();
         });
 
         exitButton.setOnAction(e -> {
@@ -47,27 +48,18 @@ public class UserSelectionController extends MenuController {
         for (int i = 0; i < list.size(); i++) {
             observableList.add(list.get(i));
         }
-        usersListView.getItems().addAll(observableList);
+        userListView.getItems().addAll(observableList);
     }
 
     private void handleGoButtonAction(){
-       if (usersListView.getSelectionModel().getSelectedItem() != null) {
-           chosenUserName = usersListView.getSelectionModel().getSelectedItem();
+       if (userListView.getSelectionModel().getSelectedItem() != null) {
+           chosenUserName = (String) userListView.getSelectionModel().getSelectedItem();
            loadFXMLScene("/resources/MainMenu.fxml", "Main Menu");
        }
     }
 
     private void handleCreateButtonAction(){
         loadFXMLScene("/resources/CreateUserMenu.fxml", "Create User");
-    }
-
-    private void handleDeleteButtonAction(){
-        if (usersListView.getSelectionModel().getSelectedItem() != null) {
-            chosenUserName = usersListView.getSelectionModel().getSelectedItem();
-            DeleteUserFromFile deleteUserFromFile = new DeleteUserFromFile(chosenUserName);
-            usersListView.getItems().clear();
-            loadData();
-        }
     }
 
     private void handleExitButtonAction(){
@@ -83,5 +75,4 @@ public class UserSelectionController extends MenuController {
         }
         return userNameList;
     }
-
 }

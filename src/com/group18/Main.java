@@ -25,11 +25,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
        try {
-           BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("/resources/UserSelectionMenu.fxml"));
+           BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("/resources/MessageOfTheDayDisplay.fxml"));
             Scene scene = new Scene(root, 600, 400);
             this.primaryStage = primaryStage;
             primaryStage.setScene(scene);
-            primaryStage.setTitle("User Selection");
+            primaryStage.setTitle("Message Of The Day");
             primaryStage.show();
        } catch (IOException e) {
            e.printStackTrace();
