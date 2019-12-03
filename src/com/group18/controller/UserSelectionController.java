@@ -23,6 +23,7 @@ public class UserSelectionController extends MenuController {
     @FXML Button exitButton;
     @FXML Button goButton;
     @FXML Button createProfileButton;
+    @FXML Button deleteButton;
     @FXML ListView userListView;
 
 
@@ -42,10 +43,16 @@ public class UserSelectionController extends MenuController {
         exitButton.setOnAction(e -> {
             handleExitButtonAction();
         });
+
+        deleteButton.setOnAction(e -> {
+            handleDeleteButtonAction();
+        });
+
         loadData();
     }
 
     private void loadData(){
+        userListView.getItems().clear();
         observableList.removeAll(observableList);
         List<User> userList = UserRepository.getAll();
         for (int i = 0; i < userList.size(); i++) {
@@ -57,7 +64,7 @@ public class UserSelectionController extends MenuController {
     private void handleGoButtonAction(){
        if (userListView.getSelectionModel().getSelectedItem() != null) {
            chosenUserName = (String) userListView.getSelectionModel().getSelectedItem();
-           user = UserRepository.get("./src/resources/users" + chosenUserName + ".ser");
+           user = UserRepository.get("./src/resources/users/" + chosenUserName + ".ser");
            loadFXMLScene("/resources/MainMenu.fxml", "Main Menu");
        }
     }
@@ -69,5 +76,13 @@ public class UserSelectionController extends MenuController {
     private void handleExitButtonAction(){
         Platform.exit();
         System.exit(0);
+    }
+
+    private void handleDeleteButtonAction() {
+        if (userListView.getSelectionModel().getSelectedItem() != null) {
+            chosenUserName = (String) userListView.getSelectionModel().getSelectedItem();
+            UserRepository.delete(chosenUserName + ".ser");
+            loadData();
+        }
     }
 }

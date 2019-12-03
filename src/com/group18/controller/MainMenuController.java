@@ -64,7 +64,7 @@ public class MainMenuController extends MenuController {
     }
 
     private void handleHighScoreButtonAction() {
-        loadFXMLScene("/resources/HighScoreMenu.fxml", "High Score Menu");
+        loadFXMLScene("/resources/LeaderBoard.fxml", "High Score Menu");
     }
 
     private void handleExitButtonAction() {

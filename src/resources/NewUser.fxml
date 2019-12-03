@@ -19,22 +19,17 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="saveButton" layoutX="25.0" layoutY="319.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" text="Save">
+            <Button fx:id="saveButton" layoutX="110.0" layoutY="319.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" text="Save">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="cancelButton" layoutX="435.0" layoutY="319.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" text="Cancel">
+            <Button fx:id="cancelButton" layoutX="350.0" layoutY="319.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" text="Cancel">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
             <TextField fx:id="userNameTextField" layoutX="296.0" layoutY="207.0" promptText="User Name" />
-            <Button fx:id="deleteButton" layoutX="230.0" layoutY="319.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" text="Delete">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Button>
          </children>
       </Pane>
    </center>
