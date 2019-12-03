@@ -10,6 +10,7 @@ import com.group18.model.entity.*;
 import com.group18.model.item.ElementItem;
 import com.group18.model.item.Key;
 import com.sun.javafx.util.Logging;
+import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.io.File;
@@ -31,12 +32,7 @@ public class LevelLoader {
     /**
      * The directory which will hold all the default level files
      */
-    public static final String DEFAULT_LEVEL_DIRECTORY = "./levels/level";
-
-    /**
-     * The directory which will hold all user-saved level files
-     */
-    public static final String SAVED_LEVEL_DIRECTORY =  "./savedlevels/saved-level";
+    public static final String DEFAULT_LEVEL_DIRECTORY = "./src/resources/levels/Level";
 
     /**
      * The logger which will allows us to output errors in a nice format
@@ -83,9 +79,12 @@ public class LevelLoader {
                 lineCounter++;
             }
 
-            setTeleporterPartners(cells);
 
-            return new Level(cells);
+            setTeleporterPartners(cells);
+            Level levelObj = new Level(cells);
+            setLevelFor(cells, levelObj);
+
+            return levelObj;
 
         } catch (FileNotFoundException ex) {
             LOGGER.log(WARNING, String.format("Level file %s does not exist", level), ex);
@@ -95,15 +94,27 @@ public class LevelLoader {
     }
 
     /**
+     * Set the level for each cell
+     * @param cells The cells in the level
+     * @param levelObj The level object
+     */
+    private static void setLevelFor(Cell[][] cells, Level levelObj) {
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
+                cells[i][j].setLevel(levelObj);
+            }
+        }
+    }
+
+    /**
      * There will only ever be one teleporter per level. So after all the cells are set
      * we iterate over the cells, and partner up the teleporters
      * @param cells
      */
     private static void setTeleporterPartners(Cell[][] cells) {
         Teleporter teleporter = null;
-
         for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[0].length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
                 if (cells[i][j] instanceof Teleporter) {
                     if (teleporter == null) {
                         teleporter = (Teleporter) cells[i][j];
@@ -126,6 +137,7 @@ public class LevelLoader {
      */
     private static void fillCell(Scanner line, Point point, Cell[][] cells, User user) {
         Cell cell = createNewCell(line, point);
+        cell.setCoordinates(point);
         placeEntity(line, cell, user);
         String potentialDirection = line.next();
 
@@ -138,6 +150,7 @@ public class LevelLoader {
             setItem(cell, potentialItem);
         }
 
+        cells[(int) point.getY()][(int) point.getX()] = cell;
     }
 
     /**
@@ -240,7 +253,7 @@ public class LevelLoader {
                         cell.placePlayer(user);
                         user.setCurrentCell(cell);
                         break;
-                    case STLE:
+                    case SLE:
                         StraightLineEnemy sle = new StraightLineEnemy(null);
                         cell.placeEnemy(sle);
                         sle.setCurrentCell(cell);
@@ -277,45 +290,60 @@ public class LevelLoader {
      */
     private static Cell createNewCell(Scanner line, Point point) {
         String potentialCell = line.next();
-        CellAcronym cellType = potentialCell.substring(0,3).equals("TD")
-                               ? CellAcronym.TD : CellAcronym.valueOf(potentialCell);
+        CellAcronym cellType;
+        if (potentialCell.length() > 2) {
+            cellType = CellAcronym.TD;
+        } else {
+            cellType = CellAcronym.valueOf(potentialCell);
+        }
 
         Cell cell = null;
 
         switch (cellType) {
             case WC:
                 cell = new Wall(point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Wall")));
                 break;
             case GC:
                 cell = new Ground(point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Ground")));
                 break;
             case FC:
                 cell = new Element(ElementType.FIRE, point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Element-Fire")));
                 break;
             case WTC:
                 cell = new Element(ElementType.WATER, point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Element-Water")));
                 break;
             case TC:
                 cell = new Teleporter(null, point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Teleporter")));
                 break;
             case GOC:
                 cell = new Goal(point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Goal")));
                 break;
             case GD:
                 cell = new ColourDoor(Colour.GREEN, point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Green-Door")));
                 break;
             case RD:
                 cell = new ColourDoor(Colour.RED, point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Red-Door")));
                 break;
             case BD:
                 cell = new ColourDoor(Colour.BLUE, point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Blue-Door")));
                 break;
             case YD:
                 cell = new ColourDoor(Colour.YELLOW, point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Yellow-Door")));
                 break;
             case TD:
                 int tokens = potentialCell.charAt(3);
                 cell = new TokenDoor(tokens, point);
+                cell.setSpriteImage(new Image(ResourceRepository.getResource("Token-Door")));
             default:
                 break;
         }
@@ -326,7 +354,7 @@ public class LevelLoader {
     /**
      * An enum representing all the cell acronyms in the level file
      */
-    private static enum CellAcronym {
+    private enum CellAcronym {
         WC,
         GC,
         FC,
@@ -343,9 +371,9 @@ public class LevelLoader {
     /**
      * An enum representing all the entity acronyms in the level file
      */
-    private static enum EntityAcronym {
+    private enum EntityAcronym {
         U,
-        STLE,
+        SLE,
         STE,
         WFE,
         DTE;
@@ -354,7 +382,7 @@ public class LevelLoader {
     /**
      * An item representing all the item acronyms in the level file
      */
-    private static enum ItemAcronym {
+    private enum ItemAcronym {
         FBI,
         FI,
         TKI,

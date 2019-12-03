@@ -1,5 +1,6 @@
 package com.group18.model;
 
+import com.group18.controller.GameController;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.cell.*;
 import com.group18.model.entity.Enemy;
@@ -9,6 +10,9 @@ import com.group18.model.entity.User;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.WARNING;
 
 
 /**
@@ -17,6 +21,18 @@ import java.util.List;
  * @author danielturato
  */
 public class Level {
+
+    /**
+     * The game controller which will control the graphical representation of each level.
+     * We can then communicate problems in the backend with the front-end
+     */
+    private static final GameController GAME_CONTROLLER = new GameController();
+
+    /**
+     * Used to log errors to the console
+     */
+    private static final Logger LOGGER = Logger.getLogger("Level");
+
 
     /**
      * The board for this level, holding Level.rows x Level.columns of cells.
@@ -79,6 +95,32 @@ public class Level {
     }
 
     /**
+     * Here, we move the enemy in the direction they calculated to move in.
+     * There direction will always be a valid one, based on calculation.
+     * @param enemy The enemy who wishes to move
+     * @param direction The direction in which the enemy wishes to move in
+     */
+    public void moveEnemy(Enemy enemy, Direction direction) {
+        Point newPosition = calculateNewPosition(enemy.getCurrentCell().getPosition(), direction);
+
+        Cell newCell = getCell(newPosition);
+        Cell oldCell = enemy.getCurrentCell();
+
+        oldCell.removeEntity(enemy);
+        try {
+            newCell.placeEnemy(enemy);
+            enemy.setCurrentCell(newCell);
+            enemy.setDirection(direction);
+
+            if (newCell.hasPlayerAndEnemy()) {
+                GAME_CONTROLLER.triggerAlert("GAME LOST", State.LEVEL_LOST);
+            }
+        } catch (InvalidMoveException ex) {
+            LOGGER.log(WARNING, "This enemy is attempting to move to an invalid cell", ex);
+        }
+    }
+
+    /**
      * Here, we attempt to move a user in a direction they wish to move in
      * @param user The user who wishes to move
      * @param direction The direction in which the user wishes to move in
@@ -93,15 +135,21 @@ public class Level {
 
             oldCell.removeEntity(user);
 
-            // At this point, the move has been deemed valid.
-            // Therefore, the newCell must be either be a ground cell or a door which can be opened.
+            if (newCell instanceof Element) {
+                Element element = (Element) newCell;
+                ((Element) newCell).toggleAction(user);
+            }
+
             if (newCell instanceof Door) {
-                //TODO: if door is coloured, we need to consume the key colour
-                //TODO: then trigger animations/sounds registering the door is unlocked
+                Door door = (Door) newCell;
+
+                if (door instanceof ColourDoor) {
+                   ((ColourDoor) door).toggleAction(user);
+                   //TODO:drt - Replace cell
+                    //TODO:drt - Then move them on to the replaced door
+                }
+                //TODO: move them 1 space over the token door.
                 //TODO: then we to recalculate & re-verify the user can reach at least +1 in multiple directions
-                //TODO: if they can't then they shouldn't be able to open the door
-                //TODO: but if they can , then continue
-                //TODO: then move the user.
             } else {
                 newCell.placePlayer(user);
                 user.setCurrentCell(newCell);
@@ -152,8 +200,6 @@ public class Level {
         return getAdjacentCells(cellPosition);
     }
 
-    public void moveEnemy(Enemy enemy, Direction direction) {}
-
     public boolean isEnemyClose(User user) {
         return false;
     }
@@ -180,12 +226,12 @@ public class Level {
 
     /**
      * Get the cell at a specific point
-     * @param row The row the cell is at
-     * @param column The column the cell is at
+     * @param y The y the cell is at
+     * @param x The x the cell is at
      * @return The cell at the specific row & column
      */
-    private Cell getCell(int row, int column) {
-        return getCell(new Point(row, column));
+    private Cell getCell(int y, int x) {
+        return getCell(new Point(x, y));
     }
 
     private void removeCell(Point point) {}

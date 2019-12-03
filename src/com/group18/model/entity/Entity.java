@@ -2,6 +2,7 @@ package com.group18.model.entity;
 
 import com.group18.model.Direction;
 import com.group18.model.cell.Cell;
+import javafx.scene.image.Image;
 
 import java.beans.*;
 import java.io.Serializable;

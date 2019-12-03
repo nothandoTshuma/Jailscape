@@ -6,15 +6,15 @@ import com.group18.model.cell.Cell;
 import com.group18.model.cell.Wall;
 
 import java.awt.*;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import static com.group18.model.Direction.*;
 
 /**
  * An enemy that randomly follows the path in front of them
+ *
  * @author danielturato
  */
 public class WallFollowingEnemy extends Enemy {
@@ -100,6 +100,8 @@ public class WallFollowingEnemy extends Enemy {
         Point currentPosition = this.getCurrentCell().getPosition();
 
         // Loop through each possible valid direction to move in
+        List<Direction> directionsToRemove = new ArrayList<>();
+
         for (Direction direction : validDirections) {
             int x = (int) currentPosition.getX();
             int y = (int) currentPosition.getY();
@@ -125,6 +127,7 @@ public class WallFollowingEnemy extends Enemy {
             List<Cell> adjacentCells = level.getAdjacentCells(new Point(x, y));
             adjacentCells.remove(this.getCurrentCell());
 
+
             // Now loop through the adjacent cells and check there's at least one wall adjacent to the
             // possible new position
             boolean isValidDirection = false;
@@ -137,9 +140,11 @@ public class WallFollowingEnemy extends Enemy {
             // If the possible direction lands them in a cell with no adjacent wall cells,
             // then this direction is no longer valid.
             if (!(isValidDirection)) {
-                validDirections.remove(direction);
+                directionsToRemove.add(direction);
             }
         }
+        validDirections.removeAll(directionsToRemove);
+
     }
 
     /**

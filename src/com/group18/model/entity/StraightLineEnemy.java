@@ -77,10 +77,14 @@ public class StraightLineEnemy extends Enemy {
     public void setOrientation(Direction direction) {
         if (direction == LEFT || direction == RIGHT) {
             this.orientation = Orientation.HORIZONTAL;
+        } else if (direction == UP || direction == DOWN) {
+            this.orientation = Orientation.VERTICAL;
+        } else {
+            this.orientation = Orientation.HORIZONTAL;
         }
+    }
 
-        //Even if they're idle, it doesn't matter what they're orientation is.
-        this.orientation = Orientation.VERTICAL;
-
+    public Orientation getOrientation() {
+        return orientation;
     }
 }
