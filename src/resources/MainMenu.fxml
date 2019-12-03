@@ -1,74 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.MainMenuController">
-   <top>
-      <VBox alignment="TOP_CENTER" prefHeight="85.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="JailScape">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-            <Label fx:id="messageOfDayLabel" />
-         </children>
-      </VBox>
-   </top>
-   <bottom>
-      <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="exitButton" mnemonicParsing="false" text="Exit">
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="changeUserButton" mnemonicParsing="false" text="Change User">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Button>
-            <Label fx:id="userNameLabel" nodeOrientation="RIGHT_TO_LEFT">
-               <HBox.margin>
-                  <Insets left="350.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
-   </bottom>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.MenuMenu">
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="412.0" prefWidth="600.0" style="-fx-background-image: url(&quot;https://imgur.com/gQasDwv.png&quot;);" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="levelsButton" mnemonicParsing="false" text="Levels">
-               <VBox.margin>
-                  <Insets bottom="50.0" />
-               </VBox.margin>
+            <Label alignment="TOP_CENTER" layoutY="1.0" prefHeight="56.0" prefWidth="600.0" text="JailScape" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="45.0" />
                </font>
-               <padding>
-                  <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
-               </padding>
-            </Button>
-            <Button fx:id="highScoreButton" mnemonicParsing="false" text="HighScore">
+            </Label>
+            <Button layoutX="68.0" layoutY="67.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="88.0" style="-fx-background-image: url(&quot;https://imgur.com/7CpqXTO.png&quot;);" />
+            <Button layoutX="429.0" layoutY="67.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="101.0" style="-fx-background-image: url(&quot;https://imgur.com/fGZQsP9.jpg&quot;);" />
+            <Button layoutX="62.0" layoutY="224.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-image: url(&quot;https://imgur.com/DZNDqRw.png&quot;);" />
+            <Button layoutX="430.0" layoutY="224.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-image: url(&quot;https://imgur.com/57UtgHt.png&quot;);" />
+            <Button layoutX="52.0" layoutY="170.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Levels">
                <font>
-                  <Font size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
-               </padding>
-            </Button>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button layoutX="420.0" layoutY="170.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Leader Board">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button layoutX="52.0" layoutY="327.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Users">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button layoutX="420.0" layoutY="327.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Exit">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button layoutX="250.0" layoutY="155.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="100.0" style="-fx-background-image: url(&quot;https://imgur.com/pow1nb4.png&quot;);" />
+            <Button layoutX="250.0" layoutY="220.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="START!">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
          </children>
-      </VBox>
+      </Pane>
    </center>
 </BorderPane>
