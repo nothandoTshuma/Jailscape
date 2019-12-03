@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.UserProfile">
+   <center>
+      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(&quot;https://imgur.com/gQasDwv.png&quot;);" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="TOP_CENTER" layoutX="9.0" prefHeight="52.0" prefWidth="583.0" text="Nothando" textFill="#fffefe">
+               <font>
+                  <Font name="System Bold" size="45.0" />
+               </font></Label>
+            <Label layoutX="113.0" layoutY="185.0" text="Select new username:" textFill="#fffbfb">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="183.0" layoutY="222.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="236.0" text="Play with this user">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="183.0" layoutY="276.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="236.0" text="Delete user profile">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="183.0" layoutY="330.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" text="Save">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="319.0" layoutY="330.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" text="Cancel">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <TextField layoutX="319.0" layoutY="188.0" />
+            <Label layoutX="250.0" layoutY="66.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-image: url(&quot;https://imgur.com/DZNDqRw.png&quot;);" />
+         </children></Pane>
+   </center>
+</BorderPane>
