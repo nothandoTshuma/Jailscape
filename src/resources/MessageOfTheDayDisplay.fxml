@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.MessageOfTheDayDisplay">
+   <left>
+      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(&quot;https://imgur.com/GHAqTex.png&quot;);" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="TOP_CENTER" layoutX="143.0" layoutY="24.0" prefHeight="60.0" prefWidth="436.0" text="Message of the day!" textAlignment="CENTER">
+               <font>
+                  <Font name="Niagara Solid" size="45.0" />
+               </font>
+            </Label>
+            <Label layoutX="148.0" layoutY="4.0" prefHeight="100.0" prefWidth="100.0" rotate="17.4" style="-fx-background-image: url(&quot;https://imgur.com/CVca8a3.png&quot;);" />
+            <Label layoutX="94.0" layoutY="175.0" prefHeight="109.0" prefWidth="412.0" style="-fx-background-image: url(&quot;https://imgur.com/q79NOVz.png&quot;);" text="Before you judge a man, walk a mile in his shoes. After that who cares?... He’s a mile away and you’ve got his shoes!— Billy Connolly" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Times New Roman" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="8.0" layoutY="87.0" prefHeight="101.0" prefWidth="133.0" style="-fx-background-image: url(&quot;https://imgur.com/ma5Iloq.png&quot;);" />
+            <Label layoutX="458.0" layoutY="265.0" prefHeight="101.0" prefWidth="131.0" rotate="179.2" style="-fx-background-image: url(&quot;https://imgur.com/ma5Iloq.png&quot;);" />
+            <Button layoutX="180.0" layoutY="316.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Okay!">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="311.0" layoutY="316.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Copy text">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+         </children></Pane>
+   </left>
+</BorderPane>
