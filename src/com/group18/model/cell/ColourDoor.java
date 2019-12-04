@@ -1,5 +1,6 @@
 package com.group18.model.cell;
 
+import com.group18.controller.GameController;
 import com.group18.model.Actionable;
 import com.group18.model.Colour;
 import com.group18.model.entity.Entity;
@@ -41,9 +42,16 @@ public class ColourDoor extends Wall implements Door, Actionable {
 
             if (canOpen(user)) {
                 user.consumeKey(colour);
-                //TODO add animations links
+                GameController.playSound("DoorOpen");
             }
         }
     }
 
+    /**
+     * Get the colour of this door
+     * @return The colour of the door
+     */
+    public Colour getColour() {
+        return colour;
+    }
 }

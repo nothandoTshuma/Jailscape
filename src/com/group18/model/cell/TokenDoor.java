@@ -1,5 +1,6 @@
 package com.group18.model.cell;
 
+import com.group18.controller.GameController;
 import com.group18.model.Actionable;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
@@ -31,8 +32,8 @@ public class TokenDoor extends Wall implements Door, Actionable {
      * @param user checks if it can open the door
      * @return boolean value suggesting if the door can be opened.
      */
-    public boolean canOpen(User user)
-    {
+    public boolean canOpen(User user) {
+
         return user.getTokens() >= this.tokens;
     }
 
@@ -43,8 +44,16 @@ public class TokenDoor extends Wall implements Door, Actionable {
             User user = (User) entity;
 
             if (user.getTokens() >= this.tokens) {
-                //TODO - trigger animations & sounds
+                GameController.playSound("DoorOpen");
             }
         }
+    }
+
+    /**
+     * Get the ammount of tokens needed to open this door
+     * @return Get the tokens for this door
+     */
+    public int getTokens() {
+        return tokens;
     }
 }

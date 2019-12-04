@@ -2,15 +2,20 @@ package com.group18.controller;
 
 
 import com.group18.core.LevelLoader;
+import com.group18.core.LevelSaver;
 import com.group18.core.ResourceRepository;
 import com.group18.exception.InvalidLevelException;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Direction;
 import com.group18.model.Level;
 import com.group18.model.State;
-import com.group18.model.cell.Cell;
+import com.group18.model.cell.*;
 import com.group18.model.entity.*;
+import com.group18.model.item.Collectable;
+import com.group18.model.item.ElementItem;
+import com.group18.model.item.Key;
 import com.group18.viewmodel.EnemyViewModel;
+import com.group18.viewmodel.ItemViewModel;
 import com.group18.viewmodel.UserViewModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -34,6 +39,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
@@ -41,8 +50,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.awt.*;
+import java.io.File;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -75,17 +87,22 @@ public class GameController extends Application {
     /**
      * The level object associated with this level
      */
-    private Level level;
+    private static Level level;
 
     /**
      * The user view model associated with this level
      */
-    private UserViewModel userViewModel;
+    private static UserViewModel userViewModel;
 
     /**
      * The enemy view models associated with this level
      */
     private List<EnemyViewModel> enemyViewModels = new ArrayList<>();
+
+    /**
+     * The item view models associated with this level
+     */
+    private List<ItemViewModel> itemViewModels = new ArrayList<>();
 
     /**
      * The current width of this level
@@ -105,7 +122,7 @@ public class GameController extends Application {
     /**
      * The board pane for this controller
      */
-    private Pane boardPane;
+    private static Pane boardPane;
 
     /**
      * The primary stage for this controller
@@ -115,44 +132,34 @@ public class GameController extends Application {
     /**
      * The initial epoch start time for this level
      */
-    private Instant startTime;
+    private static Instant startTime;
 
     /**
      * The total elapsed pause time for this level
      */
-    private Long totalPausedTime = 0L;
+    private static Long totalPausedTime = 0L;
 
     /**
      * The current level number for this controller
      */
-    private int currentLevel;
+    private static int currentLevel;
 
     /**
-     * The alert label for this Controller
+     * The group which holds all images of all cells
      */
-    private Label alertLabel;
+    private static Group cellImages;
 
     /**
-     * The alert service for this controller
+     * Holds if the current animation of a user has been completed
      */
-    private Service alertService = new AlertService();
+    private boolean animationCompleted = true;
 
     /**
-     * An alert service which will wait 3 seconds.
-     * Used to display alerts to the user for a short amount of time.
+     * The background music player for the game
      */
-    class AlertService extends Service<Void> {
-        @Override
-        protected Task<Void> createTask() {
-            return new Task<Void>() {
-                @Override
-                protected Void call() throws Exception {
-                    Thread.sleep(3000);
-                    return null;
-                }
-            };
-        }
-    }
+    private static MediaPlayer backgroundMusicPlayer;
+
+
 
     /**
      * The start method, that will initialise the whole game in which the user
@@ -166,9 +173,8 @@ public class GameController extends Application {
         ResourceRepository.createResourceMap();
         loadLevel();
         createBoard();
-        createAlertLabel();
 
-        Scene scene = new Scene(new BorderPane(this.boardPane),500,500);
+        Scene scene = new Scene(new BorderPane(boardPane),500,500);
         restrictView(scene);
 
         this.currentState = State.IN_PROGRESS;
@@ -179,25 +185,9 @@ public class GameController extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         startTime = Instant.now();
+        playSound("BackgroundMusic");
     }
 
-    /**
-     * Creates an alert label, that allows the game to alert the user
-     * in changes they need knowledge of
-     */
-    private void createAlertLabel() {
-        Label alert = new Label();
-        alert.setStyle("-fx-background-color: white");
-        alert.setVisible(false);
-        this.alertLabel = alert;
-
-        alertService.setOnSucceeded(e -> {
-            alert.setVisible(false);
-            alertService.reset();
-        });
-
-        this.boardPane.getChildren().addAll(alert);
-    }
 
     /**
      * Restrict the view, so the user can only view a specific section of the game
@@ -208,7 +198,7 @@ public class GameController extends Application {
         clip.widthProperty().bind(scene.widthProperty());
         clip.heightProperty().bind(scene.heightProperty());
 
-        ImageView userImageView = this.userViewModel.getImageView();
+        ImageView userImageView = userViewModel.getImageView();
         clip.xProperty().bind(Bindings.createDoubleBinding(() ->
                         clampRange(userImageView.getX() - scene.getWidth() / 2,
                                 0, boardPane.getWidth() - scene.getWidth()),
@@ -230,8 +220,9 @@ public class GameController extends Application {
      */
     private void createBoard() {
         Pane pane = drawCells(level);
-        this.boardPane = pane;
-        drawEntities(pane, level);
+        boardPane = pane;
+        drawAssets(pane, level);
+
     }
 
     /**
@@ -242,8 +233,10 @@ public class GameController extends Application {
         User user = new User("Daniel");
         //TODO:drt - Set level!
         currentLevel = 1;
-        Level level = LevelLoader.loadLevel(1, user);
-        this.level = level;
+        //Level level = LevelLoader.loadLevel(1, user);
+        Level curLevel = LevelLoader.loadLevel(1, user);
+        level = curLevel;
+
     }
 
     /**
@@ -251,7 +244,7 @@ public class GameController extends Application {
      * @param pane The pane the entities will be drawn on
      * @param level The level object that these entities are on
      */
-    private void drawEntities(Pane pane, Level level) {
+    private void drawAssets(Pane pane, Level level) {
         Cell[][] cells = level.getBoard();
 
         Group sprites = new Group();
@@ -262,8 +255,8 @@ public class GameController extends Application {
                     Entity entity = cell.getCurrentEntities().get(0);
                     if (entity instanceof User) {
                         //TODO:drt - Don't create new user view model after implementing user loading
-                        this.userViewModel = new UserViewModel((User) entity);
-                        this.userViewModel.setImageView(j, i);
+                        userViewModel = new UserViewModel((User) entity);
+                        userViewModel.setImageView(j, i);
                         sprites.getChildren().add(userViewModel.getImageView());
                     } else {
                         EnemyViewModel enemyViewModel = createEnemyViewModel((Enemy) entity, j, i);
@@ -271,10 +264,82 @@ public class GameController extends Application {
                         sprites.getChildren().add(enemyViewModel.getImageView());
                     }
                 }
+
+                if (cell instanceof Ground) {
+                    Ground ground = (Ground) cell;
+                    if (ground.hasItem()) {
+                        ItemViewModel itemViewModel = createItemViewModel(ground.getItem(), j, i);
+                        itemViewModels.add(itemViewModel);
+                        sprites.getChildren().addAll(itemViewModel.getImageView());
+                    }
+                }
             }
         }
 
         pane.getChildren().add(sprites);
+    }
+
+    /**
+     * Creates a new Item View Model based on an item on a cell
+     * @param item The item
+     * @param y The item's Y position
+     * @param x The item's X position
+     * @return The ItemViewModel
+     */
+    private ItemViewModel createItemViewModel(Collectable item, int y, int x) {
+        ItemViewModel itemViewModel = injectItemImages(item);
+        itemViewModel.setImageView(y, x);
+        return itemViewModel;
+    }
+
+    /**
+     * Inject the required images for each item
+     * @param item The item
+     * @return The view model of the item
+     */
+    private ItemViewModel injectItemImages(Collectable item) {
+        ItemViewModel itemViewModel = null;
+
+        if (item instanceof ElementItem) {
+            switch (((ElementItem) item)) {
+                case FIRE_BOOTS:
+                    itemViewModel =
+                            new ItemViewModel(new Image(ResourceRepository.getResource("FireBoots")), item);
+                    break;
+                case FLIPPERS:
+                    itemViewModel =
+                            new ItemViewModel(new Image(ResourceRepository.getResource("Flippers")), item);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (((Key) item)) {
+                case RED_KEY:
+                    itemViewModel =
+                            new ItemViewModel(new Image(ResourceRepository.getResource("Key-Red")), item);
+                    break;
+                case BLUE_KEY:
+                    itemViewModel =
+                            new ItemViewModel(new Image(ResourceRepository.getResource("Key-Blue")), item);
+                    break;
+                case GREEN_KEY:
+                    itemViewModel =
+                            new ItemViewModel(new Image(ResourceRepository.getResource("Key-Green")), item);
+                    break;
+                case YELLOW_KEY:
+                    itemViewModel =
+                            new ItemViewModel(new Image(ResourceRepository.getResource("Key-Yellow")), item);
+                    break;
+                case TOKEN_KEY:
+                    itemViewModel =
+                            new ItemViewModel(new Image(ResourceRepository.getResource("Token")), item);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return itemViewModel;
     }
 
     /**
@@ -285,7 +350,7 @@ public class GameController extends Application {
      * @return The EnemyViewModel
      */
     private EnemyViewModel createEnemyViewModel(Enemy enemy, int y, int x) {
-        EnemyViewModel enemyViewModel = injectImages(enemy);
+        EnemyViewModel enemyViewModel = injectEnemyImages(enemy);
         enemyViewModel.setImageView(y, x);
 
         return enemyViewModel;
@@ -302,6 +367,8 @@ public class GameController extends Application {
         int boardWidth = level.getBoardWidth();
         int boardHeight = level.getBoardHeight();
         setBoardArea(boardWidth, boardHeight);
+        System.out.println(levelHeight);
+        System.out.println(levelWidth);
 
         Group cellGroups = new Group();
         for (int i = 0; i < boardHeight; i++) {
@@ -312,6 +379,7 @@ public class GameController extends Application {
             }
         }
 
+        cellImages = cellGroups;
         board.getChildren().add(cellGroups);
         setBoardLimits(board);
 
@@ -337,7 +405,9 @@ public class GameController extends Application {
      * @return An imageview of the cell
      */
     private ImageView createSpriteImageView(int i, int j, Cell cell) {
-        ImageView imageView = new ImageView(cell.getSpriteImage());
+        Image spriteImage = getSpriteImage(cell);
+
+        ImageView imageView = new ImageView(spriteImage);
         imageView.setFitHeight(64);
         imageView.setFitWidth(64);
         imageView.setX(j * 64);
@@ -346,25 +416,102 @@ public class GameController extends Application {
     }
 
     /**
+     * Get the image resource of a cell, depending on it's type
+     * @param cell The cell we want the image off
+     * @return The image of the cell
+     */
+    private Image getSpriteImage(Cell cell) {
+        Image spriteImage = null;
+        if (cell instanceof ColourDoor) {
+            switch (((ColourDoor) cell).getColour()) {
+                case RED:
+                    spriteImage = new Image(ResourceRepository.getResource("Red-Door"));
+                    break;
+                case BLUE:
+                    spriteImage = new Image(ResourceRepository.getResource("Blue-Door"));
+                    break;
+                case YELLOW:
+                    spriteImage = new Image(ResourceRepository.getResource("Yellow-Door"));
+                    break;
+                case GREEN:
+                    spriteImage = new Image(ResourceRepository.getResource("Green-Door"));
+                    break;
+                default:
+                    break;
+            }
+        } else if (cell instanceof TokenDoor) {
+            spriteImage = new Image(ResourceRepository.getResource("Token-Door"));
+        } else if (cell instanceof Wall) {
+            spriteImage = new Image(ResourceRepository.getResource("Wall"));
+        } else if (cell instanceof Element) {
+            switch (((Element) cell).getElementType()) {
+                case FIRE:
+                    spriteImage = new Image(ResourceRepository.getResource("Element-Fire"));
+                    break;
+                case WATER:
+                    spriteImage = new Image(ResourceRepository.getResource("Element-Water"));
+                    break;
+                default:
+                    break;
+            }
+        } else if (cell instanceof Goal) {
+            spriteImage = new Image(ResourceRepository.getResource("Goal"));
+        } else if (cell instanceof Teleporter) {
+            spriteImage = new Image(ResourceRepository.getResource("Teleporter"));
+        } else if (cell instanceof Ground) {
+            spriteImage = new Image(ResourceRepository.getResource("Ground"));
+        }
+
+        return spriteImage;
+    }
+
+    /**
      * Move the player in the game
      * @param deltaX The user's X translation value
      * @param deltaY The user's Y translation value
      */
     private void movePlayer(int deltaX, int deltaY) {
-        if (!pressed) {
-            ImageView userImageView = this.userViewModel.getImageView();
+        ImageView userImageView = userViewModel.getImageView();
 
-            pressed = true;
-            double x = (clampRange(userImageView.getX() + deltaX,
-                            0, boardPane.getWidth() - userImageView.getFitWidth()));
+        pressed = true;
+        double x = (clampRange(userImageView.getX() + deltaX,
+                        0, boardPane.getWidth() - userImageView.getFitWidth()));
 
-            double y =
-                    (clampRange(userImageView.getY() + deltaY,
-                            0, boardPane.getHeight() - userImageView.getFitHeight()));
+        double y =
+                (clampRange(userImageView.getY() + deltaY,
+                        0, boardPane.getHeight() - userImageView.getFitHeight()));
 
 
+        if (!(userViewModel.getUser().getCurrentCell() instanceof Teleporter)) {
             animateUser(userImageView, x, y);
+        } else {
+            double newX = userViewModel.getUser().getCurrentCell().getPosition().getX() * 64;
+            double newY = userViewModel.getUser().getCurrentCell().getPosition().getY() * 64;
+            animateUser(userImageView, newX, newY);
+        }
 
+        if (userViewModel.getUser().getCurrentCell() instanceof Goal) {
+            triggerAlert("Level won!", State.LEVEL_WON);
+        }
+
+        checkForItemPickups(x, y);
+
+    }
+
+    /**
+     * Check if the user has just picked up an item
+     * @param x The user's new X position
+     * @param y The user's new Y position
+     */
+    private void checkForItemPickups(double x, double y) {
+        for (ItemViewModel itemViewModel : itemViewModels) {
+            double iX = itemViewModel.getImageView().getX();
+            double iY = itemViewModel.getImageView().getY();
+
+            if (iX == x && iY == y) {
+                System.out.println("picked up!");
+                itemViewModel.getImageView().setVisible(false);
+            }
         }
     }
 
@@ -388,6 +535,7 @@ public class GameController extends Application {
 
         timeline.setOnFinished(e -> {
             userImageView.setImage(new Image(ResourceRepository.getResource("User-Idle")));
+            animationCompleted = true;
         });
 
         timeline.getKeyFrames().addAll(movement, walking);
@@ -399,9 +547,10 @@ public class GameController extends Application {
      * Move an enemy by translating their current position
      * @param deltaX The X translation value
      * @param deltaY The Y translation value
-     * @param enemyImageView The enemy image view that will be changing
+     * @param enemy The enemy image view that will be changing
      */
-    private void moveEnemy(int deltaX, int deltaY, ImageView enemyImageView) {
+    private void moveEnemy(int deltaX, int deltaY, EnemyViewModel enemy) {
+        ImageView enemyImageView = enemy.getImageView();
         double x =
                 (clampRange(enemyImageView.getX() + deltaX,
                         0, boardPane.getWidth() - enemyImageView.getFitWidth()));
@@ -411,6 +560,10 @@ public class GameController extends Application {
                         0, boardPane.getHeight() - enemyImageView.getFitHeight()));
 
         animateEnemy(enemyImageView, x, y);
+
+        if (enemy.getEnemy().getCurrentCell().hasPlayerAndEnemy()) {
+            triggerAlert("GAME LOST", State.LEVEL_LOST);
+        }
     }
 
     /**
@@ -442,24 +595,24 @@ public class GameController extends Application {
      * move in.
      */
     private void moveEnemies() {
-        User user = this.userViewModel.getUser();
+        User user = userViewModel.getUser();
         for (EnemyViewModel evm : this.enemyViewModels) {
             Enemy enemy = evm.getEnemy();
             Direction nextDirection = enemy.getNextDirection(user, level);
-            this.level.moveEnemy(enemy, nextDirection);
+            level.moveEnemy(enemy, nextDirection);
 
             switch (nextDirection) {
                 case LEFT:
-                    moveEnemy(-CELL_WIDTH, 0, evm.getImageView());
+                    moveEnemy(-CELL_WIDTH, 0, evm);
                     break;
                 case RIGHT:
-                    moveEnemy(CELL_WIDTH, 0, evm.getImageView());
+                    moveEnemy(CELL_WIDTH, 0,evm);
                     break;
                 case UP:
-                    moveEnemy(0, -CELL_WIDTH, evm.getImageView());
+                    moveEnemy(0, -CELL_WIDTH, evm);
                     break;
                 case DOWN:
-                    moveEnemy(0, CELL_WIDTH, evm.getImageView());
+                    moveEnemy(0, CELL_WIDTH, evm);
                     break;
                 default:
                     break;
@@ -473,40 +626,43 @@ public class GameController extends Application {
      * @param code The keyboard KeyCode that was pressed
      */
     private void processKey(KeyCode code) {
-        User user = this.userViewModel.getUser();
-        alertLabel.setVisible(false);
+        User user = userViewModel.getUser();
         try {
-            switch (code) {
-                case ESCAPE:
-                    pauseGame();
-                    break;
-                case LEFT:
-                    this.level.movePlayer(user, Direction.LEFT);
-                    movePlayer(-CELL_WIDTH, 0);
-                    moveEnemies();
-                    break ;
-                case RIGHT:
-                    this.level.movePlayer(user, Direction.RIGHT);
-                    movePlayer(CELL_WIDTH, 0);
-                    moveEnemies();
-                    break ;
-                case UP:
-                    this.level.movePlayer(user, Direction.UP);
-                    movePlayer(0, -CELL_WIDTH);
-                    moveEnemies();
-                    break ;
-                case DOWN:
-                    this.level.movePlayer(user, Direction.DOWN);
-                    movePlayer(0, CELL_WIDTH);
-                    moveEnemies();
-                    break ;
-                default:
-                    break ;
+            if (!pressed && animationCompleted) {
+                switch (code) {
+                    case ESCAPE:
+                        pauseGame();
+                        break;
+                    case LEFT:
+                        level.movePlayer(user, Direction.LEFT);
+                        movePlayer(-CELL_WIDTH, 0);
+                        animationCompleted = false;
+                        moveEnemies();
+                        break;
+                    case RIGHT:
+                        level.movePlayer(user, Direction.RIGHT);
+                        movePlayer(CELL_WIDTH, 0);
+                        animationCompleted = false;
+                        moveEnemies();
+                        break;
+                    case UP:
+                        level.movePlayer(user, Direction.UP);
+                        movePlayer(0, -CELL_WIDTH);
+                        animationCompleted = false;
+                        moveEnemies();
+                        break;
+                    case DOWN:
+                        level.movePlayer(user, Direction.DOWN);
+                        movePlayer(0, CELL_WIDTH);
+                        animationCompleted = false;
+                        moveEnemies();
+                        break;
+                    default:
+                        break;
+                }
             }
         } catch (InvalidMoveException ex) {
             LOGGER.log(WARNING, "The user has attempted an invalid move!", ex);
-            alertLabel.setText("You cannot move on to that cell!");
-            alertLabel.setVisible(true);
         }
 
     }
@@ -516,7 +672,7 @@ public class GameController extends Application {
      */
     private void pauseGame() {
         Instant currentPauseTime = Instant.now();
-        this.boardPane.setEffect(new GaussianBlur());
+        boardPane.setEffect(new GaussianBlur());
 
         VBox pauseMenu = createPauseMenu();
         Button resume = new Button("Resume");
@@ -528,14 +684,32 @@ public class GameController extends Application {
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(pauseMenu, Color.TRANSPARENT));
 
-        resume.setOnAction(event -> {
-            this.boardPane.setEffect(null);
+        resume.setOnAction(e -> {
+            boardPane.setEffect(null);
             updateTotalPauseTime(currentPauseTime);
             popupStage.hide();
         });
 
+        saveAndQuit.setOnAction(e -> {
+            LevelSaver.saveLevel(1, level, userViewModel.getUser());
+            Platform.exit();
+        });
+
         this.currentState = State.PAUSED;
         popupStage.show();
+    }
+
+    /**
+     * Replace a cell image at a specific position with a ground image
+     * @param point The position of the image
+     */
+    public static void replaceCell(Point point) {
+        ImageView imageView = new ImageView(new Image(ResourceRepository.getResource("Ground")));
+        imageView.setY(point.getY() * 64);
+        imageView.setX(point.getX() * 64);
+
+        int idx = (int) ((int)(level.getBoardHeight() * point.getY()) + point.getX());
+        cellImages.getChildren().set(idx, imageView);
     }
 
     /**
@@ -567,7 +741,7 @@ public class GameController extends Application {
      * @param enemy The enemy object
      * @return The enemies view model
      */
-    private EnemyViewModel injectImages(Enemy enemy) {
+    private EnemyViewModel injectEnemyImages(Enemy enemy) {
         EnemyViewModel enemyViewModel = null;
 
         if (enemy instanceof SmartTargetingEnemy) {
@@ -587,37 +761,36 @@ public class GameController extends Application {
         return enemyViewModel;
     }
 
-    /**
-     * Trigger a message alert for the user to see in the game
-     * @param message The message to be shown
-     */
-    public static void triggerAlert(String message) {
-        //TODO:drt - The game needs to be in a border boardPane with Hidden alert boardPane at the top
-    }
 
     /**
      * Trigger a message alert with also a change in state
      * @param message the message to be shown to the user
      * @param state The state that is being changed
      */
-    public void triggerAlert(String message, State state) {
-        //TODO:drt - Game lost or game won so we show actual alert and the game ends.
+    public static void triggerAlert(String message, State state) {
+        backgroundMusicPlayer.stop();
+        if (state == State.LEVEL_LOST) {
+            playSound("PlayerDeath");
+        } else if (state == State.LEVEL_WON) {
+            playSound("LevelWin");
+            addNewFinishTime();
+            //TODO:drt Update user.ser file
+        }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText(message);
         alert.showAndWait();
-        addNewFinishTime();
         Platform.exit();
     }
 
     /**
      * Used to add a new level finish time to the user's score list.
      */
-    private void addNewFinishTime() {
+    private static void addNewFinishTime() {
         User user = userViewModel.getUser();
+        System.out.println(user);
         Instant elapsed = Instant.now();
         Long newFinishTime =
                 java.time.Duration.between(startTime, elapsed).toMillis() - totalPausedTime;
-
         try {
             user.addQuickestTime(newFinishTime, currentLevel);
         } catch (InvalidLevelException ex) {
@@ -633,6 +806,15 @@ public class GameController extends Application {
     public void setBoardArea(int x, int y) {
         this.levelWidth = x;
         this.levelHeight = y;
+    }
+
+    public static void playSound(String soundName) {
+        Media sound = new Media(new File("./src/resources/sounds/"+soundName+".wav").toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        if (soundName.equals("BackgroundMusic")) {
+            backgroundMusicPlayer = mediaPlayer;
+        }
+        mediaPlayer.play();
     }
 
     //TODO:drt - Delete this method once fully tested

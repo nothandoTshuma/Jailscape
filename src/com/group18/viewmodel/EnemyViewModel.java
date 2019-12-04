@@ -3,7 +3,11 @@ package com.group18.viewmodel;
 import com.group18.model.entity.Enemy;
 import javafx.scene.image.Image;
 
-
+/**
+ * A view model linking front-end assets to a specific enemy object
+ *
+ * @author danielturato
+ */
 public class EnemyViewModel extends ViewModel {
 
     /**
