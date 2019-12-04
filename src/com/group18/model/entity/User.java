@@ -203,4 +203,5 @@ public class User extends Entity {
     public int getHighestLevel() {
         return highestLevel;
     }
+
 }
