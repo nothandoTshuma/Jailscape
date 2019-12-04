@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="118.0" prefWidth="303.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.FromBeginning">
+   <right>
+      <Pane prefHeight="118.0" prefWidth="303.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="122.0" layoutY="-1.0" text="Level 1">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+            <Label layoutX="26.0" layoutY="26.0" prefHeight="43.0" prefWidth="251.0" text="Do you want to start from the beginning of the level?" textAlignment="CENTER" wrapText="true" />
+            <Button layoutX="26.0" layoutY="77.0" mnemonicParsing="false" prefWidth="100.0" text="Confirm" />
+            <Button layoutX="177.0" layoutY="77.0" mnemonicParsing="false" prefWidth="100.0" text="Cancel" />
+         </children>
+      </Pane>
+   </right>
+</BorderPane>
