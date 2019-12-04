@@ -5,6 +5,8 @@ import javafx.scene.image.ImageView;
 
 /**
  * A base class for all view models
+ *
+ * @author danielturato
  */
 public abstract class ViewModel {
 

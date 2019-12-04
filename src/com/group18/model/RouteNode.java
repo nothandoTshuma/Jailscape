@@ -5,7 +5,7 @@ package com.group18.model;
  * Holds information regarding it's parent node, distance from the start node
  * and an estimated distance to the target node.
  *
- * @author danielturato
+ * @author danielturato nothandotshuma riyagupta
  */
 public class RouteNode implements Comparable<RouteNode> {
 
