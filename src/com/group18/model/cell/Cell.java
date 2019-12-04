@@ -34,11 +34,6 @@ public abstract class Cell implements Node, Serializable {
      */
     List<Entity> currentEntities;
 
-    /**
-     * This cell's image representation in the game
-     */
-    private javafx.scene.image.Image spriteImage;
-
 
     /**
      * Used to setup basic fields that each Cell needs.
@@ -157,19 +152,4 @@ public abstract class Cell implements Node, Serializable {
      */
     public abstract boolean hasPlayerAndEnemy();
 
-    /**
-     * Get this cell's sprite image
-     * @return The spite image
-     */
-    public javafx.scene.image.Image getSpriteImage() {
-        return spriteImage;
-    }
-
-    /**
-     * Set this cell's sprite image
-     * @param spriteImage The new sprite image
-     */
-    public void setSpriteImage(Image spriteImage) {
-        this.spriteImage = spriteImage;
-    }
 }

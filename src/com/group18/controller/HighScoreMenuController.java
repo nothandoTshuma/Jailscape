@@ -1,24 +1,36 @@
 package com.group18.controller;
 
 import com.group18.core.FileReader;
+import com.group18.core.UserRepository;
+import com.group18.exception.InvalidLevelException;
+import com.group18.model.entity.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HighScoreMenuController extends MenuController {
     @FXML Button backButton;
-    @FXML Label level1Label;
-    @FXML Label level2Label;
-    @FXML Label level3Label;
-    @FXML Label level4Label;
-    @FXML Label level5Label;
-
-    private final String TOP_3_HIGHSCORES_FILE = "./src/resources/Top3HighScores.txt";
-    private ArrayList<String> highScoresList = new ArrayList<>();
+    @FXML Label user1Label;
+    @FXML Label user2Label;
+    @FXML Label user3Label;
+    @FXML Label score1Label;
+    @FXML Label score2Label;
+    @FXML Label score3Label;
+    @FXML ChoiceBox levelChoiceBox;
 
     public void initialize() {
-        displayHighScores();
+        levelChoiceBox.getItems().add("level1");
+        levelChoiceBox.getItems().add("level2");
+        levelChoiceBox.getItems().add("level3");
+        levelChoiceBox.getItems().add("level4");
+        levelChoiceBox.getItems().add("level5");
+
+        levelChoiceBox.setOnAction(e -> {
+            handleLevelChoiceBoxAction();
+        });
 
         backButton.setOnAction(e -> {
             handleBackButtonAction();
@@ -26,21 +38,29 @@ public class HighScoreMenuController extends MenuController {
 
     }
 
+    private void handleLevelChoiceBoxAction() {
+        if(levelChoiceBox.getSelectionModel().getSelectedItem().equals("level1")) {
+        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level2")) {
+        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level3")) {
+        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level4")) {
+        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level5")) {
+        }
+    }
+
     private void handleBackButtonAction() {
         loadFXMLScene("/resources/MainMenu.fxml", "Main Menu");
     }
 
-    private void displayHighScores() {
-        highScoresList = FileReader.getFileLines(TOP_3_HIGHSCORES_FILE);
-        String[] levelList = highScoresList.get(0).split(",");
-        level1Label.setText("Level 1: \n" + levelList[0] + " " + levelList[1] + "\n" + levelList[2] + " " + levelList[3] + "\n" + levelList[4] + " " + levelList[5]);
-        levelList = highScoresList.get(1).split(",");
-        level2Label.setText("Level 2: \n" + levelList[0] + " " + levelList[1] + "\n" + levelList[2] + " " + levelList[3] + "\n" + levelList[4] + " " + levelList[5]);
-        levelList = highScoresList.get(2).split(",");
-        level3Label.setText("Level 3: \n" + levelList[0] + " " + levelList[1] + "\n" + levelList[2] + " " + levelList[3] + "\n" + levelList[4] + " " + levelList[5]);
-        levelList = highScoresList.get(3).split(",");
-        level4Label.setText("Level 4: \n" + levelList[0] + " " + levelList[1] + "\n" + levelList[2] + " " + levelList[3] + "\n" + levelList[4] + " " + levelList[5]);
-        levelList = highScoresList.get(4).split(",");
-        level5Label.setText("Level 5: \n" + levelList[0] + " " + levelList[1] + "\n" + levelList[2] + " " + levelList[3] + "\n" + levelList[4] + " " + levelList[5]);
+    private String[][] getThreeHighestScores(int level) throws InvalidLevelException {
+        String[][] usersAndScore = new String[3][2];
+        List<User> userList = UserRepository.getAll();
+        String[][] tempList = new String[userList.size()][];
+        for (int i = 0; i < userList.size(); i++) {
+            tempList[i][0] = userList.get(i).getUsername();
+            tempList[i][1] = String.valueOf(userList.get(i).getQuickestTimesFor(level));
+        }
+
+        return  usersAndScore;
     }
+
 }

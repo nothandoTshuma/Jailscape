@@ -8,6 +8,7 @@ import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -18,15 +19,10 @@ import static java.util.logging.Level.WARNING;
 /**
  * This class represents each level in Jailscape.
  * Will act as a link between the backend & frontend.
+ *
  * @author danielturato
  */
 public class Level {
-
-    /**
-     * The game controller which will control the graphical representation of each level.
-     * We can then communicate problems in the backend with the front-end
-     */
-    private static final GameController GAME_CONTROLLER = new GameController();
 
     /**
      * Used to log errors to the console
@@ -112,9 +108,7 @@ public class Level {
             enemy.setCurrentCell(newCell);
             enemy.setDirection(direction);
 
-            if (newCell.hasPlayerAndEnemy()) {
-                GAME_CONTROLLER.triggerAlert("GAME LOST", State.LEVEL_LOST);
-            }
+
         } catch (InvalidMoveException ex) {
             LOGGER.log(WARNING, "This enemy is attempting to move to an invalid cell", ex);
         }
@@ -135,30 +129,49 @@ public class Level {
 
             oldCell.removeEntity(user);
 
-            if (newCell instanceof Element) {
+            if (newCell instanceof Teleporter) {
+                ((Teleporter) newCell).toggleAction(user);
+            } else if (newCell instanceof Element) {
                 Element element = (Element) newCell;
                 ((Element) newCell).toggleAction(user);
-            }
-
-            if (newCell instanceof Door) {
+                newCell.placePlayer(user);
+                user.setCurrentCell(newCell);
+            } else if (newCell instanceof Ground) {
+                ((Ground) newCell).toggleAction(user);
+                newCell.placePlayer(user);
+                user.setCurrentCell(newCell);
+            } else if (newCell instanceof Door) {
                 Door door = (Door) newCell;
 
                 if (door instanceof ColourDoor) {
                    ((ColourDoor) door).toggleAction(user);
-                   //TODO:drt - Replace cell
-                    //TODO:drt - Then move them on to the replaced door
+                    System.out.println("done");
+                } else {
+                    ((TokenDoor) door).toggleAction(user);
                 }
-                //TODO: move them 1 space over the token door.
-                //TODO: then we to recalculate & re-verify the user can reach at least +1 in multiple directions
+
+                Ground ground = new Ground();
+                replaceCell(newCell.getPosition(), ground);
+                ground.placePlayer(user);
+                user.setCurrentCell(ground);
+                graph.resetNodes(this, new ArrayList<Point>());
             } else {
                 newCell.placePlayer(user);
                 user.setCurrentCell(newCell);
             }
 
         } else {
+            GameController.playSound("PlayerBlocked");
             throw new InvalidMoveException(String.format("Moving in a %s direction is not valid", direction));
         }
     }
+
+    public void replaceCell(Point point, Cell newCell) {
+        newCell.setCoordinates(point);
+        board[(int) point.getY()][(int) point.getX()] = newCell;
+        GameController.replaceCell(point);
+    }
+
 
     /**
      * Get adjacent cells from a certain Point
@@ -234,10 +247,6 @@ public class Level {
         return getCell(new Point(x, y));
     }
 
-    private void removeCell(Point point) {}
-
-    public void replaceCell(Point point, Cell newCell) {}
-
     /**
      * Used to check if an entity is able to move on to this cell.
      * @param cell The cell in which the entity wants to move on to
@@ -255,7 +264,6 @@ public class Level {
                 if (cell instanceof Door) {
                     return ((Door) cell).canOpen(((User) entity));
                 }
-
                 return false;
             }
 

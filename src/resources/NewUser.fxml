@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.NewUser">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.CreateUserMenuController">
    <center>
       <Pane prefHeight="400.0" prefWidth="620.0" style="-fx-background-image: url(&quot;https://imgur.com/gQasDwv.png&quot;);" BorderPane.alignment="CENTER">
          <children>
@@ -14,22 +14,22 @@
                </font>
             </Label>
             <Label layoutX="250.0" layoutY="77.0" prefHeight="102.0" prefWidth="100.0" style="-fx-background-image: url(&quot;https://imgur.com/DZNDqRw.png&quot;);" />
-            <Label layoutX="151.0" layoutY="200.0" prefHeight="38.0" prefWidth="156.0" text="Set username: " textFill="#fffefe">
+            <Label layoutX="140.0" layoutY="201.0" prefHeight="38.0" prefWidth="156.0" text="Set username: " textFill="#fffefe">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button layoutX="307.0" layoutY="205.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="163.0" />
-            <Button layoutX="230.0" layoutY="255.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" text="Save">
+            <Button fx:id="saveButton" layoutX="110.0" layoutY="319.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" text="Save">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="230.0" layoutY="319.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" text="Cancel">
+            <Button fx:id="cancelButton" layoutX="350.0" layoutY="319.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" text="Cancel">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
+            <TextField fx:id="userNameTextField" layoutX="296.0" layoutY="207.0" promptText="User Name" />
          </children>
       </Pane>
    </center>

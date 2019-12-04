@@ -37,12 +37,7 @@
                   </Button>
                </children>
             </Pane>
-            <Button layoutX="59.0" layoutY="331.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="105.0" text="Play">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Button>
-            <Button layoutX="437.0" layoutY="331.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="105.0" text="Back">
+            <Button fx:id="backButton" layoutX="248.0" layoutY="334.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="105.0" text="Back">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
