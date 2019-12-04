@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.UserSelectionMenu">
-   <center>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.UserSelectionController">
+   <bottom>
       <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(&quot;https://imgur.com/gQasDwv.png&quot;);" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="TOP_CENTER" layoutX="140.0" prefHeight="66.0" prefWidth="321.0" text="User selection" textAlignment="CENTER" textFill="WHITE">
@@ -13,40 +13,27 @@
                   <Font name="System Bold" size="45.0" />
                </font>
             </Label>
-            <Button layoutX="40.0" layoutY="95.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-image: url(&quot;https://imgur.com/DZNDqRw.png&quot;);" />
-            <Button layoutX="250.0" layoutY="95.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-image: url(&quot;https://imgur.com/DZNDqRw.png&quot;);" />
-            <Button layoutX="464.0" layoutY="95.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-image: url(&quot;https://imgur.com/DZNDqRw.png&quot;);" />
-            <Label alignment="TOP_CENTER" layoutX="18.0" layoutY="198.0" prefHeight="45.0" prefWidth="145.0" text="Nothando" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label alignment="TOP_CENTER" layoutX="228.0" layoutY="198.0" prefHeight="45.0" prefWidth="145.0" text="Riya" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="442.0" layoutY="198.0" prefHeight="45.0" prefWidth="145.0" text="Daniel" textAlignment="CENTER" textFill="#fffbfb">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Button layoutX="120.0" layoutY="321.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Create profile">
+            <Button fx:id="createProfileButton" layoutX="40.0" layoutY="341.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Create profile">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="324.0" layoutY="321.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Back" textAlignment="CENTER">
+            <Button fx:id="exitButton" layoutX="382.0" layoutY="341.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Exit" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <ChoiceBox layoutX="199.0" layoutY="243.0" prefHeight="45.0" prefWidth="204.0" />
-            <Label layoutX="210.0" layoutY="244.0" prefHeight="42.0" prefWidth="177.0" text="Show all users:">
+            <Button fx:id="goButton" layoutX="210.0" layoutY="288.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Go">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
-            </Label>
+            </Button>
+            <ListView fx:id="userListView" layoutX="157.0" layoutY="66.0" prefHeight="200.0" prefWidth="289.0" />
+            <Button fx:id="deleteButton" layoutX="210.0" layoutY="341.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Delete">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
          </children></Pane>
-   </center>
+   </bottom>
 </BorderPane>

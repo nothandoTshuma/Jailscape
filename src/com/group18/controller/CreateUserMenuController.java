@@ -1,46 +1,37 @@
 package com.group18.controller;
 
-import com.group18.core.AddUserName;
+import com.group18.core.UserRepository;
+import com.group18.model.entity.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class CreateUserMenuController extends MenuController{
     @FXML TextField userNameTextField;
-    @FXML Button createButton;
-    @FXML Button backButton;
-
-    private String userName;
+    @FXML Button saveButton;
+    @FXML Button cancelButton;
 
     public void initialize() {
-        createButton.setOnAction(e -> {
+        saveButton.setOnAction(e -> {
             handleCreateButtonAction();
         });
 
-        backButton.setOnAction(e -> {
+        cancelButton.setOnAction(e -> {
             handleBackButtonAction();
         });
     }
 
     private void handleCreateButtonAction(){
         if (!(userNameTextField.getCharacters().toString().equals(""))) {
-            userName = userNameTextField.getCharacters().toString();
-            AddUserName addUserName = new AddUserName(userName);
-            if (!(addUserName.isUserNameExists())) {
-                addUserName.writeUserName();
-                loadFXMLScene("/resources/UserSelectionMenu.fxml", "User Selection");
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Login");
-                alert.setHeaderText("Error!");
-                alert.setContentText(userName + " has already been taken, try again.");
-                alert.showAndWait();
-            }
+            String userName = userNameTextField.getCharacters().toString();
+            User user = new User(userName);
+            UserRepository.save(user);
+            loadFXMLScene("/resources/UserSelectionMenu.fxml", "User Selection");
         }
     }
 
     private void handleBackButtonAction(){
         loadFXMLScene("/resources/UserSelectionMenu.fxml", "User Selection");
     }
+
 }
