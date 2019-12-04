@@ -2,72 +2,75 @@ package com.group18.controller;
 
 import com.group18.core.DeleteUserFromFile;
 import com.group18.core.FileReader;
+import com.group18.core.UserRepository;
+import com.group18.model.entity.User;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserSelectionController extends MenuController {
-    @FXML ListView<String> usersListView;
-    @FXML Button goButton;
-    @FXML Button createButton;
-    @FXML Button deleteButton;
+
+
     @FXML Button exitButton;
+    @FXML Button goButton;
+    @FXML Button createProfileButton;
+    @FXML Button deleteButton;
+    @FXML ListView userListView;
+
 
     private ObservableList observableList = FXCollections.observableArrayList();
     private String chosenUserName;
+    public static User user;
 
     public void initialize(){
         goButton.setOnAction(e -> {
             handleGoButtonAction();
         });
 
-        createButton.setOnAction(e -> {
+        createProfileButton.setOnAction(e -> {
             handleCreateButtonAction();
+        });
+
+        exitButton.setOnAction(e -> {
+            handleExitButtonAction();
         });
 
         deleteButton.setOnAction(e -> {
             handleDeleteButtonAction();
         });
 
-        exitButton.setOnAction(e -> {
-            handleExitButtonAction();
-        });
         loadData();
     }
 
     private void loadData(){
+        userListView.getItems().clear();
         observableList.removeAll(observableList);
-        ArrayList<String> list = getUserNames(FileReader.getFileLines("./src/resources/UserNames.txt"));
-        for (int i = 0; i < list.size(); i++) {
-            observableList.add(list.get(i));
+        List<User> userList = UserRepository.getAll();
+        for (int i = 0; i < userList.size(); i++) {
+            observableList.add(userList.get(i).getUsername());
         }
-        usersListView.getItems().addAll(observableList);
+        userListView.getItems().addAll(observableList);
     }
 
     private void handleGoButtonAction(){
-       if (usersListView.getSelectionModel().getSelectedItem() != null) {
-           chosenUserName = usersListView.getSelectionModel().getSelectedItem();
+       if (userListView.getSelectionModel().getSelectedItem() != null) {
+           chosenUserName = (String) userListView.getSelectionModel().getSelectedItem();
+           user = UserRepository.get("./src/resources/users/" + chosenUserName + ".ser");
            loadFXMLScene("/resources/MainMenu.fxml", "Main Menu");
        }
     }
 
     private void handleCreateButtonAction(){
-        loadFXMLScene("/resources/CreateUserMenu.fxml", "Create User");
-    }
-
-    private void handleDeleteButtonAction(){
-        if (usersListView.getSelectionModel().getSelectedItem() != null) {
-            chosenUserName = usersListView.getSelectionModel().getSelectedItem();
-            DeleteUserFromFile deleteUserFromFile = new DeleteUserFromFile(chosenUserName);
-            usersListView.getItems().clear();
-            loadData();
-        }
+        loadFXMLScene("/resources/NewUser.fxml", "Create User");
     }
 
     private void handleExitButtonAction(){
@@ -75,13 +78,11 @@ public class UserSelectionController extends MenuController {
         System.exit(0);
     }
 
-    private ArrayList<String> getUserNames(ArrayList<String> list) {
-        ArrayList<String> userNameList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            String[] tempList = list.get(i).split(",");
-            userNameList.add(tempList[0]);
+    private void handleDeleteButtonAction() {
+        if (userListView.getSelectionModel().getSelectedItem() != null) {
+            chosenUserName = (String) userListView.getSelectionModel().getSelectedItem();
+            UserRepository.delete(chosenUserName + ".ser");
+            loadData();
         }
-        return userNameList;
     }
-
 }

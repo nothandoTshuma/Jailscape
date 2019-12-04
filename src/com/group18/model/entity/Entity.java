@@ -15,12 +15,12 @@ public abstract class Entity implements Serializable {
     /**
      * Stores the entities current cell position
      */
-    private transient Cell currentCell;
+    private Cell currentCell;
 
     /**
      * Stores the entities current direction
      */
-    private transient Direction direction;
+    private Direction direction;
 
     /**
      * Get the current entities cell

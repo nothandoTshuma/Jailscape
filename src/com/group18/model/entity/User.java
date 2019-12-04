@@ -48,7 +48,7 @@ public class User extends Entity {
         this.quickestTimes = new HashMap<>();
         this.highestLevel = 1;
 
-        quickestTimes.put(highestLevel, new Long[3]);
+        quickestTimes.put(highestLevel, new Long[]{0L,0L,0L});
     }
 
     /**
@@ -104,13 +104,16 @@ public class User extends Entity {
      * @param colour The colour of the key that needs to be consumed
      */
     public void consumeKey(Colour colour) {
+        Collectable removedItem = null;
         for (Collectable item : this.inventory) {
             if (item instanceof Key) {
-                if (((Key) item).getColour() == colour) {
-                    this.inventory.remove(item);
+                if (((Key) item).getColour() == colour && removedItem == null) {
+                    removedItem = item;
                 }
             }
         }
+
+        this.inventory.remove(removedItem);
     }
 
     /**
@@ -143,16 +146,16 @@ public class User extends Entity {
      * @param level The level the generated time came from
      */
     public void addQuickestTime(Long time, int level) throws InvalidLevelException {
-        if (level > this.highestLevel || level > 0) {
+        if (level > this.highestLevel || level < 0) {
             throw new InvalidLevelException("You are trying to input a time for a level this user has not yet reached.");
         }
 
         Long[] levelArray = getQuickestTimesFor(level);
-        if (levelArray[2] > time){
+        if (levelArray[2] > time || levelArray[2] == 0){
             levelArray[2] = time;
-        } else if (levelArray[1] > time) {
+        } else if (levelArray[1] > time || levelArray[1] == 0) {
             levelArray[1] = time;
-        } else if (levelArray[0] > time) {
+        } else if (levelArray[0] > time || levelArray[0] == 0) {
             levelArray[0] = time;
         }
     }
@@ -171,7 +174,7 @@ public class User extends Entity {
      * @return quickestTimes
      */
     public Long[] getQuickestTimesFor(int level) throws InvalidLevelException {
-        if (level > this.highestLevel || level > 0) {
+        if (level > this.highestLevel || level < 0) {
             throw new InvalidLevelException("The user has not reached this level before");
         }
 
@@ -190,7 +193,7 @@ public class User extends Entity {
      * Increments the level each time the user passes a stage.
      */
     public void incrementLevel() {
-        quickestTimes.put(++highestLevel, new Long[3]);
+        quickestTimes.put(++highestLevel, new Long[]{0L,0L,0L});
     }
 
     /**
@@ -200,4 +203,5 @@ public class User extends Entity {
     public int getHighestLevel() {
         return highestLevel;
     }
+
 }

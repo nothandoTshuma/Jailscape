@@ -36,7 +36,7 @@ public class ResourceRepository {
         ASSET_RESOURCES.put("Blue-Door", ASSET_DIRECTORY + "/Cell/DoorBlue.png");
         ASSET_RESOURCES.put("Green-Door", ASSET_DIRECTORY + "/Cell/DoorGreen.png");
         ASSET_RESOURCES.put("Red-Door", ASSET_DIRECTORY + "/Cell/DoorRed.png");
-        ASSET_RESOURCES.put("Yellow-Door", ASSET_DIRECTORY + "/Cell/DoorBlack.png");
+        ASSET_RESOURCES.put("Yellow-Door", ASSET_DIRECTORY + "/Cell/DoorYellow.png");
         ASSET_RESOURCES.put("Element-Fire", ASSET_DIRECTORY + "/Cell/FireCell.png");
         ASSET_RESOURCES.put("Element-Water", ASSET_DIRECTORY + "/Cell/WaterCell.png");
         ASSET_RESOURCES.put("Goal",  ASSET_DIRECTORY + "/Cell/GoalCell.png");
@@ -51,7 +51,7 @@ public class ResourceRepository {
         ASSET_RESOURCES.put("Key-Green", ASSET_DIRECTORY + "/Item/KeyGreen.png");
         ASSET_RESOURCES.put("Key-Red", ASSET_DIRECTORY + "/Item/KeyRed.png");
         ASSET_RESOURCES.put("Key-Yellow", ASSET_DIRECTORY + "/Item/KeyYellow.png");
-        ASSET_RESOURCES.put("Token", ASSET_DIRECTORY + "/Item/Token.png");
+        ASSET_RESOURCES.put("Token", ASSET_DIRECTORY + "/Item/Token.gif");
 
     }
 

@@ -7,13 +7,22 @@ import javafx.scene.control.Label;
 
 public class MainMenuController extends MenuController {
     @FXML Button exitButton;
+    @FXML Button exitImgButton;
     @FXML Button levelsButton;
-    @FXML Button highScoreButton;
-    @FXML Label userNameLabel;
-    @FXML Button changeUserButton;
+    @FXML Button levelsImgButton;
+    @FXML Button leaderBoardButton;
+    @FXML Button leaderBoardImgButton;
+    @FXML Button usersButton;
+    @FXML Button usersImgButton;
+    @FXML Button startButton;
+    @FXML Button startImgButton;
 
     public void initialize() {
         exitButton.setOnAction(e -> {
+            handleExitButtonAction();
+        });
+
+        exitImgButton.setOnAction(e -> {
             handleExitButtonAction();
         });
 
@@ -21,15 +30,33 @@ public class MainMenuController extends MenuController {
             handleLevelsButtonAction();
         });
 
-        highScoreButton.setOnAction(e -> {
+        levelsImgButton.setOnAction(e -> {
+            handleLevelsButtonAction();
+        });
+
+        leaderBoardButton.setOnAction(e -> {
             handleHighScoreButtonAction();
         });
 
-        changeUserButton.setOnAction(e -> {
+        leaderBoardImgButton.setOnAction(e -> {
+            handleHighScoreButtonAction();
+        });
+
+        usersButton.setOnAction(e -> {
             handleChangeUserButtonAction();
         });
 
-        userNameLabel.setText("User Name: Test");
+        usersImgButton.setOnAction(e -> {
+            handleChangeUserButtonAction();
+        });
+
+        startButton.setOnAction(e -> {
+            handleStartButtonAction();
+        });
+
+        startImgButton.setOnAction(e -> {
+            handleStartButtonAction();
+        });
     }
 
     private void handleLevelsButtonAction() {
@@ -37,7 +64,7 @@ public class MainMenuController extends MenuController {
     }
 
     private void handleHighScoreButtonAction() {
-        loadFXMLScene("/resources/HighScoreMenu.fxml", "High Score Menu");
+        loadFXMLScene("/resources/LeaderBoard.fxml", "High Score Menu");
     }
 
     private void handleExitButtonAction() {
@@ -47,5 +74,10 @@ public class MainMenuController extends MenuController {
 
     private void handleChangeUserButtonAction() {
         loadFXMLScene("/resources/UserSelectionMenu.fxml", "User Selection");
+    }
+
+    private void handleStartButtonAction() {
+        int highestLevel = UserSelectionController.user.getHighestLevel();
+
     }
 }

@@ -46,7 +46,8 @@ public class LevelLoader {
      * @return The level object
      */
     public static Level loadLevel(int level, User user) {
-        String fileName = DEFAULT_LEVEL_DIRECTORY + level + ".txt";
+        String fileName = DEFAULT_LEVEL_DIRECTORY + level + "File.txt";
+        //String fileName = "./src/resources/saved-levels/Daniellevel-save1.txt";
         Cell[][] cells = null;
 
         try {
@@ -55,16 +56,21 @@ public class LevelLoader {
             int boardHeight = 0;
             int boardWidth = 0;
 
+            Cell previousCell = null;
+            int entities = 0;
             while (inputStream.hasNextLine()) {
                 Scanner line = new Scanner(inputStream.nextLine());
                 line.useDelimiter(",");
 
                 if (lineCounter == 0) {
                     cells = new Cell[line.nextInt()][line.nextInt()];
-
+                } else if (entities > 0) {
+                    placeEntity(line, previousCell, user);
+                    entities--;
                 } else {
                     Point point = new Point(boardWidth, boardHeight);
-                    fillCell(line, point, cells, user);
+                    entities = fillCell(line, point, cells, user);
+                    previousCell = cells[(int) point.getY()][(int) point.getX()];
 
                     if (boardWidth+1 < cells[0].length) {
                         boardWidth++;
@@ -134,23 +140,21 @@ public class LevelLoader {
      * @param point The point in the 2D level grid we are currently at
      * @param cells The 2D array of cells for the level
      * @param user The user associated with this level
+     * @return The number of entities on this cell
      */
-    private static void fillCell(Scanner line, Point point, Cell[][] cells, User user) {
+    private static int fillCell(Scanner line, Point point, Cell[][] cells, User user) {
         Cell cell = createNewCell(line, point);
         cell.setCoordinates(point);
-        placeEntity(line, cell, user);
-        String potentialDirection = line.next();
 
-        if (!potentialDirection.equals("X")) {
-            setDirection(cell, potentialDirection);
-        }
-
+        int entities = Integer.parseInt(line.next());
         String potentialItem = line.next();
         if (!potentialItem.equals(("X"))) {
             setItem(cell, potentialItem);
         }
 
         cells[(int) point.getY()][(int) point.getX()] = cell;
+
+        return entities;
     }
 
     /**
@@ -245,6 +249,7 @@ public class LevelLoader {
      */
     private static void placeEntity(Scanner line, Cell cell, User user) {
         String entityType = line.next();
+        Direction direction = retrieveDirection(line.next());
         if (!entityType.equals("X")) {
             EntityAcronym entityAcronym = EntityAcronym.valueOf(entityType);
             try {
@@ -252,26 +257,31 @@ public class LevelLoader {
                     case U:
                         cell.placePlayer(user);
                         user.setCurrentCell(cell);
+                        user.setDirection(direction);
                         break;
                     case SLE:
                         StraightLineEnemy sle = new StraightLineEnemy(null);
                         cell.placeEnemy(sle);
                         sle.setCurrentCell(cell);
+                        sle.setDirection(direction);
                         break;
                     case STE:
                         SmartTargetingEnemy ste = new SmartTargetingEnemy();
                         cell.placeEnemy(ste);
                         ste.setCurrentCell(cell);
+                        ste.setDirection(direction);
                         break;
                     case WFE:
                         WallFollowingEnemy wfe = new WallFollowingEnemy();
                         cell.placeEnemy(wfe);
                         wfe.setCurrentCell(cell);
+                        wfe.setDirection(direction);
                         break;
                     case DTE:
                         DumbTargetingEnemy dte = new DumbTargetingEnemy();
                         cell.placeEnemy(dte);
                         dte.setCurrentCell(cell);
+                        dte.setDirection(direction);
                         break;
                     default:
                         break;
@@ -292,7 +302,11 @@ public class LevelLoader {
         String potentialCell = line.next();
         CellAcronym cellType;
         if (potentialCell.length() > 2) {
-            cellType = CellAcronym.TD;
+            if (Character.isDigit(potentialCell.charAt(2))) {
+                cellType = CellAcronym.TD;
+            } else  {
+                cellType = CellAcronym.valueOf(potentialCell);
+            }
         } else {
             cellType = CellAcronym.valueOf(potentialCell);
         }
@@ -302,48 +316,38 @@ public class LevelLoader {
         switch (cellType) {
             case WC:
                 cell = new Wall(point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Wall")));
                 break;
             case GC:
                 cell = new Ground(point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Ground")));
                 break;
             case FC:
                 cell = new Element(ElementType.FIRE, point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Element-Fire")));
                 break;
             case WTC:
                 cell = new Element(ElementType.WATER, point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Element-Water")));
                 break;
             case TC:
                 cell = new Teleporter(null, point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Teleporter")));
                 break;
             case GOC:
                 cell = new Goal(point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Goal")));
                 break;
             case GD:
                 cell = new ColourDoor(Colour.GREEN, point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Green-Door")));
                 break;
             case RD:
                 cell = new ColourDoor(Colour.RED, point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Red-Door")));
                 break;
             case BD:
                 cell = new ColourDoor(Colour.BLUE, point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Blue-Door")));
                 break;
             case YD:
                 cell = new ColourDoor(Colour.YELLOW, point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Yellow-Door")));
                 break;
             case TD:
-                int tokens = potentialCell.charAt(3);
+                int tokens = Integer.parseInt(String.valueOf(potentialCell.charAt(2)));
                 cell = new TokenDoor(tokens, point);
-                cell.setSpriteImage(new Image(ResourceRepository.getResource("Token-Door")));
+                break;
             default:
                 break;
         }

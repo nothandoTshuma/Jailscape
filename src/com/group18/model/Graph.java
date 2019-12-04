@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * This graph will specifically be used in calculating the shortest path
  * within the game.
  *
- * @author danielturato
+ * @author danielturato nothandotshuma riyagupta
  */
 public class Graph {
 
@@ -71,6 +71,15 @@ public class Graph {
         }
 
         this.connections = connections;
+    }
+
+    /**
+     * Reset the nodes for this graph
+     * @param level The level associated with this graph
+     * @param points The points associated with this graph
+     */
+    public void resetNodes(Level level, List<Point> points) {
+        setNodes(level, points);
     }
 
     /**
