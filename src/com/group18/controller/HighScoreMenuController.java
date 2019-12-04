@@ -8,8 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class HighScoreMenuController extends MenuController {
     @FXML Button backButton;
@@ -29,7 +30,11 @@ public class HighScoreMenuController extends MenuController {
         levelChoiceBox.getItems().add("level5");
 
         levelChoiceBox.setOnAction(e -> {
-            handleLevelChoiceBoxAction();
+            try {
+                handleLevelChoiceBoxAction();
+            } catch (InvalidLevelException ex) {
+                ex.printStackTrace();
+            }
         });
 
         backButton.setOnAction(e -> {
@@ -38,12 +43,22 @@ public class HighScoreMenuController extends MenuController {
 
     }
 
-    private void handleLevelChoiceBoxAction() {
+    private void handleLevelChoiceBoxAction() throws InvalidLevelException {
         if(levelChoiceBox.getSelectionModel().getSelectedItem().equals("level1")) {
+            Map<String, Long> topThreeScores = getThreeHighestScores(1);
+            addToLabels(topThreeScores);
         } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level2")) {
+            Map<String, Long> topThreeScores = getThreeHighestScores(2);
+            addToLabels(topThreeScores);
         } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level3")) {
+            Map<String, Long> topThreeScores = getThreeHighestScores(3);
+            addToLabels(topThreeScores);
         } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level4")) {
+            Map<String, Long> topThreeScores = getThreeHighestScores(4);
+            addToLabels(topThreeScores);
         } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level5")) {
+            Map<String, Long> topThreeScores = getThreeHighestScores(5);
+            addToLabels(topThreeScores);
         }
     }
 
@@ -51,16 +66,51 @@ public class HighScoreMenuController extends MenuController {
         loadFXMLScene("/resources/MainMenu.fxml", "Main Menu");
     }
 
-    private String[][] getThreeHighestScores(int level) throws InvalidLevelException {
-        String[][] usersAndScore = new String[3][2];
+    private Map<String, Long> getThreeHighestScores(int level) throws InvalidLevelException {
         List<User> userList = UserRepository.getAll();
-        String[][] tempList = new String[userList.size()][];
+
+        Map<String,Long> quickestTimes = new HashMap<>();
+
         for (int i = 0; i < userList.size(); i++) {
-            tempList[i][0] = userList.get(i).getUsername();
-            tempList[i][1] = String.valueOf(userList.get(i).getQuickestTimesFor(level));
+            quickestTimes.put(userList.get(i).getUsername(), userList.get(i).getQuickestTimesFor(level)[2]);
         }
 
-        return  usersAndScore;
+        Map<String, Long> topThreeTimes = new TreeMap<>();
+        while (topThreeTimes.size() < 3) {
+            String username = "";
+            Long time = -1L;
+            for (Map.Entry<String, Long> keySet : quickestTimes.entrySet()) {
+                if (keySet.getValue() > time) {
+                    username = keySet.getKey();
+                    time = keySet.getValue();
+                }
+            }
+            topThreeTimes.put(username, time);
+            quickestTimes.remove(username);
+        }
+
+        return topThreeTimes.entrySet().stream()
+                                        .sorted(Map.Entry.comparingByValue())
+                                        .collect(
+                                                Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                                                        (e1, e2) -> e1, LinkedHashMap::new));
+    }
+
+    private void addToLabels(Map<String, Long> topThreeScores) {
+        ArrayList<String> userNameList = new ArrayList<>();
+        ArrayList<Long> scoreList = new ArrayList<>();
+
+        for (Map.Entry<String, Long> keySet : topThreeScores.entrySet()) {
+            userNameList.add(keySet.getKey());
+            scoreList.add(keySet.getValue());
+        }
+        user1Label.setText(userNameList.get(0));
+        user2Label.setText(userNameList.get(1));
+        user3Label.setText(userNameList.get(2));
+        score1Label.setText(String.valueOf(scoreList.get(0)));
+        score2Label.setText(String.valueOf(scoreList.get(0)));
+        score3Label.setText(String.valueOf(scoreList.get(0)));
+
     }
 
 }
