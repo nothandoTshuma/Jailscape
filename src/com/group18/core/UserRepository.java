@@ -40,7 +40,7 @@ public class UserRepository {
         if (directoryFiles != null) {
             for (File file : directoryFiles) {
                 String fileName = file.getName();
-                User user = get(fileName);
+                User user = get(USER_DIRECTORY + "/" + fileName);
 
                 if (user != null) {
                     users.add(user);

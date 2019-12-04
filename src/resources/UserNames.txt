@@ -1,3 +1,0 @@
-sam,1
-fraser,1
-ethan,1
