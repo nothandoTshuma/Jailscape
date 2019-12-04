@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="204d656e-eb5b-49c4-af7b-0ff1a5934e16" name="Default Changelist" comment="">
+    <list default="true" id="204d656e-eb5b-49c4-af7b-0ff1a5934e16" name="Default Changelist" comment="Started on controllers.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/CreateUserMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/CreateUserMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/UserSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/UserSelectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/group18/core/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/core/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/CreateUserMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/MainMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/NewUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/NewUser.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/Top3HighScores.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/UserNames.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/group18/controller/HighScoreMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/LeaderBoard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/LeaderBoard.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -136,8 +129,23 @@
       <option name="presentableId" value="Default" />
       <updated>1574942191631</updated>
       <workItem from="1575396583383" duration="1667000" />
-      <workItem from="1575407760926" duration="4507000" />
+      <workItem from="1575407760926" duration="11299000" />
     </task>
+    <task id="LOCAL-00001" summary="Started on controllers.">
+      <created>1575412474797</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1575412474797</updated>
+    </task>
+    <task id="LOCAL-00002" summary="More Controllers.">
+      <created>1575416262439</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1575416262439</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,5 +163,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Started on controllers." />
+    <MESSAGE value="More Controllers." />
+    <option name="LAST_COMMIT_MESSAGE" value="More Controllers." />
   </component>
 </project>
