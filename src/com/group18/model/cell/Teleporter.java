@@ -1,5 +1,6 @@
 package com.group18.model.cell;
 
+import com.group18.controller.GameController;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Actionable;
 import com.group18.model.entity.Entity;
@@ -38,6 +39,8 @@ public class Teleporter extends Ground implements Actionable {
             removeEntity(entity);
             try {
                 partner.placePlayer((User) entity);
+                entity.setCurrentCell(partner);
+                GameController.playSound("PlayerTeleport");
             } catch (InvalidMoveException ex) {
                 //TODO - not sure what to do now
             }

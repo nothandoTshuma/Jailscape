@@ -18,7 +18,7 @@ import static com.group18.model.Direction.*;
 /**
  * This enemy moves towards the User by finding the shortest viable path.
  *
- * @author danielturato
+ * @author danielturato nothandotshuma riyagupta
  */
 public class SmartTargetingEnemy extends Enemy {
 
@@ -142,7 +142,7 @@ public class SmartTargetingEnemy extends Enemy {
         List<Cell> validCells =
                 adjacentCells.stream()
                         .filter(cell -> !(cell instanceof Wall || cell instanceof Goal ||
-                                cell instanceof Element || cell instanceof Door))
+                                cell instanceof Element || cell instanceof Door || cell instanceof Teleporter))
                         .collect(Collectors.toList());
 
         if (validCells.size() < 1) {

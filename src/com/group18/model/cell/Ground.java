@@ -1,5 +1,6 @@
 package com.group18.model.cell;
 
+import com.group18.controller.GameController;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Actionable;
 import com.group18.model.item.Collectable;
@@ -7,6 +8,7 @@ import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
+import com.group18.model.item.Key;
 
 import java.awt.*;
 import java.util.List;
@@ -128,7 +130,18 @@ public class Ground extends Cell implements Actionable {
     @Override
     public void toggleAction(Entity entity) {
         if (entity instanceof User && hasItem()) {
-            ((User) entity).addItem(this.item);
+            if (this.getItem() instanceof Key) {
+                if (((Key) this.getItem()) == Key.TOKEN_KEY) {
+                    GameController.playSound("PickupCoin");
+                    ((User) entity).addToken();
+                } else {
+                    GameController.playSound("PickupItem");
+                    ((User) entity).addItem(this.item);
+                }
+            } else {
+                GameController.playSound("PickupItem");
+                ((User) entity).addItem(this.item);
+            }
             setItem(null);
         }
     }
