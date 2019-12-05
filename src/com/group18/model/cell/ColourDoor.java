@@ -33,7 +33,7 @@ public class ColourDoor extends Wall implements Door, Actionable {
      * @return boolean value suggesting if the door can be opened.
      */
     public boolean canOpen(User user) {
-        return user.hasKey(colour);
+        return user.hasKey(colour, getLevel().getCurrentLevel());
     }
 
     public void toggleAction(Entity entity) {
@@ -41,7 +41,7 @@ public class ColourDoor extends Wall implements Door, Actionable {
             User user = (User) entity;
 
             if (canOpen(user)) {
-                user.consumeKey(colour);
+                user.consumeKey(colour, getLevel().getCurrentLevel());
                 GameController.playSound("DoorOpen");
             }
         }

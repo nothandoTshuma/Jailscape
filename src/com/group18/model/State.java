@@ -6,6 +6,4 @@ package com.group18.model;
 public enum State {
     LEVEL_WON,
     LEVEL_LOST,
-    IN_PROGRESS,
-    PAUSED;
 }

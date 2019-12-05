@@ -7,10 +7,7 @@ import com.group18.model.item.ElementItem;
 import com.group18.model.item.Key;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Designs the behaviours of User.
@@ -32,7 +29,7 @@ public class User extends Entity {
     /**
      * Instantiates an arraylist to store the user's inventory.
      */
-    private final List<Collectable> inventory;
+    private final Map<Integer, List<Collectable>> inventory;
     /**
      * Instantiates a hashmap to store the top 3 quickest times the user has played.
      */
@@ -44,10 +41,11 @@ public class User extends Entity {
      */
     public User(String username) {
         this.username = username;
-        this.inventory = new ArrayList<>();
+        this.inventory = new TreeMap<>();
         this.quickestTimes = new HashMap<>();
         this.highestLevel = 1;
 
+        inventory.put(highestLevel, new ArrayList<>());
         quickestTimes.put(highestLevel, new Long[]{0L,0L,0L});
     }
 
@@ -70,16 +68,16 @@ public class User extends Entity {
      * Returns a list of the inventory the user has earned.
      * @return inventory
      */
-    public List<Collectable> getInventory() {
-        return inventory;
+    public List<Collectable> getInventory(int level) {
+        return inventory.get(level);
     }
 
     /**
      * Adds to the inventory, each time a user earns a collectable item.
      * @param item The item that the User wants to collect
      */
-    public void addItem(Collectable item) {
-        inventory.add(item);
+    public void addItem(Collectable item, int level) {
+        inventory.get(level).add(item);
     }
 
     /**
@@ -87,10 +85,11 @@ public class User extends Entity {
      * @param colour The colour of key
      * @return Boolean value suggesting if this user has a key of a specific colour
      */
-    public boolean hasKey(Colour colour) {
+    public boolean hasKey(Colour colour, int level) {
         boolean hasKey = false;
+        List<Collectable> currentInv = getInventory(level);
 
-        for (Collectable item : this.inventory) {
+        for (Collectable item : currentInv) {
             if (item instanceof Key) {
                 hasKey = ((Key) item).getColour() == colour;
             }
@@ -103,9 +102,11 @@ public class User extends Entity {
      * Remove a key of a specific colour from the user's inventory
      * @param colour The colour of the key that needs to be consumed
      */
-    public void consumeKey(Colour colour) {
+    public void consumeKey(Colour colour, int level) {
+        List<Collectable> currentInv = getInventory(level);
+
         Collectable removedItem = null;
-        for (Collectable item : this.inventory) {
+        for (Collectable item : currentInv) {
             if (item instanceof Key) {
                 if (((Key) item).getColour() == colour && removedItem == null) {
                     removedItem = item;
@@ -113,7 +114,7 @@ public class User extends Entity {
             }
         }
 
-        this.inventory.remove(removedItem);
+        currentInv.remove(removedItem);
     }
 
     /**
@@ -121,8 +122,10 @@ public class User extends Entity {
      * @param i The item, the user needs to check upon
      * @return boolean value depending on whether it is collectable or not.
      */
-    public boolean hasItem(Class<? extends Collectable> i) {
-        for (Collectable item : this.inventory) {
+    public boolean hasItem(Class<? extends Collectable> i, int level) {
+        List<Collectable> currentInv = getInventory(level);
+
+        for (Collectable item : currentInv) {
             if (i.isInstance(item)) {
                 return true;
             }
@@ -130,8 +133,10 @@ public class User extends Entity {
        return false;
     }
 
-    public boolean hasElementItem(ElementItem elementItem) {
-        for (Collectable item : this.inventory) {
+    public boolean hasElementItem(ElementItem elementItem, int level) {
+        List<Collectable> currentInv = getInventory(level);
+
+        for (Collectable item : currentInv) {
             if (item == elementItem) {
                 return true;
             }
@@ -194,6 +199,7 @@ public class User extends Entity {
      */
     public void incrementLevel() {
         quickestTimes.put(++highestLevel, new Long[]{0L,0L,0L});
+        inventory.put(highestLevel, new ArrayList<>());
     }
 
     /**
@@ -202,6 +208,15 @@ public class User extends Entity {
      */
     public int getHighestLevel() {
         return highestLevel;
+    }
+
+    /**
+     * Reset the inventory for a specific level
+     * @param level The level associated with the inventory
+     */
+    public void resetInventory(int level) {
+        inventory.replace(level, new ArrayList<>());
+        tokens = 0;
     }
 
 }
