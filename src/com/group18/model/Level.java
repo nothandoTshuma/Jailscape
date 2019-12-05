@@ -51,14 +51,20 @@ public class Level {
     private Graph graph;
 
     /**
+     * The level number associated with this Level
+     */
+    private int currentLevel;
+
+    /**
      * Creates a new level
      * @param board The board for this level.
      */
-    public Level(Cell[][] board) {
+    public Level(Cell[][] board, int level) {
         this.board = board;
         this.boardHeight = board.length;
         this.boardWidth = board[0].length;
         this.graph = new Graph(this);
+        this.currentLevel = level;
     }
 
     public Graph getGraph() {
@@ -145,7 +151,6 @@ public class Level {
 
                 if (door instanceof ColourDoor) {
                    ((ColourDoor) door).toggleAction(user);
-                    System.out.println("done");
                 } else {
                     ((TokenDoor) door).toggleAction(user);
                 }
@@ -272,7 +277,7 @@ public class Level {
 
         // An enemy can not move on to a Wall, Goal, Element or Door cell.
         return !(cell instanceof Wall || cell instanceof Goal ||
-                cell instanceof Element || cell instanceof Door);
+                cell instanceof Element || cell instanceof Door || cell instanceof Teleporter);
     }
 
     /**
@@ -314,4 +319,11 @@ public class Level {
         //TODO update state in game controller
     }
 
+    /**
+     * Get this level's current level number
+     * @return The level number
+     */
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
 }

@@ -4,6 +4,7 @@ package com.group18.controller;
 import com.group18.core.LevelLoader;
 import com.group18.core.LevelSaver;
 import com.group18.core.ResourceRepository;
+import com.group18.core.UserRepository;
 import com.group18.exception.InvalidLevelException;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Direction;
@@ -20,11 +21,7 @@ import com.group18.viewmodel.UserViewModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -39,10 +36,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
@@ -51,10 +45,8 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.awt.*;
-import java.io.File;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -66,7 +58,7 @@ import static java.util.logging.Level.WARNING;
  *
  * @author frasergrandfield ethanpugh danielturato
  */
-public class GameController extends Application {
+public class GameController extends BaseController {
 
     /**
      * The width of each cell in each level. Also used to determine
@@ -80,11 +72,6 @@ public class GameController extends Application {
     private static final Logger LOGGER = Logger.getLogger("GameController");
 
     /**
-     * Holds the current state of the level
-     */
-    private State currentState;
-
-    /**
      * The level object associated with this level
      */
     private static Level level;
@@ -93,6 +80,51 @@ public class GameController extends Application {
      * The user view model associated with this level
      */
     private static UserViewModel userViewModel;
+
+    /**
+     * The board pane for this controller
+     */
+    private static Pane boardPane;
+
+    /**
+     * The primary stage for this controller
+     */
+    private static Stage primaryStage;
+
+    /**
+     * The initial epoch start time for this level
+     */
+    private static Instant startTime;
+
+    /**
+     * The total elapsed pause time for this level
+     */
+    private static Long totalPausedTime = 0L;
+
+    /**
+     * The total saved time used if this level comes from a save
+     */
+    private static Long totalSavedTime = 0L;
+
+    /**
+     * The current level number for this controller
+     */
+    private static int currentLevel;
+
+    /**
+     * The group which holds all images of all cells
+     */
+    private static Group cellImages;
+
+    /**
+     * The background music player for the game
+     */
+    private static MediaPlayer backgroundMusicPlayer;
+
+    /**
+     * Holds if the current animation of a user has been completed
+     */
+    private boolean animationCompleted = true;
 
     /**
      * The enemy view models associated with this level
@@ -120,67 +152,31 @@ public class GameController extends Application {
     private boolean pressed = false;
 
     /**
-     * The board pane for this controller
+     * Creates a new Game Controller, starting the Game for the user at the
+     * specified stage
+     * @param stage The primary stage for the game to be played on
      */
-    private static Pane boardPane;
+    public GameController(Stage stage) {
+        primaryStage = stage;
+        init();
+    }
+
+    public GameController() {
+
+    }
 
     /**
-     * The primary stage for this controller
-     */
-    private Stage primaryStage;
-
-    /**
-     * The initial epoch start time for this level
-     */
-    private static Instant startTime;
-
-    /**
-     * The total elapsed pause time for this level
-     */
-    private static Long totalPausedTime = 0L;
-
-    /**
-     * The current level number for this controller
-     */
-    private static int currentLevel;
-
-    /**
-     * The group which holds all images of all cells
-     */
-    private static Group cellImages;
-
-    /**
-     * Holds if the current animation of a user has been completed
-     */
-    private boolean animationCompleted = true;
-
-    /**
-     * The background music player for the game
-     */
-    private static MediaPlayer backgroundMusicPlayer;
-
-
-
-    /**
-     * The start method, that will initialise the whole game in which the user
+     * The init method, that will initialise the whole game in which the user
      * will be able to comfortably be able to play
-     * @param primaryStage The primary stage of this Game
-     * @throws Exception This method can throw many possible exceptions
      */
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        //TODO:drt - This needs to be somewhere else.
-        ResourceRepository.createResourceMap();
-        loadLevel();
+    private void init() {
         createBoard();
 
         Scene scene = new Scene(new BorderPane(boardPane),500,500);
         restrictView(scene);
 
-        this.currentState = State.IN_PROGRESS;
         scene.setOnKeyPressed(e -> processKey(e.getCode()));
         scene.setOnKeyReleased(e -> pressed = false);
-        this.primaryStage = primaryStage;
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -222,21 +218,19 @@ public class GameController extends Application {
         Pane pane = drawCells(level);
         boardPane = pane;
         drawAssets(pane, level);
-
     }
 
     /**
      * Load a level from a specific level file
      */
-    private void loadLevel() {
-        //TODO:drt - Load user!
-        User user = new User("Daniel");
-        //TODO:drt - Set level!
-        currentLevel = 1;
-        //Level level = LevelLoader.loadLevel(1, user);
-        Level curLevel = LevelLoader.loadLevel(1, user);
-        level = curLevel;
+    public static void loadBaseLevel(int levelNum) {
+        currentLevel = levelNum;
+        level = LevelLoader.loadLevel(levelNum, userViewModel.getUser());
+    }
 
+    public static void loadSavedLevel(int levelNum) {
+        currentLevel = levelNum;
+        level = LevelLoader.loadSavedLevel(levelNum, userViewModel.getUser());
     }
 
     /**
@@ -361,7 +355,7 @@ public class GameController extends Application {
      * @param level The level object associated with this level
      * @return A pane containing all the cell images associated with this level
      */
-    public Pane drawCells(Level level) {
+    private Pane drawCells(Level level) {
         Pane board = new Pane();
         Cell[][] cells = level.getBoard();
         int boardWidth = level.getBoardWidth();
@@ -491,7 +485,7 @@ public class GameController extends Application {
         }
 
         if (userViewModel.getUser().getCurrentCell() instanceof Goal) {
-            triggerAlert("Level won!", State.LEVEL_WON);
+            triggerAlert("Congratulations! You have completed Level" + currentLevel, State.LEVEL_WON);
         }
 
         checkForItemPickups(x, y);
@@ -509,7 +503,6 @@ public class GameController extends Application {
             double iY = itemViewModel.getImageView().getY();
 
             if (iX == x && iY == y) {
-                System.out.println("picked up!");
                 itemViewModel.getImageView().setVisible(false);
             }
         }
@@ -562,7 +555,7 @@ public class GameController extends Application {
         animateEnemy(enemyImageView, x, y);
 
         if (enemy.getEnemy().getCurrentCell().hasPlayerAndEnemy()) {
-            triggerAlert("GAME LOST", State.LEVEL_LOST);
+            triggerAlert("Unlucky! You have been killed by an enemy.", State.LEVEL_LOST);
         }
     }
 
@@ -678,6 +671,7 @@ public class GameController extends Application {
         Button resume = new Button("Resume");
         Button saveAndQuit = new Button("Save and Quit");
         pauseMenu.getChildren().addAll(resume, saveAndQuit);
+        pauseMenu.setAlignment(Pos.CENTER);
 
         Stage popupStage = new Stage(StageStyle.TRANSPARENT);
         popupStage.initOwner(primaryStage);
@@ -691,12 +685,26 @@ public class GameController extends Application {
         });
 
         saveAndQuit.setOnAction(e -> {
-            LevelSaver.saveLevel(1, level, userViewModel.getUser());
-            Platform.exit();
+            popupStage.hide();
+            LevelSaver.saveLevel(currentLevel, level, userViewModel.getUser(), calculateCurrentSavedTime());
+            loadMainMenu(userViewModel.getUser());
         });
 
-        this.currentState = State.PAUSED;
         popupStage.show();
+    }
+
+    /**
+     * Calculate the current elapsed time used for saves
+     * @return The calculated elapsed time up till now
+     */
+    private Long calculateCurrentSavedTime() {
+        Instant elapsed = Instant.now();
+        Long newFinishTime =
+                java.time.Duration.between(startTime, elapsed).toMillis() - totalPausedTime + totalSavedTime;
+        totalPausedTime = 0L;
+        totalSavedTime = 0L;
+
+        return newFinishTime;
     }
 
     /**
@@ -767,35 +775,56 @@ public class GameController extends Application {
      * @param message the message to be shown to the user
      * @param state The state that is being changed
      */
-    public static void triggerAlert(String message, State state) {
+    public void triggerAlert(String message, State state) {
         backgroundMusicPlayer.stop();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        User user = userViewModel.getUser();
         if (state == State.LEVEL_LOST) {
             playSound("PlayerDeath");
+            user.resetInventory(level.getCurrentLevel());
+            alert.setHeaderText("LEVEL LOST");
         } else if (state == State.LEVEL_WON) {
+            alert.setHeaderText("LEVEL WON");
             playSound("LevelWin");
             addNewFinishTime();
-            //TODO:drt Update user.ser file
+            user.setCurrentCell(null);
+            if (user.getHighestLevel() == currentLevel) {
+                if (currentLevel < 5) {
+                    user.incrementLevel();
+                }
+            }
+            user.resetInventory(currentLevel);
+            UserRepository.save(user);
         }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText(message);
         alert.showAndWait();
-        Platform.exit();
+        loadMainMenu(user);
     }
+
 
     /**
      * Used to add a new level finish time to the user's score list.
      */
     private static void addNewFinishTime() {
         User user = userViewModel.getUser();
-        System.out.println(user);
         Instant elapsed = Instant.now();
         Long newFinishTime =
-                java.time.Duration.between(startTime, elapsed).toMillis() - totalPausedTime;
+                java.time.Duration.between(startTime, elapsed).toMillis() - totalPausedTime + totalSavedTime;
+        totalPausedTime = 0L;
+        totalSavedTime = 0L;
         try {
             user.addQuickestTime(newFinishTime, currentLevel);
         } catch (InvalidLevelException ex) {
-            LOGGER.log(WARNING, "The user has completed a level that they shouldn't of completed", ex);
+            LOGGER.log(WARNING, "The user has completed a level that they should not have completed", ex);
         }
+    }
+
+    /**
+     * Set the user for this game
+     * @param user The user
+     */
+    public static void setUser(User user) {
+        userViewModel = new UserViewModel(user);
     }
 
     /**
@@ -803,23 +832,18 @@ public class GameController extends Application {
      * @param x The width of this level
      * @param y The height of this level
      */
-    public void setBoardArea(int x, int y) {
+    private void setBoardArea(int x, int y) {
         this.levelWidth = x;
         this.levelHeight = y;
     }
 
-    public static void playSound(String soundName) {
-        Media sound = new Media(new File("./src/resources/sounds/"+soundName+".wav").toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        if (soundName.equals("BackgroundMusic")) {
-            backgroundMusicPlayer = mediaPlayer;
-        }
-        mediaPlayer.play();
+
+    public static void setBackgroundMusicPlayer(MediaPlayer backgroundMusicPlayer) {
+        GameController.backgroundMusicPlayer = backgroundMusicPlayer;
     }
 
-    //TODO:drt - Delete this method once fully tested
-    public static void main(String[] args) {
-        launch(args);
+    public static void setTotalSavedTime(Long totalSavedTime) {
+        GameController.totalSavedTime = totalSavedTime;
     }
 }
 

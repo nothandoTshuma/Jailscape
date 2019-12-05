@@ -1,5 +1,6 @@
 package com.group18.core;
 
+import com.group18.controller.GameController;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Colour;
 import com.group18.model.Direction;
@@ -35,9 +36,31 @@ public class LevelLoader {
     public static final String DEFAULT_LEVEL_DIRECTORY = "./src/resources/levels/Level";
 
     /**
+     * The directory which will hold all the saved level files
+     */
+    public static final String SAVED_LEVEL_DIRECTORY = "./src/resources/saved-levels/";
+
+    /**
      * The logger which will allows us to output errors in a nice format
      */
     private static final Logger LOGGER = Logger.getLogger("LevelLoader");
+
+    /**
+     * True if loading from a saved file
+     */
+    private static boolean loadSave = false;
+
+    /**
+     * Load a saved level file for a specified level
+     * @param level The saved level number
+     * @param user The user who wants the saved the level
+     * @return A level object containing the saved level
+     */
+    public static Level loadSavedLevel(int level, User user) {
+        String fileName = SAVED_LEVEL_DIRECTORY + user.getUsername() + "-level-save" + level + ".txt";
+        loadSave = true;
+        return load(level, user, fileName);
+    }
 
     /**
      * Load a default level file for a specified level
@@ -46,8 +69,11 @@ public class LevelLoader {
      * @return The level object
      */
     public static Level loadLevel(int level, User user) {
-        String fileName = DEFAULT_LEVEL_DIRECTORY + level + "File.txt";
-        //String fileName = "./src/resources/saved-levels/Daniellevel-save1.txt";
+        String fileName = DEFAULT_LEVEL_DIRECTORY + level + ".txt";
+        return load(level, user, fileName);
+    }
+
+    private static Level load(int level, User user, String fileName) {
         Cell[][] cells = null;
 
         try {
@@ -64,6 +90,9 @@ public class LevelLoader {
 
                 if (lineCounter == 0) {
                     cells = new Cell[line.nextInt()][line.nextInt()];
+                } else if (loadSave && lineCounter == 1) {
+                    GameController.setTotalSavedTime(line.nextLong());
+                    loadSave = false;
                 } else if (entities > 0) {
                     placeEntity(line, previousCell, user);
                     entities--;
@@ -87,7 +116,7 @@ public class LevelLoader {
 
 
             setTeleporterPartners(cells);
-            Level levelObj = new Level(cells);
+            Level levelObj = new Level(cells, level);
             setLevelFor(cells, levelObj);
 
             return levelObj;

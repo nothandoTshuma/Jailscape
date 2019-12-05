@@ -1,6 +1,5 @@
 package com.group18.controller;
 
-import com.group18.core.FileReader;
 import com.group18.core.UserRepository;
 import com.group18.exception.InvalidLevelException;
 import com.group18.model.entity.User;
@@ -12,7 +11,7 @@ import javafx.scene.control.Label;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class HighScoreMenuController extends MenuController {
+public class HighScoreController extends BaseController {
     @FXML Button backButton;
     @FXML Label user1Label;
     @FXML Label user2Label;
@@ -63,7 +62,7 @@ public class HighScoreMenuController extends MenuController {
     }
 
     private void handleBackButtonAction() {
-        loadFXMLScene("/resources/MainMenu.fxml", "Main Menu");
+        loadFXMLScene("/scenes/MainMenu.fxml", "Main Menu");
     }
 
     private Map<String, Long> getThreeHighestScores(int level) throws InvalidLevelException {

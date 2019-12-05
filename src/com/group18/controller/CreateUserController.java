@@ -6,17 +6,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class CreateUserMenuController extends MenuController{
+public class CreateUserController extends BaseController {
     @FXML TextField userNameTextField;
     @FXML Button saveButton;
     @FXML Button cancelButton;
 
     public void initialize() {
         saveButton.setOnAction(e -> {
+            buttonClick();
             handleCreateButtonAction();
         });
 
         cancelButton.setOnAction(e -> {
+            buttonClick();
             handleBackButtonAction();
         });
     }
@@ -26,12 +28,12 @@ public class CreateUserMenuController extends MenuController{
             String userName = userNameTextField.getCharacters().toString();
             User user = new User(userName);
             UserRepository.save(user);
-            loadFXMLScene("/resources/UserSelectionMenu.fxml", "User Selection");
+            loadFXMLScene("/scenes/UserSelectionMenu.fxml", "User Selection");
         }
     }
 
     private void handleBackButtonAction(){
-        loadFXMLScene("/resources/UserSelectionMenu.fxml", "User Selection");
+        loadFXMLScene("/scenes/UserSelectionMenu.fxml", "User Selection");
     }
 
 }

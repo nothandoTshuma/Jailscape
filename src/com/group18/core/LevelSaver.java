@@ -25,26 +25,29 @@ public class LevelSaver {
     /**
      * The directory which will hold all user-saved level files
      */
-    public static final String SAVED_LEVEL_DIRECTORY =  "./src/resources/saved-levels/";
+    public static final String SAVED_LEVEL_DIRECTORY = "./src/resources/saved-levels/";
 
     /**
      * Save a level in progress so user's can reload a saved level.
      * @param levelNumber The level number that is being saved
      * @param level The level object that is being saved
      * @param user The user associated with the level
+     * @param currentTime The current elapsed time of the level so far
      */
-    public static void saveLevel(int levelNumber, Level level, User user) {
-        String levelFileName = String.format("%slevel-save%s.txt", user.getUsername(), levelNumber);
+    public static void saveLevel(int levelNumber, Level level, User user, Long currentTime) {
+        String levelFileName =
+                String.format("%s%s-level-save%s.txt", SAVED_LEVEL_DIRECTORY, user.getUsername(), levelNumber);
         delete(levelFileName);
-        createFile(level, levelFileName, user);
+        createFile(level, levelFileName, user, currentTime);
     }
 
-    private static void createFile(Level level, String levelFileName, User user) {
+    private static void createFile(Level level, String levelFileName, User user, Long currentTime) {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(levelFileName))) {
             Cell[][] cells = level.getBoard();
             writer.write(String.format("%d,%d", level.getBoardHeight(), level.getBoardWidth()));
             writer.newLine();
-            //TODO:drt - Append current time
+            writer.write(String.valueOf(currentTime));
+            writer.newLine();
             char delimiter = ',';
             for (int i = 0; i < level.getBoardHeight(); i++) {
                 for (int j = 0; j < level.getBoardWidth(); j++) {
@@ -70,7 +73,6 @@ public class LevelSaver {
                     }
                 }
             }
-            writer.flush();
         } catch (IOException ex) {
             //TODO:drt - Handle exception
         }
@@ -221,7 +223,7 @@ public class LevelSaver {
      * Delete a previous saved level, if it already exists
      * @param levelFileName The level file to be deleted
      */
-    private static void delete(String levelFileName) {
+    public static void delete(String levelFileName) {
         try {
             Files.deleteIfExists(Paths.get(levelFileName));
         } catch (IOException ex) {

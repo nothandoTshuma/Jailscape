@@ -136,11 +136,11 @@ public class Ground extends Cell implements Actionable {
                     ((User) entity).addToken();
                 } else {
                     GameController.playSound("PickupItem");
-                    ((User) entity).addItem(this.item);
+                    ((User) entity).addItem(this.item, getLevel().getCurrentLevel());
                 }
             } else {
                 GameController.playSound("PickupItem");
-                ((User) entity).addItem(this.item);
+                ((User) entity).addItem(this.item, getLevel().getCurrentLevel());
             }
             setItem(null);
         }
