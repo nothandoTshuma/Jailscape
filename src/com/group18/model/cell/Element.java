@@ -34,8 +34,11 @@ public class Element extends Ground implements Actionable {
     public void toggleAction(Entity entity) {
         if(entity instanceof User) {
             User user = (User) entity;
-            if (!(user.hasElementItem(this.elementType.getElementItem()))) {
-                GameController.triggerAlert("You walked into an element without its item", State.LEVEL_LOST);
+            if (!(user.hasElementItem(
+                    this.elementType.getElementItem(), getLevel().getCurrentLevel()))) {
+
+                GameController gc = new GameController();
+                gc.triggerAlert("You walked into an element without its item! Unlucky!", State.LEVEL_LOST);
             }
 
             switch (elementType) {

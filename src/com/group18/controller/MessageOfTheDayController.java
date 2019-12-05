@@ -5,7 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class MessageOfTheDayController extends MenuController {
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+
+public class MessageOfTheDayController extends BaseController {
     @FXML Button okayButton;
     @FXML Button copyTextButton;
     @FXML Label messageLabel;
@@ -28,11 +32,17 @@ public class MessageOfTheDayController extends MenuController {
     }
 
     private void handleOkayButtonAction() {
-        loadFXMLScene("/resources/UserSelectionMenu.fxml", "User Selection Menu");
+        buttonClick();
+        loadFXMLScene("/scenes/UserSelectionMenu.fxml", "User Selection Menu");
     }
 
     private void handleCopyTextButtonAction() {
+        buttonClick();
 
+        String messageOfTheDay = messageLabel.getText();
+        StringSelection stringSelection = new StringSelection(messageOfTheDay);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
     }
 
 }
