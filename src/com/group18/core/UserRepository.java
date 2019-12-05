@@ -57,6 +57,7 @@ public class UserRepository {
      */
     public static void save(User user) {
         String fileName = USER_DIRECTORY + "/" + user.getUsername() + ".ser";
+        delete("fileName");
 
         try {
             FileOutputStream file = new FileOutputStream(fileName);
