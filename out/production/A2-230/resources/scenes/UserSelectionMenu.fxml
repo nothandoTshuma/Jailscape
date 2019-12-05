@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.UserSelectionController">
+   <bottom>
+      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(&quot;https://imgur.com/gQasDwv.png&quot;);" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="TOP_CENTER" layoutX="140.0" prefHeight="66.0" prefWidth="321.0" text="User selection" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="45.0" />
+               </font>
+            </Label>
+            <Button fx:id="createProfileButton" layoutX="40.0" layoutY="341.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Create profile">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitButton" layoutX="382.0" layoutY="341.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Exit" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="goButton" layoutX="210.0" layoutY="288.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Go">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <ListView fx:id="userListView" layoutX="157.0" layoutY="66.0" prefHeight="200.0" prefWidth="289.0" />
+            <Button fx:id="deleteButton" layoutX="210.0" layoutY="341.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Delete">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+         </children></Pane>
+   </bottom>
+</BorderPane>
