@@ -4,7 +4,7 @@ import com.group18.model.entity.Entity;
 
 /**
  * Any cell that performs an action, should implement this interface
- * @author danielturato
+ * @author riyagupta
  */
 public interface Actionable {
 

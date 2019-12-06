@@ -10,8 +10,6 @@ import com.group18.model.cell.*;
 import com.group18.model.entity.*;
 import com.group18.model.item.ElementItem;
 import com.group18.model.item.Key;
-import com.sun.javafx.util.Logging;
-import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.io.File;

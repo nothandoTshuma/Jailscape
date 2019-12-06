@@ -4,6 +4,8 @@ import java.awt.*;
 
 /**
  * Models a Node in a graph
+ *
+ * @author danielturato nothandotshuma riyagupta
  */
 public interface Node {
 

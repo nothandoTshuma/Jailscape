@@ -2,6 +2,8 @@ package com.group18.model;
 
 /**
  * Models the different types of game state in the game
+ *
+ * @author danielturato
  */
 public enum State {
     LEVEL_WON,
