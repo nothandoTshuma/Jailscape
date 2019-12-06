@@ -15,8 +15,15 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.WARNING;
 
 public class MainMenuController extends BaseController {
+
+    private static final Logger LOGGER = Logger.getLogger("MainMenuController");
+
     @FXML Button exitButton;
     @FXML Button exitImgButton;
     @FXML Button levelsButton;
@@ -104,8 +111,17 @@ public class MainMenuController extends BaseController {
 
 
     private void handleHighScoreButtonAction() {
-        //TODO:drt - Implement controller setting
-        //loadFXMLScene("/scenes/LeaderBoard.fxml", "High Score Menu");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainMenuController.class.getResource("/scenes/Leaderboard.fxml"));
+            BorderPane borderPane = fxmlLoader.load();
+            HighScoreController controller = fxmlLoader.getController();
+            controller.setUser(user);
+            Scene editScene = new Scene(borderPane, 600, 400);
+            Stage editStage = Main.getPrimaryStage();
+            editStage.setScene(editScene);
+        } catch (IOException ex) {
+            //TODO:drt - handle
+        }
     }
 
     private void handleExitButtonAction() {
@@ -140,7 +156,7 @@ public class MainMenuController extends BaseController {
             controller.setCurrentAlertStage(menuAlertStage);
             alertStage.show();
         } catch (IOException ex) {
-            //TODO:drt - Handle this ex
+            LOGGER.log(WARNING, "Unable to show this alert", ex);
         }
     }
 

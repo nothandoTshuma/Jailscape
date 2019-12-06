@@ -16,6 +16,7 @@ public class Main extends javafx.application.Application {
     @Override
     public void start(Stage primaryStage) {
         ResourceRepository.createResourceMap();
+        primaryStage.setResizable(false);
         try {
             BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("/scenes/MessageOfTheDayDisplay.fxml"));
             Scene scene = new Scene(root, 600, 400);

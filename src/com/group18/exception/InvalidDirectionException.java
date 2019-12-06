@@ -4,7 +4,7 @@ package com.group18.exception;
  * An exception thrown when there is an invalid direction inputted
  * @author danielturato nothandotshuma riyagupta
  */
-public class InvalidDirectionException extends Exception {
+public class InvalidDirectionException extends IllegalArgumentException {
 
     /**
      * Creates a new InvalidDirectionException

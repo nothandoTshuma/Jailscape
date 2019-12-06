@@ -224,22 +224,6 @@ public class LevelLoader {
     }
 
     /**
-     * Set a direction for the entity currently on the specified cell
-     * @param cell The cell the entity is on
-     * @param potentialDirection The potential direction name
-     */
-    private static void setDirection(Cell cell, String potentialDirection) {
-        Direction direction = retrieveDirection(potentialDirection);
-        // At the start of a level, there will only be 1 entity on 1 cell
-        Entity entity = cell.getCurrentEntities().get(0);
-        entity.setDirection(direction);
-
-        if (entity instanceof StraightLineEnemy) {
-            ((StraightLineEnemy) entity).setOrientation(direction);
-        }
-    }
-
-    /**
      * Retrieve a Direction value based on the value given in a level input file
      * @param potentialDirection The potential direction name
      * @return The direction value
@@ -293,6 +277,7 @@ public class LevelLoader {
                         cell.placeEnemy(sle);
                         sle.setCurrentCell(cell);
                         sle.setDirection(direction);
+                        sle.setOrientation(direction);
                         break;
                     case STE:
                         SmartTargetingEnemy ste = new SmartTargetingEnemy();

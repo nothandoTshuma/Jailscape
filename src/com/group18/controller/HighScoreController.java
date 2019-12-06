@@ -7,9 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.text.TextAlignment;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.TimeUnit;
 
 public class HighScoreController extends BaseController {
     @FXML Button backButton;
@@ -21,12 +22,19 @@ public class HighScoreController extends BaseController {
     @FXML Label score3Label;
     @FXML ChoiceBox levelChoiceBox;
 
+    private ArrayList<String> topUserNames = new ArrayList<>();
+    private ArrayList<Long> topScores = new ArrayList<>();
+
+    private User user;
+
     public void initialize() {
-        levelChoiceBox.getItems().add("level1");
-        levelChoiceBox.getItems().add("level2");
-        levelChoiceBox.getItems().add("level3");
-        levelChoiceBox.getItems().add("level4");
-        levelChoiceBox.getItems().add("level5");
+        levelChoiceBox.getItems().add("Level 1");
+        levelChoiceBox.getItems().add("Level 2");
+        levelChoiceBox.getItems().add("Level 3");
+        levelChoiceBox.getItems().add("Level 4");
+        levelChoiceBox.getItems().add("Level 5");
+
+        setLabelAllignments();
 
         levelChoiceBox.setOnAction(e -> {
             try {
@@ -42,74 +50,133 @@ public class HighScoreController extends BaseController {
 
     }
 
+    private void setLabelAllignments() {
+        user1Label.setTextAlignment(TextAlignment.CENTER);
+        user2Label.setTextAlignment(TextAlignment.CENTER);
+        user3Label.setTextAlignment(TextAlignment.CENTER);
+        score1Label.setTextAlignment(TextAlignment.CENTER);
+        score2Label.setTextAlignment(TextAlignment.CENTER);
+        score3Label.setTextAlignment(TextAlignment.CENTER);
+    }
+
     private void handleLevelChoiceBoxAction() throws InvalidLevelException {
-        if(levelChoiceBox.getSelectionModel().getSelectedItem().equals("level1")) {
-            Map<String, Long> topThreeScores = getThreeHighestScores(1);
-            addToLabels(topThreeScores);
-        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level2")) {
-            Map<String, Long> topThreeScores = getThreeHighestScores(2);
-            addToLabels(topThreeScores);
-        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level3")) {
-            Map<String, Long> topThreeScores = getThreeHighestScores(3);
-            addToLabels(topThreeScores);
-        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level4")) {
-            Map<String, Long> topThreeScores = getThreeHighestScores(4);
-            addToLabels(topThreeScores);
-        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("level5")) {
-            Map<String, Long> topThreeScores = getThreeHighestScores(5);
-            addToLabels(topThreeScores);
+        if(levelChoiceBox.getSelectionModel().getSelectedItem().equals("Level 1")) {
+            getThreeHighestScores(1);
+            addToLabels();
+        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("Level 2")) {
+            getThreeHighestScores(2);
+            addToLabels();
+        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("Level 3")) {
+            getThreeHighestScores(3);
+            addToLabels();
+        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("Level 4")) {
+            getThreeHighestScores(4);
+            addToLabels();
+        } else if (levelChoiceBox.getSelectionModel().getSelectedItem().equals("Level 5")) {
+            getThreeHighestScores(5);
+            addToLabels();
         }
     }
 
     private void handleBackButtonAction() {
-        loadFXMLScene("/scenes/MainMenu.fxml", "Main Menu");
+        loadMainMenu(user);
     }
 
-    private Map<String, Long> getThreeHighestScores(int level) throws InvalidLevelException {
+    private void getThreeHighestScores(int level) throws InvalidLevelException {
+        topUserNames.clear();
+        topScores.clear();
         List<User> userList = UserRepository.getAll();
-
-        Map<String,Long> quickestTimes = new HashMap<>();
+        ArrayList<String> userNamesList = new ArrayList<>();
+        ArrayList<Long> scoresList = new ArrayList<>();
 
         for (int i = 0; i < userList.size(); i++) {
-            quickestTimes.put(userList.get(i).getUsername(), userList.get(i).getQuickestTimesFor(level)[2]);
+            if (userList.get(i).getHighestLevel() >= level) {
+                userNamesList.add(userList.get(i).getUsername());
+                userNamesList.add(userList.get(i).getUsername());
+                userNamesList.add(userList.get(i).getUsername());
+                scoresList.add(userList.get(i).getQuickestTimesFor(level)[0]);
+                scoresList.add(userList.get(i).getQuickestTimesFor(level)[1]);
+                scoresList.add(userList.get(i).getQuickestTimesFor(level)[2]);
+            }
         }
+        bubbleSort(scoresList, userNamesList);
 
-        Map<String, Long> topThreeTimes = new TreeMap<>();
-        while (topThreeTimes.size() < 3) {
-            String username = "";
-            Long time = -1L;
-            for (Map.Entry<String, Long> keySet : quickestTimes.entrySet()) {
-                if (keySet.getValue() > time) {
-                    username = keySet.getKey();
-                    time = keySet.getValue();
+    }
+    private void bubbleSort(ArrayList<Long> scores, ArrayList<String> name) {
+        ArrayList<Long> arrScore = scores;
+        ArrayList<String> arrName = name;
+        int n = arrScore.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arrScore.get(j) > arrScore.get(j + 1)) {
+                    Long tempScore = arrScore.get(j);
+                    arrScore.set(j, arrScore.get(j + 1));
+                    arrScore.set(j + 1, tempScore);
+
+                    String tempName = arrName.get(j);
+                    arrName.set(j, arrName.get(j + 1));
+                    arrName.set(j + 1, tempName);
                 }
             }
-            topThreeTimes.put(username, time);
-            quickestTimes.remove(username);
         }
-
-        return topThreeTimes.entrySet().stream()
-                                        .sorted(Map.Entry.comparingByValue())
-                                        .collect(
-                                                Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                                                        (e1, e2) -> e1, LinkedHashMap::new));
+        int j = 0;
+        for(int i = 0; i < arrScore.size();i++) {
+            if (j < 3 && arrScore.get(i) != 0) {
+                topUserNames.add(arrName.get(i));
+                topScores.add(arrScore.get(i));
+                j++;
+            }
+        }
     }
 
-    private void addToLabels(Map<String, Long> topThreeScores) {
-        ArrayList<String> userNameList = new ArrayList<>();
-        ArrayList<Long> scoreList = new ArrayList<>();
-
-        for (Map.Entry<String, Long> keySet : topThreeScores.entrySet()) {
-            userNameList.add(keySet.getKey());
-            scoreList.add(keySet.getValue());
+    private void addToLabels() {
+        if (topUserNames.size() == 3) {
+            user1Label.setText(topUserNames.get(0));
+            user2Label.setText(topUserNames.get(1));
+            user3Label.setText(topUserNames.get(2));
+            System.out.println(topScores.get(0));
+            score1Label.setText(getFormattedTime(topScores.get(0)));
+            score2Label.setText(getFormattedTime(topScores.get(1)));
+            score3Label.setText(getFormattedTime(topScores.get(2)));
+        } else if (topUserNames.size() == 2) {
+            user1Label.setText(topUserNames.get(0));
+            user2Label.setText(topUserNames.get(1));
+            score1Label.setText(getFormattedTime(topScores.get(0)));
+            score2Label.setText(getFormattedTime(topScores.get(1)));
+            user3Label.setText("N/A");
+            score3Label.setText("0");
+        } else if (topUserNames.size() == 1) {
+            user1Label.setText(topUserNames.get(0));
+            score1Label.setText(getFormattedTime(topScores.get(0)));
+            user2Label.setText("N/A");
+            score2Label.setText("0");
+            user3Label.setText("N/A");
+            score3Label.setText("0");
+        } else if (topUserNames.size() == 0) {
+            user1Label.setText("N/A");
+            score1Label.setText("0");
+            user2Label.setText("N/A");
+            score2Label.setText("0");
+            user3Label.setText("N/A");
+            score3Label.setText("0");
         }
-        user1Label.setText(userNameList.get(0));
-        user2Label.setText(userNameList.get(1));
-        user3Label.setText(userNameList.get(2));
-        score1Label.setText(String.valueOf(scoreList.get(0)));
-        score2Label.setText(String.valueOf(scoreList.get(0)));
-        score3Label.setText(String.valueOf(scoreList.get(0)));
-
     }
 
+    /**
+     * Credit *-*
+     * @param finishTime
+     * @return
+     */
+    private String getFormattedTime(Long finishTime) {
+        return String.format("%d : %d",
+                TimeUnit.MILLISECONDS.toMinutes(finishTime),
+                TimeUnit.MILLISECONDS.toSeconds(finishTime) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(finishTime))
+        );
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
+
