@@ -48,6 +48,7 @@ import java.awt.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.WARNING;
@@ -179,6 +180,7 @@ public class GameController extends BaseController {
         scene.setOnKeyReleased(e -> pressed = false);
 
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
         startTime = Instant.now();
         playSound("BackgroundMusic");
@@ -485,7 +487,7 @@ public class GameController extends BaseController {
         }
 
         if (userViewModel.getUser().getCurrentCell() instanceof Goal) {
-            triggerAlert("Congratulations! You have completed Level" + currentLevel, State.LEVEL_WON);
+            triggerAlert("Congratulations! You have completed Level " + currentLevel, State.LEVEL_WON);
         }
 
         checkForItemPickups(x, y);
@@ -671,7 +673,7 @@ public class GameController extends BaseController {
         Button resume = new Button("Resume");
         Button saveAndQuit = new Button("Save and Quit");
         pauseMenu.getChildren().addAll(resume, saveAndQuit);
-        pauseMenu.setAlignment(Pos.CENTER);
+        pauseMenu.setAlignment(Pos.BASELINE_CENTER);
 
         Stage popupStage = new Stage(StageStyle.TRANSPARENT);
         popupStage.initOwner(primaryStage);
@@ -783,10 +785,13 @@ public class GameController extends BaseController {
             playSound("PlayerDeath");
             user.resetInventory(level.getCurrentLevel());
             alert.setHeaderText("LEVEL LOST");
+            alert.setContentText(message);
         } else if (state == State.LEVEL_WON) {
-            alert.setHeaderText("LEVEL WON");
             playSound("LevelWin");
-            addNewFinishTime();
+            Long finishTime = addNewFinishTime();
+            String time = getFormattedTime(finishTime);
+            alert.setContentText("You beat this level in " + time);
+            alert.setHeaderText(message);
             user.setCurrentCell(null);
             if (user.getHighestLevel() == currentLevel) {
                 if (currentLevel < 5) {
@@ -796,16 +801,23 @@ public class GameController extends BaseController {
             user.resetInventory(currentLevel);
             UserRepository.save(user);
         }
-        alert.setContentText(message);
         alert.showAndWait();
         loadMainMenu(user);
+    }
+
+    private String getFormattedTime(Long finishTime) {
+        return String.format("%d minutes, %d seconds",
+                TimeUnit.MILLISECONDS.toMinutes(finishTime),
+                TimeUnit.MILLISECONDS.toSeconds(finishTime) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(finishTime))
+                );
     }
 
 
     /**
      * Used to add a new level finish time to the user's score list.
      */
-    private static void addNewFinishTime() {
+    private static Long addNewFinishTime() {
         User user = userViewModel.getUser();
         Instant elapsed = Instant.now();
         Long newFinishTime =
@@ -817,6 +829,8 @@ public class GameController extends BaseController {
         } catch (InvalidLevelException ex) {
             LOGGER.log(WARNING, "The user has completed a level that they should not have completed", ex);
         }
+
+        return newFinishTime;
     }
 
     /**
