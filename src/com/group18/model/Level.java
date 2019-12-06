@@ -288,9 +288,14 @@ public class Level {
             return true;
         }
 
+        boolean hasItem = false;
+        if (cell instanceof Ground) {
+            hasItem = ((Ground) cell).hasItem();
+        }
+
         // An enemy can not move on to a Wall, Goal, Element or Door cell.
         return !(cell instanceof Wall || cell instanceof Goal ||
-                cell instanceof Element || cell instanceof Door || cell instanceof Teleporter);
+                cell instanceof Element || cell instanceof Door || hasItem);
     }
 
     /**

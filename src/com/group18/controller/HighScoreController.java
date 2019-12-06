@@ -206,14 +206,12 @@ public class HighScoreController extends BaseController {
             n++;
         }
 
-        if (scores.size() >= 3) {
-            topUserNames = names.subList(0, 3);
-            topScores = scores.subList(0, 3);
-        } else {
-            topUserNames = names;
-            topScores = scores;
+        for (int i = 0; i < scores.size(); i++) {
+            if (scores.get(i) != 0) {
+                topScores.add(scores.get(i));
+                topUserNames.add(names.get(i));
+            }
         }
-
     }
 
     /**
@@ -239,36 +237,35 @@ public class HighScoreController extends BaseController {
     private void displayScores() {
         int size = topUserNames.size();
 
+        setBasicLabels();
+
         if (size >= 1) {
-            if (topScores.get(0) == 0) {
-                user1Label.setText("N/A");
-                score1Label.setText("0");
-            } else {
-                user1Label.setText(topUserNames.get(0));
-                score1Label.setText(getFormattedTime(topScores.get(0)));
-            }
+            user1Label.setText(topUserNames.get(0));
+            score1Label.setText(getFormattedTime(topScores.get(0)));
         }
 
         if (size >= 2) {
-            if (topScores.get(1) == 0) {
-                user2Label.setText("N/A");
-                score2Label.setText("0");
-            } else {
-                user2Label.setText(topUserNames.get(1));
-                score2Label.setText(getFormattedTime(topScores.get(1)));
-            }
+            user2Label.setText(topUserNames.get(1));
+            score2Label.setText(getFormattedTime(topScores.get(1)));
         }
 
         if (size >= 3) {
-            if (topScores.get(2) == 0) {
-                user3Label.setText("N/A");
-                score3Label.setText("0");
-            } else {
-                user3Label.setText(topUserNames.get(2));
-                score3Label.setText(getFormattedTime(topScores.get(2)));
-            }
+            user3Label.setText(topUserNames.get(2));
+            score3Label.setText(getFormattedTime(topScores.get(2)));
         }
 
+    }
+
+    /**
+     * Set the basic text of all leaderboard labels
+     */
+    private void setBasicLabels() {
+        user1Label.setText("N/A");
+        score1Label.setText("0");
+        user2Label.setText("N/A");
+        score2Label.setText("0");
+        user3Label.setText("N/A");
+        score3Label.setText("0");
     }
 
     /**
