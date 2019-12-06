@@ -67,20 +67,43 @@ public class Level {
         this.currentLevel = level;
     }
 
+    /**
+     * Get the current graph associated with this Level
+     * @return The graph
+     */
     public Graph getGraph() {
         return graph;
     }
 
+    /**
+     * Reset this level's graph
+     */
     public void resetGraph() {
         this.graph = new Graph(this);
     }
 
+    /**
+     * Get this levels board width
+     * @return The board width
+     */
     public int getBoardWidth() {
         return boardWidth;
     }
 
+    /**
+     * Get this levels board height
+     * @return The board height
+     */
     public int getBoardHeight() {
         return boardHeight;
+    }
+
+    /**
+     * Get this level's current level number
+     * @return The level number
+     */
+    public int getCurrentLevel() {
+        return currentLevel;
     }
 
     /**
@@ -171,12 +194,6 @@ public class Level {
         }
     }
 
-    public void replaceCell(Point point, Cell newCell) {
-        newCell.setCoordinates(point);
-        board[(int) point.getY()][(int) point.getX()] = newCell;
-        GameController.replaceCell(point);
-    }
-
 
     /**
      * Get adjacent cells from a certain Point
@@ -216,10 +233,6 @@ public class Level {
         Point cellPosition = cell.getPosition();
 
         return getAdjacentCells(cellPosition);
-    }
-
-    public boolean isEnemyClose(User user) {
-        return false;
     }
 
     /**
@@ -312,18 +325,14 @@ public class Level {
     }
 
     /**
-     * Updates the state in the game controller
-     * @param state The new state of the game
+     * Replace the cell at a particular point
+     * @param point The point of the old cell
+     * @param newCell The new cell to be put on the point
      */
-    public void updateState(State state) {
-        //TODO update state in game controller
+    private void replaceCell(Point point, Cell newCell) {
+        newCell.setCoordinates(point);
+        board[(int) point.getY()][(int) point.getX()] = newCell;
+        GameController.replaceCell(point);
     }
 
-    /**
-     * Get this level's current level number
-     * @return The level number
-     */
-    public int getCurrentLevel() {
-        return currentLevel;
-    }
 }

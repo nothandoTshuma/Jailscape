@@ -63,7 +63,6 @@ public class UserRepository {
             FileOutputStream file = new FileOutputStream(fileName);
             ObjectOutputStream outputStream = new ObjectOutputStream(file);
 
-            // Method for serialization of object
             outputStream.writeObject(user);
 
             outputStream.close();

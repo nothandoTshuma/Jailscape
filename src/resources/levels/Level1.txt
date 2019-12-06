@@ -249,7 +249,7 @@ GC,0,X
 GC,0,X
 WC,0,X
 GC,1,X
-SLE,L
+SLE,U
 GC,0,X
 GC,0,X
 GC,0,X

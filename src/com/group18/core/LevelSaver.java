@@ -48,6 +48,18 @@ public class LevelSaver {
         createFile(level, levelFileName, user, currentTime);
     }
 
+    /**
+     * Delete a previous saved level, if it already exists
+     * @param levelFileName The level file to be deleted
+     */
+    public static void delete(String levelFileName) {
+        try {
+            Files.deleteIfExists(Paths.get(levelFileName));
+        } catch (IOException ex) {
+            LOGGER.log(WARNING, "There was a problem deleting this file: " + levelFileName, ex);
+        }
+    }
+
     private static void createFile(Level level, String levelFileName, User user, Long currentTime) {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(levelFileName))) {
             Cell[][] cells = level.getBoard();
@@ -224,18 +236,6 @@ public class LevelSaver {
         }
 
         return cellAcronym;
-    }
-
-    /**
-     * Delete a previous saved level, if it already exists
-     * @param levelFileName The level file to be deleted
-     */
-    public static void delete(String levelFileName) {
-        try {
-            Files.deleteIfExists(Paths.get(levelFileName));
-        } catch (IOException ex) {
-            LOGGER.log(WARNING, "There was a problem deleting this file: " + levelFileName, ex);
-        }
     }
 
 

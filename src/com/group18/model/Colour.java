@@ -2,7 +2,7 @@ package com.group18.model;
 
 /**
  * Models all possible colours in the game
- * @author danielturato
+ * @author riyagupta
  */
 public enum Colour {
     RED,

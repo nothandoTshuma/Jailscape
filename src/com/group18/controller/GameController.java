@@ -153,6 +153,13 @@ public class GameController extends BaseController {
     private boolean pressed = false;
 
     /**
+     * Default constructor, needed in various circumstances
+     */
+    public GameController() {
+
+    }
+
+    /**
      * Creates a new Game Controller, starting the Game for the user at the
      * specified stage
      * @param stage The primary stage for the game to be played on
@@ -162,8 +169,93 @@ public class GameController extends BaseController {
         init();
     }
 
-    public GameController() {
+    /**
+     * Load a level from a base level file
+     * @param levelNum The number of the level
+     */
+    public static void loadBaseLevel(int levelNum) {
+        currentLevel = levelNum;
+        level = LevelLoader.loadLevel(levelNum, userViewModel.getUser());
+    }
 
+    /**
+     * Load a level from a saved level file
+     * @param levelNum The number of the level
+     */
+    public static void loadSavedLevel(int levelNum) {
+        currentLevel = levelNum;
+        level = LevelLoader.loadSavedLevel(levelNum, userViewModel.getUser());
+    }
+
+    /**
+     * Replace a cell image at a specific position with a ground image
+     * @param point The position of the image
+     */
+    public static void replaceCell(Point point) {
+        ImageView imageView = new ImageView(new Image(ResourceRepository.getResource("Ground")));
+        imageView.setY(point.getY() * 64);
+        imageView.setX(point.getX() * 64);
+
+        int idx = (int) ((int)(level.getBoardHeight() * point.getY()) + point.getX());
+        cellImages.getChildren().set(idx, imageView);
+    }
+
+    /**
+     * Trigger a message alert with also a change in state
+     * @param message the message to be shown to the user
+     * @param state The state that is being changed
+     */
+    public void triggerAlert(String message, State state) {
+        backgroundMusicPlayer.stop();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        User user = userViewModel.getUser();
+        if (state == State.LEVEL_LOST) {
+            playSound("PlayerDeath");
+            user.resetInventory(level.getCurrentLevel());
+            alert.setHeaderText("LEVEL LOST");
+            alert.setContentText(message);
+        } else if (state == State.LEVEL_WON) {
+            playSound("LevelWin");
+            Long finishTime = addNewFinishTime();
+            String time = getFormattedTime(finishTime);
+            alert.setContentText("You beat this level in " + time);
+            alert.setHeaderText(message);
+            user.setCurrentCell(null);
+            if (user.getHighestLevel() == currentLevel) {
+                if (currentLevel < 5) {
+                    user.incrementLevel();
+                }
+            }
+            user.resetInventory(currentLevel);
+            UserRepository.save(user);
+        }
+        alert.showAndWait();
+        loadMainMenu(user);
+    }
+
+    /**
+     * Set the user for this game
+     * @param user The user
+     */
+    public static void setUser(User user) {
+        userViewModel = new UserViewModel(user);
+    }
+
+
+    /**
+     * Set the background music player for this controller
+     * @param backgroundMusicPlayer The new media player
+     */
+    public static void setBackgroundMusicPlayer(MediaPlayer backgroundMusicPlayer) {
+        GameController.backgroundMusicPlayer = backgroundMusicPlayer;
+    }
+
+    /**
+     * Set the total time this level received from a saved file
+     * @param totalSavedTime The new total saved time
+     */
+    public static void setTotalSavedTime(Long totalSavedTime) {
+        GameController.totalSavedTime = totalSavedTime;
     }
 
     /**
@@ -220,19 +312,6 @@ public class GameController extends BaseController {
         Pane pane = drawCells(level);
         boardPane = pane;
         drawAssets(pane, level);
-    }
-
-    /**
-     * Load a level from a specific level file
-     */
-    public static void loadBaseLevel(int levelNum) {
-        currentLevel = levelNum;
-        level = LevelLoader.loadLevel(levelNum, userViewModel.getUser());
-    }
-
-    public static void loadSavedLevel(int levelNum) {
-        currentLevel = levelNum;
-        level = LevelLoader.loadSavedLevel(levelNum, userViewModel.getUser());
     }
 
     /**
@@ -490,6 +569,10 @@ public class GameController extends BaseController {
 
         checkForItemPickups(x, y);
 
+        if (userViewModel.getUser().getCurrentCell().hasPlayerAndEnemy()) {
+            triggerAlert("Unlucky! You have been killed by an enemy.", State.LEVEL_LOST);
+        }
+
     }
 
     /**
@@ -576,6 +659,13 @@ public class GameController extends BaseController {
         timeline.play();
     }
 
+    /**
+     * Clamps the range in which an entity can move in
+     * @param value The potential new value
+     * @param min The min value the potential value can be
+     * @param max The max value the potential value can be
+     * @return The final value
+     */
     private double clampRange(double value, double min, double max) {
         if (value < min) return min ;
         if (value > max) return max ;
@@ -707,18 +797,6 @@ public class GameController extends BaseController {
         return newFinishTime;
     }
 
-    /**
-     * Replace a cell image at a specific position with a ground image
-     * @param point The position of the image
-     */
-    public static void replaceCell(Point point) {
-        ImageView imageView = new ImageView(new Image(ResourceRepository.getResource("Ground")));
-        imageView.setY(point.getY() * 64);
-        imageView.setX(point.getX() * 64);
-
-        int idx = (int) ((int)(level.getBoardHeight() * point.getY()) + point.getX());
-        cellImages.getChildren().set(idx, imageView);
-    }
 
     /**
      * Creates the style's a features for the pause menu
@@ -771,48 +849,16 @@ public class GameController extends BaseController {
 
 
     /**
-     * Trigger a message alert with also a change in state
-     * @param message the message to be shown to the user
-     * @param state The state that is being changed
+     * Used to formatted a time from milliseconds into minutes & seconds
+     * Credit - https://stackoverflow.com/questions/17624335/converting-milliseconds-to-minutes-and-seconds
+     * @param time The time to be formatted (ms)
+     * @return The formatted time
      */
-    public void triggerAlert(String message, State state) {
-        backgroundMusicPlayer.stop();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        User user = userViewModel.getUser();
-        if (state == State.LEVEL_LOST) {
-            playSound("PlayerDeath");
-            user.resetInventory(level.getCurrentLevel());
-            alert.setHeaderText("LEVEL LOST");
-            alert.setContentText(message);
-        } else if (state == State.LEVEL_WON) {
-            playSound("LevelWin");
-            Long finishTime = addNewFinishTime();
-            String time = getFormattedTime(finishTime);
-            alert.setContentText("You beat this level in " + time);
-            alert.setHeaderText(message);
-            user.setCurrentCell(null);
-            if (user.getHighestLevel() == currentLevel) {
-                if (currentLevel < 5) {
-                    user.incrementLevel();
-                }
-            }
-            user.resetInventory(currentLevel);
-            UserRepository.save(user);
-        }
-        alert.showAndWait();
-        loadMainMenu(user);
-    }
-
-    /**
-     * Credit *-*
-     * @param finishTime
-     * @return
-     */
-    private String getFormattedTime(Long finishTime) {
+    private String getFormattedTime(Long time) {
         return String.format("%d minutes, %d seconds",
-                TimeUnit.MILLISECONDS.toMinutes(finishTime),
-                TimeUnit.MILLISECONDS.toSeconds(finishTime) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(finishTime))
+                TimeUnit.MILLISECONDS.toMinutes(time),
+                TimeUnit.MILLISECONDS.toSeconds(time) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
                 );
     }
 
@@ -837,14 +883,6 @@ public class GameController extends BaseController {
     }
 
     /**
-     * Set the user for this game
-     * @param user The user
-     */
-    public static void setUser(User user) {
-        userViewModel = new UserViewModel(user);
-    }
-
-    /**
      * Set the width & height of this level
      * @param x The width of this level
      * @param y The height of this level
@@ -854,13 +892,5 @@ public class GameController extends BaseController {
         this.levelHeight = y;
     }
 
-
-    public static void setBackgroundMusicPlayer(MediaPlayer backgroundMusicPlayer) {
-        GameController.backgroundMusicPlayer = backgroundMusicPlayer;
-    }
-
-    public static void setTotalSavedTime(Long totalSavedTime) {
-        GameController.totalSavedTime = totalSavedTime;
-    }
 }
 
