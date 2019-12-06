@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(&quot;https://imgur.com/gQasDwv.png&quot;);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.HighScoreController">
-   <top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(&quot;https://imgur.com/gQasDwv.png&quot;);" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group18.controller.HighScoreController">
+   <left>
       <Pane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="161.0" layoutY="-6.0" prefHeight="50.0" prefWidth="320.0" text="Leaderboard" textFill="WHITE">
+            <Label layoutX="161.0" layoutY="14.0" prefHeight="50.0" prefWidth="320.0" text="Leaderboard" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="45.0" />
                </font>
@@ -19,47 +22,47 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="263.0" layoutY="173.0" prefHeight="166.0" prefWidth="75.0" style="-fx-background-image: url(&quot;https://i.imgur.com/qenYjAL.jpg&quot;);" />
-            <Label layoutX="188.0" layoutY="217.0" prefHeight="122.0" prefWidth="75.0" style="-fx-background-image: url(&quot;https://i.imgur.com/xQfSktB.jpg&quot;);" />
-            <Label layoutX="338.0" layoutY="250.0" prefHeight="89.0" prefWidth="75.0" style="-fx-background-image: url(&quot;https://i.imgur.com/YtweooX.gif&quot;);" />
-            <Label fx:id="user1Label" alignment="TOP_CENTER" layoutX="263.0" layoutY="147.0" prefHeight="28.0" prefWidth="75.0" textFill="WHITE">
+            <Label layoutX="263.0" layoutY="177.0" prefHeight="166.0" prefWidth="75.0" style="-fx-background-image: url(&quot;https://i.imgur.com/qenYjAL.jpg&quot;);" />
+            <Label layoutX="72.0" layoutY="223.0" prefHeight="122.0" prefWidth="75.0" style="-fx-background-image: url(&quot;https://i.imgur.com/xQfSktB.jpg&quot;);" />
+            <Label layoutX="435.0" layoutY="260.0" prefHeight="89.0" prefWidth="75.0" style="-fx-background-image: url(&quot;https://i.imgur.com/YtweooX.gif&quot;);" />
+            <Label fx:id="user1Label" alignment="TOP_CENTER" layoutX="263.0" layoutY="149.0" prefHeight="28.0" prefWidth="75.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="user2Label" layoutX="192.0" layoutY="189.0" textFill="WHITE">
+            <Label fx:id="user2Label" layoutX="73.0" layoutY="181.0" prefHeight="41.0" prefWidth="74.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="user3Label" layoutX="342.0" layoutY="223.0" textFill="WHITE">
+            <Label fx:id="user3Label" layoutX="436.0" layoutY="221.0" prefHeight="39.0" prefWidth="74.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="score2Label" layoutX="195.0" layoutY="335.0" textFill="WHITE">
+            <Label fx:id="score2Label" layoutX="69.0" layoutY="345.0" prefHeight="36.0" prefWidth="79.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="score1Label" layoutX="270.0" layoutY="335.0" textFill="WHITE">
+            <Label fx:id="score1Label" layoutX="262.0" layoutY="341.0" prefHeight="48.0" prefWidth="78.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="score3Label" layoutX="345.0" layoutY="335.0" textFill="WHITE">
+            <Label fx:id="score3Label" layoutX="434.0" layoutY="344.0" prefHeight="44.0" prefWidth="77.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" layoutX="481.0" layoutY="316.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="98.0" text="Back">
+            <Button fx:id="backButton" layoutX="472.0" layoutY="73.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="98.0" text="Back">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Label layoutX="280.0" layoutY="229.0" prefHeight="55.0" prefWidth="41.0" style="-fx-background-image: url(&quot;https://imgur.com/b2v8XlN.png&quot;);" />
-            <Label layoutX="356.0" layoutY="260.0" prefHeight="62.0" prefWidth="40.0" style="-fx-background-image: url(&quot;https://imgur.com/ufWCrkH.png&quot;);" />
-            <Label layoutX="195.0" layoutY="249.0" prefHeight="70.0" prefWidth="61.0" style="-fx-background-image: url(&quot;https://imgur.com/rQlKCyC.png&quot;);" />
+            <Label layoutX="280.0" layoutY="185.0" prefHeight="55.0" prefWidth="41.0" style="-fx-background-image: url(&quot;https://imgur.com/b2v8XlN.png&quot;);" />
+            <Label layoutX="452.0" layoutY="274.0" prefHeight="62.0" prefWidth="40.0" style="-fx-background-image: url(&quot;https://imgur.com/ufWCrkH.png&quot;);" />
+            <Label layoutX="79.0" layoutY="225.0" prefHeight="70.0" prefWidth="61.0" style="-fx-background-image: url(&quot;https://imgur.com/rQlKCyC.png&quot;);" />
          </children></Pane>
-   </top>
+   </left>
 </BorderPane>

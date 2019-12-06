@@ -42,7 +42,7 @@ public class Teleporter extends Ground implements Actionable {
                 entity.setCurrentCell(partner);
                 GameController.playSound("PlayerTeleport");
             } catch (InvalidMoveException ex) {
-                //TODO - not sure what to do now
+                ex.printStackTrace();
             }
         }
     }
