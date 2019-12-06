@@ -50,3 +50,7 @@ InspectorJ @ freesound.org
 Adam_N @ freesound.org
 
 	Fire Crackle
+
+kyles @ freesound.org
+
+	Ice Skate Slide (Hockey Player)
