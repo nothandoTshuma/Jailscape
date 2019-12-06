@@ -57,7 +57,7 @@ import static java.util.logging.Level.WARNING;
  * The controller for JailScape which controls the state & action
  * for each possible playable level.
  *
- * @author frasergrandfield ethanpugh danielturato
+ * @author frasergrandfield danielturato ethanpugh
  */
 public class GameController extends BaseController {
 
@@ -250,8 +250,6 @@ public class GameController extends BaseController {
                 if (cell.getCurrentEntities().size() > 0) {
                     Entity entity = cell.getCurrentEntities().get(0);
                     if (entity instanceof User) {
-                        //TODO:drt - Don't create new user view model after implementing user loading
-                        userViewModel = new UserViewModel((User) entity);
                         userViewModel.setImageView(j, i);
                         sprites.getChildren().add(userViewModel.getImageView());
                     } else {
@@ -805,6 +803,11 @@ public class GameController extends BaseController {
         loadMainMenu(user);
     }
 
+    /**
+     * Credit *-*
+     * @param finishTime
+     * @return
+     */
     private String getFormattedTime(Long finishTime) {
         return String.format("%d minutes, %d seconds",
                 TimeUnit.MILLISECONDS.toMinutes(finishTime),

@@ -1,6 +1,7 @@
 package com.group18.controller;
 
 import com.group18.Main;
+import com.group18.model.cell.Wall;
 import com.group18.model.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +16,15 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.WARNING;
 
 public class LevelsController extends BaseController {
+
+    private static final Logger LOGGER = Logger.getLogger("LevelsController");
+
     @FXML
     Button backButton;
 
@@ -171,7 +179,7 @@ public class LevelsController extends BaseController {
             alertStage.show();
 
         } catch (IOException ex) {
-            //TODO:drt - Handle this ex
+            LOGGER.log(WARNING, "Unable to show this alert", ex);
         }
     }
 

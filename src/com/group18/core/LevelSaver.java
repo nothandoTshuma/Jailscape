@@ -12,8 +12,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.logging.Logger;
 
 import static com.group18.model.item.ElementItem.FIRE_BOOTS;
+import static java.util.logging.Level.WARNING;
 
 /**
  * This class creates a saved level file for a specific file
@@ -26,6 +28,11 @@ public class LevelSaver {
      * The directory which will hold all user-saved level files
      */
     public static final String SAVED_LEVEL_DIRECTORY = "./src/resources/saved-levels/";
+
+    /**
+     * Used to log out important errors/messages to the console
+     */
+    private static final Logger LOGGER = Logger.getLogger("LevelSaver");
 
     /**
      * Save a level in progress so user's can reload a saved level.
@@ -74,7 +81,7 @@ public class LevelSaver {
                 }
             }
         } catch (IOException ex) {
-            //TODO:drt - Handle exception
+            LOGGER.log(WARNING, "There was a problem saving this level to a file", ex);
         }
     }
 
@@ -227,7 +234,7 @@ public class LevelSaver {
         try {
             Files.deleteIfExists(Paths.get(levelFileName));
         } catch (IOException ex) {
-            //TODO:drt - Handle
+            LOGGER.log(WARNING, "There was a problem deleting this file: " + levelFileName, ex);
         }
     }
 

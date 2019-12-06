@@ -6,7 +6,6 @@ import com.group18.model.Level;
 import com.group18.model.entity.Enemy;
 import com.group18.model.entity.Entity;
 import com.group18.model.entity.User;
-import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -116,7 +115,6 @@ public abstract class Cell implements Node, Serializable {
     boolean hasEntity(Class<? extends Entity> e) {
         return this.currentEntities.stream()
                 .anyMatch(e::isInstance);
-
 
     }
 
