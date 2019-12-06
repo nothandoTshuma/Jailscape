@@ -260,7 +260,7 @@ public class HighScoreController extends BaseController {
         }
 
         if (size >= 3) {
-            if (topScores.size() >= 3) {
+            if (topScores.get(2) == 0) {
                 user3Label.setText("N/A");
                 score3Label.setText("0");
             } else {
