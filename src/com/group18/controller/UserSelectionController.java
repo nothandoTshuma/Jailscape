@@ -90,7 +90,7 @@ public class UserSelectionController extends BaseController {
             UserRepository.delete(chosenUserName + ".ser");
 
             String baseSavedFileDir =
-                    "./resources/saved-files/" + user.getUsername() + "-level-save";
+                    "./src/resources/saved-files/" + chosenUserName + "-level-save";
 
             for (int i = 1; i <=3; i++) {
                 LevelSaver.delete(baseSavedFileDir + i + ".txt");
