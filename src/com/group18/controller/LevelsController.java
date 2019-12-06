@@ -160,6 +160,7 @@ public class LevelsController extends BaseController {
             AlertController controller = loader.getController();
             controller.setUser(user);
             controller.setCurrentLevel(level);
+            controller.setup();
 
             Stage alertStage = new Stage(StageStyle.UNDECORATED);
             alertStage.initOwner(Main.getPrimaryStage());
