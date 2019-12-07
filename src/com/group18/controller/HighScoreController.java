@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.text.TextAlignment;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -44,24 +43,6 @@ public class HighScoreController extends BaseController {
     private Label user3Label;
 
     /**
-     * Used to show the time score in 1st position for a level
-     */
-    @FXML
-    private Label score1Label;
-
-    /**
-     * Used to show the time score in 2nd position for a level
-     */
-    @FXML
-    private Label score2Label;
-
-    /**
-     * Used to show the time score in 3rd position for a level
-     */
-    @FXML
-    private Label score3Label;
-
-    /**
      * The filter option menu, allowing the user to filter between which level
      * they wish to view the high scores for.
      */
@@ -93,8 +74,6 @@ public class HighScoreController extends BaseController {
         levelChoiceBox.getItems().add("Level 4");
         levelChoiceBox.getItems().add("Level 5");
 
-        setLabelAlignments();
-
         levelChoiceBox.setOnAction(e -> {
             try {
                 handleLevelChoiceBoxAction();
@@ -115,18 +94,6 @@ public class HighScoreController extends BaseController {
      */
     public void setUser(User user) {
         this.user = user;
-    }
-
-    /**
-     * Set the alignments for all labels displayed
-     */
-    private void setLabelAlignments() {
-        user1Label.setTextAlignment(TextAlignment.CENTER);
-        user2Label.setTextAlignment(TextAlignment.CENTER);
-        user3Label.setTextAlignment(TextAlignment.CENTER);
-        score1Label.setTextAlignment(TextAlignment.CENTER);
-        score2Label.setTextAlignment(TextAlignment.CENTER);
-        score3Label.setTextAlignment(TextAlignment.CENTER);
     }
 
     /**
@@ -240,18 +207,18 @@ public class HighScoreController extends BaseController {
         setBasicLabels();
 
         if (size >= 1) {
-            user1Label.setText(topUserNames.get(0));
-            score1Label.setText(getFormattedTime(topScores.get(0)));
+            user1Label.setText(topUserNames.get(0) + " - " +
+                               getFormattedTime(topScores.get(0)));
         }
 
         if (size >= 2) {
-            user2Label.setText(topUserNames.get(1));
-            score2Label.setText(getFormattedTime(topScores.get(1)));
+            user2Label.setText(topUserNames.get(1) + " - " +
+                    getFormattedTime(topScores.get(1)));
         }
 
         if (size >= 3) {
-            user3Label.setText(topUserNames.get(2));
-            score3Label.setText(getFormattedTime(topScores.get(2)));
+            user3Label.setText(topUserNames.get(2) + " - " +
+                    getFormattedTime(topScores.get(2)));
         }
 
     }
@@ -261,11 +228,8 @@ public class HighScoreController extends BaseController {
      */
     private void setBasicLabels() {
         user1Label.setText("N/A");
-        score1Label.setText("0");
         user2Label.setText("N/A");
-        score2Label.setText("0");
         user3Label.setText("N/A");
-        score3Label.setText("0");
     }
 
     /**
@@ -275,7 +239,7 @@ public class HighScoreController extends BaseController {
      * @return The formatted time
      */
     private String getFormattedTime(Long time) {
-        return String.format("%d : %d",
+        return String.format("%2d mins,%2d sec(s)",
                 TimeUnit.MILLISECONDS.toMinutes(time),
                 TimeUnit.MILLISECONDS.toSeconds(time) -
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
