@@ -54,6 +54,9 @@ public class Element extends Ground implements Actionable {
                 case FIRE:
                     GameController.playSound("FireCrackle");
                     break;
+                case ICE:
+                    GameController.playSound("IceSlide");
+                    break;
                 default:
                     break;
             }

@@ -52,6 +52,25 @@ public class UserRepository {
     }
 
     /**
+     * Checks if there's already a user with a particular username
+     * @param username The user we're checking on
+     * @return Boolean suggests that the user exists
+     */
+    public static boolean userExists(String username) {
+        File directory = new File(USER_DIRECTORY);
+        File[] directoryFiles = directory.listFiles();
+        if (directoryFiles != null) {
+            for (File file : directoryFiles) {
+                if (file.getName().equals(username + ".ser")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Serialize a User object
      * @param user The user to be serialized.
      */

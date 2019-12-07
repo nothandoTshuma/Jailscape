@@ -201,6 +201,10 @@ public class LevelLoader {
             case FI:
                 ground.setItem(ElementItem.FLIPPERS);
                 break;
+            case ISI:
+                ground.setItem(ElementItem.ICE_SKATES);
+                System.out.println("Done");
+                break;
             case TKI:
                 ground.setItem(Key.TOKEN_KEY);
                 break;
@@ -338,6 +342,9 @@ public class LevelLoader {
             case WTC:
                 cell = new Element(ElementType.WATER, point);
                 break;
+            case IC:
+                cell = new Element(ElementType.ICE, point);
+                break;
             case TC:
                 cell = new Teleporter(null, point);
                 break;
@@ -375,6 +382,7 @@ public class LevelLoader {
         GC,
         FC,
         WTC,
+        IC,
         TC,
         GOC,
         TD,
@@ -401,6 +409,7 @@ public class LevelLoader {
     private enum ItemAcronym {
         FBI,
         FI,
+        ISI,
         TKI,
         GKI,
         RKI,

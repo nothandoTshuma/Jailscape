@@ -10,7 +10,8 @@ import static com.group18.model.item.ElementItem.*;
  */
 public enum ElementType {
     WATER(FLIPPERS),
-    FIRE(FIRE_BOOTS);
+    FIRE(FIRE_BOOTS),
+    ICE(ICE_SKATES);
 
     /**
      * Holds the element item

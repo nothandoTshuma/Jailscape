@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import static com.group18.model.item.ElementItem.FIRE_BOOTS;
+import static com.group18.model.item.ElementItem.ICE_SKATES;
 import static java.util.logging.Level.WARNING;
 
 /**
@@ -155,8 +156,10 @@ public class LevelSaver {
                 if (item instanceof ElementItem) {
                     if (((ElementItem) item) == FIRE_BOOTS) {
                         return "FBI";
+                    } else if (((ElementItem) item) == ICE_SKATES) {
+                        return "ISI";
                     }
-                    //TODO:drt - Change if adding more elements/items
+
                     return "FI";
                 }
 
@@ -223,6 +226,9 @@ public class LevelSaver {
                     break;
                 case WATER:
                     cellAcronym = "WTC";
+                    break;
+                case ICE:
+                    cellAcronym = "IC";
                     break;
                 default:
                     break;

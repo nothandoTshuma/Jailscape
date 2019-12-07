@@ -1,6 +1,7 @@
 package com.group18.model;
 
 import com.group18.controller.GameController;
+import com.group18.exception.InvalidLevelException;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.cell.*;
 import com.group18.model.entity.Enemy;
@@ -165,6 +166,11 @@ public class Level {
                 ((Element) newCell).toggleAction(user);
                 newCell.placePlayer(user);
                 user.setCurrentCell(newCell);
+
+                if (element.getElementType() == ElementType.ICE) {
+                    slide(user, direction);
+                }
+
             } else if (newCell instanceof Ground) {
                 ((Ground) newCell).toggleAction(user);
                 newCell.placePlayer(user);
@@ -192,6 +198,23 @@ public class Level {
             GameController.playSound("PlayerBlocked");
             throw new InvalidMoveException(String.format("Moving in a %s direction is not valid", direction));
         }
+    }
+
+    private void slide(User user, Direction direction) throws InvalidMoveException {
+        Point newPosition = calculateNewPosition(user.getCurrentCell().getPosition(), direction);
+
+        Cell newCell = getCell(newPosition);
+        Cell oldCell = user.getCurrentCell();
+
+        if (newCell instanceof Element) {
+            if (((Element) newCell).getElementType().equals(ElementType.ICE)) {
+                oldCell.removeEntity(user);
+                newCell.placePlayer(user);
+                user.setCurrentCell(newCell);
+                slide(user, direction);
+            }
+        }
+
     }
 
 
