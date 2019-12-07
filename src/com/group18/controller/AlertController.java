@@ -94,6 +94,7 @@ public abstract class AlertController extends BaseController {
         GameController.loadBaseLevel(currentLevel);
         MainMenuController.getMenuMusicPlayer().stop();
         currentAlertStage.hide();
+        Main.getPrimaryStage().setTitle("Jailscape");
         GameController gc = new GameController(Main.getPrimaryStage());
     }
 
