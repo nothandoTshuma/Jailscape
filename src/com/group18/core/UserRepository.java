@@ -88,7 +88,6 @@ public class UserRepository {
             file.close();
         } catch (IOException ex) {
             LOGGER.log(WARNING, "The user is trying to create a User that already exists", ex);
-            //TODO:drt - Alert user
         }
     }
 
@@ -127,7 +126,6 @@ public class UserRepository {
             Files.deleteIfExists(Paths.get(USER_DIRECTORY + "/" + fileName));
         } catch (IOException ex) {
             LOGGER.log(WARNING, "This user has now been deleted", ex);
-            //TODO:drt - Alert the user that it's been deleted
         }
     }
 

@@ -1,6 +1,7 @@
 package com.group18.controller;
 
 
+import com.group18.Main;
 import com.group18.core.LevelLoader;
 import com.group18.core.LevelSaver;
 import com.group18.core.ResourceRepository;
@@ -231,6 +232,7 @@ public class GameController extends BaseController {
             UserRepository.save(user);
         }
         alert.showAndWait();
+        Main.getPrimaryStage().setTitle("Main Menu");
         loadMainMenu(user);
     }
 
@@ -804,6 +806,7 @@ public class GameController extends BaseController {
         saveAndQuit.setOnAction(e -> {
             popupStage.hide();
             LevelSaver.saveLevel(currentLevel, level, userViewModel.getUser(), calculateCurrentSavedTime());
+            Main.getPrimaryStage().setTitle("Main Menu");
             loadMainMenu(userViewModel.getUser());
         });
 
