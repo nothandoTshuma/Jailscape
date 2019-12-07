@@ -572,6 +572,7 @@ public class GameController extends BaseController {
         } else if (!(userCurrentCell instanceof Teleporter)) {
             animateUser(userImageView, x, y);
         } else {
+            userImageView.setVisible(false);
             animatedBasedOnPosition(userImageView, userCurrentCell);
         }
 
@@ -633,6 +634,9 @@ public class GameController extends BaseController {
         KeyFrame movement = new KeyFrame(Duration.millis(500), keyValueX, keyValueY);
 
         timeline.setOnFinished(e -> {
+            if (userViewModel.getUser().getCurrentCell() instanceof Teleporter) {
+                userImageView.setVisible(true);
+            }
             userImageView.setImage(new Image(ResourceRepository.getResource("User-Idle")));
             animationCompleted = true;
         });
