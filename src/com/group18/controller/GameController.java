@@ -1,6 +1,7 @@
 package com.group18.controller;
 
 
+import com.group18.Main;
 import com.group18.core.LevelLoader;
 import com.group18.core.LevelSaver;
 import com.group18.core.ResourceRepository;
@@ -8,6 +9,7 @@ import com.group18.core.UserRepository;
 import com.group18.exception.InvalidLevelException;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Direction;
+import com.group18.model.ElementType;
 import com.group18.model.Level;
 import com.group18.model.State;
 import com.group18.model.cell.*;
@@ -48,6 +50,7 @@ import java.awt.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.WARNING;
@@ -56,7 +59,7 @@ import static java.util.logging.Level.WARNING;
  * The controller for JailScape which controls the state & action
  * for each possible playable level.
  *
- * @author frasergrandfield ethanpugh danielturato
+ * @author frasergrandfield danielturato ethanpugh
  */
 public class GameController extends BaseController {
 
@@ -152,6 +155,13 @@ public class GameController extends BaseController {
     private boolean pressed = false;
 
     /**
+     * Default constructor, needed in various circumstances
+     */
+    public GameController() {
+
+    }
+
+    /**
      * Creates a new Game Controller, starting the Game for the user at the
      * specified stage
      * @param stage The primary stage for the game to be played on
@@ -161,8 +171,94 @@ public class GameController extends BaseController {
         init();
     }
 
-    public GameController() {
+    /**
+     * Load a level from a base level file
+     * @param levelNum The number of the level
+     */
+    public static void loadBaseLevel(int levelNum) {
+        currentLevel = levelNum;
+        level = LevelLoader.loadLevel(levelNum, userViewModel.getUser());
+    }
 
+    /**
+     * Load a level from a saved level file
+     * @param levelNum The number of the level
+     */
+    public static void loadSavedLevel(int levelNum) {
+        currentLevel = levelNum;
+        level = LevelLoader.loadSavedLevel(levelNum, userViewModel.getUser());
+    }
+
+    /**
+     * Replace a cell image at a specific position with a ground image
+     * @param point The position of the image
+     */
+    public static void replaceCell(Point point) {
+        ImageView imageView = new ImageView(new Image(ResourceRepository.getResource("Ground")));
+        imageView.setY(point.getY() * 64);
+        imageView.setX(point.getX() * 64);
+
+        int idx = (int) ((int)(level.getBoardHeight() * point.getY()) + point.getX());
+        cellImages.getChildren().set(idx, imageView);
+    }
+
+    /**
+     * Trigger a message alert with also a change in state
+     * @param message the message to be shown to the user
+     * @param state The state that is being changed
+     */
+    public void triggerAlert(String message, State state) {
+        backgroundMusicPlayer.stop();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        User user = userViewModel.getUser();
+        if (state == State.LEVEL_LOST) {
+            playSound("PlayerDeath");
+            user.resetInventory(level.getCurrentLevel());
+            alert.setHeaderText("LEVEL LOST");
+            alert.setContentText(message);
+        } else if (state == State.LEVEL_WON) {
+            playSound("LevelWin");
+            Long finishTime = addNewFinishTime();
+            String time = getFormattedTime(finishTime);
+            alert.setContentText("You beat this level in " + time);
+            alert.setHeaderText(message);
+            user.setCurrentCell(null);
+            if (user.getHighestLevel() == currentLevel) {
+                if (currentLevel < 5) {
+                    user.incrementLevel();
+                }
+            }
+            user.resetInventory(currentLevel);
+            UserRepository.save(user);
+        }
+        alert.showAndWait();
+        Main.getPrimaryStage().setTitle("Main Menu");
+        loadMainMenu(user);
+    }
+
+    /**
+     * Set the user for this game
+     * @param user The user
+     */
+    public static void setUser(User user) {
+        userViewModel = new UserViewModel(user);
+    }
+
+
+    /**
+     * Set the background music player for this controller
+     * @param backgroundMusicPlayer The new media player
+     */
+    public static void setBackgroundMusicPlayer(MediaPlayer backgroundMusicPlayer) {
+        GameController.backgroundMusicPlayer = backgroundMusicPlayer;
+    }
+
+    /**
+     * Set the total time this level received from a saved file
+     * @param totalSavedTime The new total saved time
+     */
+    public static void setTotalSavedTime(Long totalSavedTime) {
+        GameController.totalSavedTime = totalSavedTime;
     }
 
     /**
@@ -179,6 +275,7 @@ public class GameController extends BaseController {
         scene.setOnKeyReleased(e -> pressed = false);
 
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
         startTime = Instant.now();
         playSound("BackgroundMusic");
@@ -221,19 +318,6 @@ public class GameController extends BaseController {
     }
 
     /**
-     * Load a level from a specific level file
-     */
-    public static void loadBaseLevel(int levelNum) {
-        currentLevel = levelNum;
-        level = LevelLoader.loadLevel(levelNum, userViewModel.getUser());
-    }
-
-    public static void loadSavedLevel(int levelNum) {
-        currentLevel = levelNum;
-        level = LevelLoader.loadSavedLevel(levelNum, userViewModel.getUser());
-    }
-
-    /**
      * Draw each entity onto the level
      * @param pane The pane the entities will be drawn on
      * @param level The level object that these entities are on
@@ -248,8 +332,6 @@ public class GameController extends BaseController {
                 if (cell.getCurrentEntities().size() > 0) {
                     Entity entity = cell.getCurrentEntities().get(0);
                     if (entity instanceof User) {
-                        //TODO:drt - Don't create new user view model after implementing user loading
-                        userViewModel = new UserViewModel((User) entity);
                         userViewModel.setImageView(j, i);
                         sprites.getChildren().add(userViewModel.getImageView());
                     } else {
@@ -303,6 +385,10 @@ public class GameController extends BaseController {
                 case FLIPPERS:
                     itemViewModel =
                             new ItemViewModel(new Image(ResourceRepository.getResource("Flippers")), item);
+                    break;
+                case ICE_SKATES:
+                    itemViewModel =
+                            new ItemViewModel(new Image(ResourceRepository.getResource("IceSkates")), item);
                     break;
                 default:
                     break;
@@ -361,8 +447,6 @@ public class GameController extends BaseController {
         int boardWidth = level.getBoardWidth();
         int boardHeight = level.getBoardHeight();
         setBoardArea(boardWidth, boardHeight);
-        System.out.println(levelHeight);
-        System.out.println(levelWidth);
 
         Group cellGroups = new Group();
         for (int i = 0; i < boardHeight; i++) {
@@ -445,6 +529,9 @@ public class GameController extends BaseController {
                 case WATER:
                     spriteImage = new Image(ResourceRepository.getResource("Element-Water"));
                     break;
+                case ICE:
+                    spriteImage = new Image(ResourceRepository.getResource("Element-Ice"));
+                    break;
                 default:
                     break;
             }
@@ -466,6 +553,8 @@ public class GameController extends BaseController {
      */
     private void movePlayer(int deltaX, int deltaY) {
         ImageView userImageView = userViewModel.getImageView();
+        User user = userViewModel.getUser();
+        Cell userCurrentCell = user.getCurrentCell();
 
         pressed = true;
         double x = (clampRange(userImageView.getX() + deltaX,
@@ -476,20 +565,40 @@ public class GameController extends BaseController {
                         0, boardPane.getHeight() - userImageView.getFitHeight()));
 
 
-        if (!(userViewModel.getUser().getCurrentCell() instanceof Teleporter)) {
+        if (userCurrentCell instanceof Element) {
+            if (((Element) userCurrentCell).getElementType().equals(ElementType.ICE)) {
+                animatedBasedOnPosition(userImageView, userCurrentCell);
+            } else {
+                animateUser(userImageView, x, y);
+            }
+        } else if (!(userCurrentCell instanceof Teleporter)) {
             animateUser(userImageView, x, y);
         } else {
-            double newX = userViewModel.getUser().getCurrentCell().getPosition().getX() * 64;
-            double newY = userViewModel.getUser().getCurrentCell().getPosition().getY() * 64;
-            animateUser(userImageView, newX, newY);
+            userImageView.setVisible(false);
+            animatedBasedOnPosition(userImageView, userCurrentCell);
         }
 
-        if (userViewModel.getUser().getCurrentCell() instanceof Goal) {
-            triggerAlert("Congratulations! You have completed Level" + currentLevel, State.LEVEL_WON);
+        if (userCurrentCell instanceof Goal) {
+            triggerAlert("Congratulations! You have completed Level " + currentLevel, State.LEVEL_WON);
         }
 
         checkForItemPickups(x, y);
 
+        if (userCurrentCell.hasPlayerAndEnemy()) {
+            triggerAlert("Unlucky! You have been killed by an enemy.", State.LEVEL_LOST);
+        }
+
+    }
+
+    /**
+     * Animate based on the User's change in position from the backend
+     * @param userImageView The User's Image View
+     * @param userCurrentCell The user's current cell
+     */
+    private void animatedBasedOnPosition(ImageView userImageView, Cell userCurrentCell) {
+        double newX = userCurrentCell.getPosition().getX() * 64;
+        double newY = userCurrentCell.getPosition().getY() * 64;
+        animateUser(userImageView, newX, newY);
     }
 
     /**
@@ -527,6 +636,9 @@ public class GameController extends BaseController {
         KeyFrame movement = new KeyFrame(Duration.millis(500), keyValueX, keyValueY);
 
         timeline.setOnFinished(e -> {
+            if (userViewModel.getUser().getCurrentCell() instanceof Teleporter) {
+                userImageView.setVisible(true);
+            }
             userImageView.setImage(new Image(ResourceRepository.getResource("User-Idle")));
             animationCompleted = true;
         });
@@ -576,6 +688,13 @@ public class GameController extends BaseController {
         timeline.play();
     }
 
+    /**
+     * Clamps the range in which an entity can move in
+     * @param value The potential new value
+     * @param min The min value the potential value can be
+     * @param max The max value the potential value can be
+     * @return The final value
+     */
     private double clampRange(double value, double min, double max) {
         if (value < min) return min ;
         if (value > max) return max ;
@@ -671,7 +790,7 @@ public class GameController extends BaseController {
         Button resume = new Button("Resume");
         Button saveAndQuit = new Button("Save and Quit");
         pauseMenu.getChildren().addAll(resume, saveAndQuit);
-        pauseMenu.setAlignment(Pos.CENTER);
+        pauseMenu.setAlignment(Pos.BASELINE_CENTER);
 
         Stage popupStage = new Stage(StageStyle.TRANSPARENT);
         popupStage.initOwner(primaryStage);
@@ -687,6 +806,7 @@ public class GameController extends BaseController {
         saveAndQuit.setOnAction(e -> {
             popupStage.hide();
             LevelSaver.saveLevel(currentLevel, level, userViewModel.getUser(), calculateCurrentSavedTime());
+            Main.getPrimaryStage().setTitle("Main Menu");
             loadMainMenu(userViewModel.getUser());
         });
 
@@ -707,18 +827,6 @@ public class GameController extends BaseController {
         return newFinishTime;
     }
 
-    /**
-     * Replace a cell image at a specific position with a ground image
-     * @param point The position of the image
-     */
-    public static void replaceCell(Point point) {
-        ImageView imageView = new ImageView(new Image(ResourceRepository.getResource("Ground")));
-        imageView.setY(point.getY() * 64);
-        imageView.setX(point.getX() * 64);
-
-        int idx = (int) ((int)(level.getBoardHeight() * point.getY()) + point.getX());
-        cellImages.getChildren().set(idx, imageView);
-    }
 
     /**
      * Creates the style's a features for the pause menu
@@ -771,41 +879,24 @@ public class GameController extends BaseController {
 
 
     /**
-     * Trigger a message alert with also a change in state
-     * @param message the message to be shown to the user
-     * @param state The state that is being changed
+     * Used to formatted a time from milliseconds into minutes & seconds
+     * Credit - https://stackoverflow.com/questions/17624335/converting-milliseconds-to-minutes-and-seconds
+     * @param time The time to be formatted (ms)
+     * @return The formatted time
      */
-    public void triggerAlert(String message, State state) {
-        backgroundMusicPlayer.stop();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        User user = userViewModel.getUser();
-        if (state == State.LEVEL_LOST) {
-            playSound("PlayerDeath");
-            user.resetInventory(level.getCurrentLevel());
-            alert.setHeaderText("LEVEL LOST");
-        } else if (state == State.LEVEL_WON) {
-            alert.setHeaderText("LEVEL WON");
-            playSound("LevelWin");
-            addNewFinishTime();
-            user.setCurrentCell(null);
-            if (user.getHighestLevel() == currentLevel) {
-                if (currentLevel < 5) {
-                    user.incrementLevel();
-                }
-            }
-            user.resetInventory(currentLevel);
-            UserRepository.save(user);
-        }
-        alert.setContentText(message);
-        alert.showAndWait();
-        loadMainMenu(user);
+    private String getFormattedTime(Long time) {
+        return String.format("%d minutes, %d seconds",
+                TimeUnit.MILLISECONDS.toMinutes(time),
+                TimeUnit.MILLISECONDS.toSeconds(time) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
+                );
     }
 
 
     /**
      * Used to add a new level finish time to the user's score list.
      */
-    private static void addNewFinishTime() {
+    private static Long addNewFinishTime() {
         User user = userViewModel.getUser();
         Instant elapsed = Instant.now();
         Long newFinishTime =
@@ -817,14 +908,8 @@ public class GameController extends BaseController {
         } catch (InvalidLevelException ex) {
             LOGGER.log(WARNING, "The user has completed a level that they should not have completed", ex);
         }
-    }
 
-    /**
-     * Set the user for this game
-     * @param user The user
-     */
-    public static void setUser(User user) {
-        userViewModel = new UserViewModel(user);
+        return newFinishTime;
     }
 
     /**
@@ -837,13 +922,5 @@ public class GameController extends BaseController {
         this.levelHeight = y;
     }
 
-
-    public static void setBackgroundMusicPlayer(MediaPlayer backgroundMusicPlayer) {
-        GameController.backgroundMusicPlayer = backgroundMusicPlayer;
-    }
-
-    public static void setTotalSavedTime(Long totalSavedTime) {
-        GameController.totalSavedTime = totalSavedTime;
-    }
 }
 

@@ -16,6 +16,7 @@ import static com.group18.model.State.*;
  * @author RIYA GUPTA
  */
 public class Element extends Ground implements Actionable {
+
     /**
      * stores the element type.
      */
@@ -31,6 +32,11 @@ public class Element extends Ground implements Actionable {
         this.elementType = elementType;
     }
 
+    /**
+     * Toggles the action of this Element. If they moved on to this element
+     * without it's element item, they will die.
+     * @param entity The entity in which the cell's action is toggled upon.
+     */
     public void toggleAction(Entity entity) {
         if(entity instanceof User) {
             User user = (User) entity;
@@ -48,12 +54,19 @@ public class Element extends Ground implements Actionable {
                 case FIRE:
                     GameController.playSound("FireCrackle");
                     break;
+                case ICE:
+                    GameController.playSound("IceSlide");
+                    break;
                 default:
                     break;
             }
         }
     }
 
+    /**
+     * Get the element type
+     * @return The element type
+     */
     public ElementType getElementType() {
         return elementType;
     }

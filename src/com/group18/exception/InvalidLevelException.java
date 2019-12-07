@@ -4,7 +4,7 @@ package com.group18.exception;
  * An exception thrown when there is an invalid level inputted
  * @author danielturato nothandotshuma riyagupta
  */
-public class InvalidLevelException extends Exception {
+public class InvalidLevelException extends IllegalArgumentException {
 
     /**
      * Creates a new InvalidLevelException

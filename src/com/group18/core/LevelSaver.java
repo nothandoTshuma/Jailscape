@@ -12,8 +12,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.logging.Logger;
 
 import static com.group18.model.item.ElementItem.FIRE_BOOTS;
+import static com.group18.model.item.ElementItem.ICE_SKATES;
+import static java.util.logging.Level.WARNING;
 
 /**
  * This class creates a saved level file for a specific file
@@ -28,6 +31,11 @@ public class LevelSaver {
     public static final String SAVED_LEVEL_DIRECTORY = "./src/resources/saved-levels/";
 
     /**
+     * Used to log out important errors/messages to the console
+     */
+    private static final Logger LOGGER = Logger.getLogger("LevelSaver");
+
+    /**
      * Save a level in progress so user's can reload a saved level.
      * @param levelNumber The level number that is being saved
      * @param level The level object that is being saved
@@ -39,6 +47,18 @@ public class LevelSaver {
                 String.format("%s%s-level-save%s.txt", SAVED_LEVEL_DIRECTORY, user.getUsername(), levelNumber);
         delete(levelFileName);
         createFile(level, levelFileName, user, currentTime);
+    }
+
+    /**
+     * Delete a previous saved level, if it already exists
+     * @param levelFileName The level file to be deleted
+     */
+    public static void delete(String levelFileName) {
+        try {
+            Files.deleteIfExists(Paths.get(levelFileName));
+        } catch (IOException ex) {
+            LOGGER.log(WARNING, "There was a problem deleting this file: " + levelFileName, ex);
+        }
     }
 
     private static void createFile(Level level, String levelFileName, User user, Long currentTime) {
@@ -74,7 +94,7 @@ public class LevelSaver {
                 }
             }
         } catch (IOException ex) {
-            //TODO:drt - Handle exception
+            LOGGER.log(WARNING, "There was a problem saving this level to a file", ex);
         }
     }
 
@@ -136,8 +156,10 @@ public class LevelSaver {
                 if (item instanceof ElementItem) {
                     if (((ElementItem) item) == FIRE_BOOTS) {
                         return "FBI";
+                    } else if (((ElementItem) item) == ICE_SKATES) {
+                        return "ISI";
                     }
-                    //TODO:drt - Change if adding more elements/items
+
                     return "FI";
                 }
 
@@ -205,6 +227,9 @@ public class LevelSaver {
                 case WATER:
                     cellAcronym = "WTC";
                     break;
+                case ICE:
+                    cellAcronym = "IC";
+                    break;
                 default:
                     break;
             }
@@ -217,18 +242,6 @@ public class LevelSaver {
         }
 
         return cellAcronym;
-    }
-
-    /**
-     * Delete a previous saved level, if it already exists
-     * @param levelFileName The level file to be deleted
-     */
-    public static void delete(String levelFileName) {
-        try {
-            Files.deleteIfExists(Paths.get(levelFileName));
-        } catch (IOException ex) {
-            //TODO:drt - Handle
-        }
     }
 
 

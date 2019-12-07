@@ -56,6 +56,28 @@ public class StraightLineEnemy extends Enemy {
     }
 
     /**
+     * Set the orientation of this Enemy
+     * @param direction The direction it is currently moving in
+     */
+    public void setOrientation(Direction direction) {
+        if (direction == LEFT || direction == RIGHT) {
+            this.orientation = Orientation.HORIZONTAL;
+        } else if (direction == UP || direction == DOWN) {
+            this.orientation = Orientation.VERTICAL;
+        } else {
+            this.orientation = Orientation.HORIZONTAL;
+        }
+    }
+
+    /**
+     * Get the orientation of this Enemy
+     * @return The orientation
+     */
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
+    /**
      * Switch their current direction, based on their orientation
      * @return Their possible new direction
      */
@@ -72,19 +94,5 @@ public class StraightLineEnemy extends Enemy {
         }
 
         return currentDirection == UP ? DOWN : UP;
-    }
-
-    public void setOrientation(Direction direction) {
-        if (direction == LEFT || direction == RIGHT) {
-            this.orientation = Orientation.HORIZONTAL;
-        } else if (direction == UP || direction == DOWN) {
-            this.orientation = Orientation.VERTICAL;
-        } else {
-            this.orientation = Orientation.HORIZONTAL;
-        }
-    }
-
-    public Orientation getOrientation() {
-        return orientation;
     }
 }

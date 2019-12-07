@@ -52,6 +52,25 @@ public class UserRepository {
     }
 
     /**
+     * Checks if there's already a user with a particular username
+     * @param username The user we're checking on
+     * @return Boolean suggests that the user exists
+     */
+    public static boolean userExists(String username) {
+        File directory = new File(USER_DIRECTORY);
+        File[] directoryFiles = directory.listFiles();
+        if (directoryFiles != null) {
+            for (File file : directoryFiles) {
+                if (file.getName().equals(username + ".ser")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Serialize a User object
      * @param user The user to be serialized.
      */
@@ -63,14 +82,12 @@ public class UserRepository {
             FileOutputStream file = new FileOutputStream(fileName);
             ObjectOutputStream outputStream = new ObjectOutputStream(file);
 
-            // Method for serialization of object
             outputStream.writeObject(user);
 
             outputStream.close();
             file.close();
         } catch (IOException ex) {
             LOGGER.log(WARNING, "The user is trying to create a User that already exists", ex);
-            //TODO:drt - Alert user
         }
     }
 
@@ -109,7 +126,6 @@ public class UserRepository {
             Files.deleteIfExists(Paths.get(USER_DIRECTORY + "/" + fileName));
         } catch (IOException ex) {
             LOGGER.log(WARNING, "This user has now been deleted", ex);
-            //TODO:drt - Alert the user that it's been deleted
         }
     }
 

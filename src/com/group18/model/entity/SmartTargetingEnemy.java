@@ -199,7 +199,13 @@ public class SmartTargetingEnemy extends Enemy {
      * @return Boolean suggesting if the node is valid
      */
     private boolean isValidNode(Node node) {
+        boolean hasItem = false;
+        if (node instanceof Ground) {
+            hasItem = ((Ground) node).hasItem();
+        }
+
+        // An enemy can not move on to a Wall, Goal, Element or Door cell.
         return !(node instanceof Wall || node instanceof Goal ||
-                node instanceof Element || node instanceof Door);
+                node instanceof Element || node instanceof Door || hasItem);
     }
 }

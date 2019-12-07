@@ -1,6 +1,5 @@
 package com.group18.controller;
 
-import com.group18.Main;
 import com.group18.core.LevelSaver;
 import com.group18.core.UserRepository;
 import com.group18.model.entity.User;
@@ -8,31 +7,67 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.List;
 
 
+/**
+ * The controller which allows the user to select the user they wish to play the game with
+ *
+ * @author frasergrandfield
+ */
 public class UserSelectionController extends BaseController {
 
+    /**
+     * The button, once clicked will exit the user from the game
+     */
+    @FXML
+    private Button exitButton;
 
-    @FXML Button exitButton;
-    @FXML Button goButton;
-    @FXML Button createProfileButton;
-    @FXML Button deleteButton;
-    @FXML ListView userListView;
+    /**
+     * The button, once clicked will use the selected user and re-direct to the Main Menu scene
+     */
+    @FXML
+    private Button goButton;
 
+    /**
+     * The button, once clicked will load the User Creation scene
+     */
+    @FXML
+    private Button createProfileButton;
+
+    /**
+     * The button, once clicked will delete the current selected user from the drop-down list
+     */
+    @FXML
+    private Button deleteButton;
+
+    /**
+     * Used to display the list of all available selectable users
+     */
+    @FXML
+    private ListView userListView;
+
+    /**
+     * An observable list, observing the listView of available user's to play with
+     */
     private ObservableList observableList = FXCollections.observableArrayList();
+
+    /**
+     * The currently selected user's username
+     */
     private String chosenUserName;
 
+    /**
+     * The possible selected user object
+     */
     private User user;
 
+    /**
+     * Initialize this controller
+     */
     public void initialize(){
         goButton.setOnAction(e -> {
             buttonClick();
@@ -57,6 +92,9 @@ public class UserSelectionController extends BaseController {
         loadData();
     }
 
+    /**
+     * Load all possible available user's into the list view
+     */
     private void loadData(){
         userListView.getItems().clear();
         observableList.removeAll(observableList);
@@ -67,6 +105,9 @@ public class UserSelectionController extends BaseController {
         userListView.getItems().addAll(observableList);
     }
 
+    /**
+     * Load the Main Menu if the user has selected a valid user to play with
+     */
     private void handleGoButtonAction(){
        if (userListView.getSelectionModel().getSelectedItem() != null) {
            chosenUserName = (String) userListView.getSelectionModel().getSelectedItem();
@@ -75,22 +116,31 @@ public class UserSelectionController extends BaseController {
        }
     }
 
+    /**
+     * Load the User Creation scene
+     */
     private void handleCreateButtonAction(){
         loadFXMLScene("/scenes/NewUser.fxml", "Create User");
     }
 
+    /**
+     * Handles the exit the game
+     */
     private void handleExitButtonAction(){
         Platform.exit();
         System.exit(0);
     }
 
+    /**
+     * Handles the deletion of a selected user from the list view
+     */
     private void handleDeleteButtonAction() {
         if (userListView.getSelectionModel().getSelectedItem() != null) {
             chosenUserName = (String) userListView.getSelectionModel().getSelectedItem();
             UserRepository.delete(chosenUserName + ".ser");
 
             String baseSavedFileDir =
-                    "./resources/saved-files/" + user.getUsername() + "-level-save";
+                    "./src/resources/saved-files/" + chosenUserName + "-level-save";
 
             for (int i = 1; i <=3; i++) {
                 LevelSaver.delete(baseSavedFileDir + i + ".txt");
