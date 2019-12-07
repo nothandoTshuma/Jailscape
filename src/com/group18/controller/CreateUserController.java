@@ -52,9 +52,15 @@ public class CreateUserController extends BaseController {
     private void handleCreateButtonAction() {
         if (!(userNameTextField.getCharacters().toString().equals(""))) {
             String userName = userNameTextField.getCharacters().toString();
-            User user = new User(userName);
-            UserRepository.save(user);
-            loadFXMLScene("/scenes/UserSelectionMenu.fxml", "User Selection");
+
+            if (UserRepository.userExists(userName)) {
+                //TODO:drt - Show alert
+            } else {
+                User user = new User(userName);
+                UserRepository.save(user);
+                loadFXMLScene("/scenes/UserSelectionMenu.fxml", "User Selection");
+            }
+
         }
     }
 

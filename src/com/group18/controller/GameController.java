@@ -8,6 +8,7 @@ import com.group18.core.UserRepository;
 import com.group18.exception.InvalidLevelException;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.Direction;
+import com.group18.model.ElementType;
 import com.group18.model.Level;
 import com.group18.model.State;
 import com.group18.model.cell.*;
@@ -383,6 +384,10 @@ public class GameController extends BaseController {
                     itemViewModel =
                             new ItemViewModel(new Image(ResourceRepository.getResource("Flippers")), item);
                     break;
+                case ICE_SKATES:
+                    itemViewModel =
+                            new ItemViewModel(new Image(ResourceRepository.getResource("IceSkates")), item);
+                    break;
                 default:
                     break;
             }
@@ -440,8 +445,6 @@ public class GameController extends BaseController {
         int boardWidth = level.getBoardWidth();
         int boardHeight = level.getBoardHeight();
         setBoardArea(boardWidth, boardHeight);
-        System.out.println(levelHeight);
-        System.out.println(levelWidth);
 
         Group cellGroups = new Group();
         for (int i = 0; i < boardHeight; i++) {
@@ -524,6 +527,9 @@ public class GameController extends BaseController {
                 case WATER:
                     spriteImage = new Image(ResourceRepository.getResource("Element-Water"));
                     break;
+                case ICE:
+                    spriteImage = new Image(ResourceRepository.getResource("Element-Ice"));
+                    break;
                 default:
                     break;
             }
@@ -545,6 +551,8 @@ public class GameController extends BaseController {
      */
     private void movePlayer(int deltaX, int deltaY) {
         ImageView userImageView = userViewModel.getImageView();
+        User user = userViewModel.getUser();
+        Cell userCurrentCell = user.getCurrentCell();
 
         pressed = true;
         double x = (clampRange(userImageView.getX() + deltaX,
@@ -555,24 +563,39 @@ public class GameController extends BaseController {
                         0, boardPane.getHeight() - userImageView.getFitHeight()));
 
 
-        if (!(userViewModel.getUser().getCurrentCell() instanceof Teleporter)) {
+        if (userCurrentCell instanceof Element) {
+            if (((Element) userCurrentCell).getElementType().equals(ElementType.ICE)) {
+                animatedBasedOnPosition(userImageView, userCurrentCell);
+            } else {
+                animateUser(userImageView, x, y);
+            }
+        } else if (!(userCurrentCell instanceof Teleporter)) {
             animateUser(userImageView, x, y);
         } else {
-            double newX = userViewModel.getUser().getCurrentCell().getPosition().getX() * 64;
-            double newY = userViewModel.getUser().getCurrentCell().getPosition().getY() * 64;
-            animateUser(userImageView, newX, newY);
+            animatedBasedOnPosition(userImageView, userCurrentCell);
         }
 
-        if (userViewModel.getUser().getCurrentCell() instanceof Goal) {
+        if (userCurrentCell instanceof Goal) {
             triggerAlert("Congratulations! You have completed Level " + currentLevel, State.LEVEL_WON);
         }
 
         checkForItemPickups(x, y);
 
-        if (userViewModel.getUser().getCurrentCell().hasPlayerAndEnemy()) {
+        if (userCurrentCell.hasPlayerAndEnemy()) {
             triggerAlert("Unlucky! You have been killed by an enemy.", State.LEVEL_LOST);
         }
 
+    }
+
+    /**
+     * Animate based on the User's change in position from the backend
+     * @param userImageView The User's Image View
+     * @param userCurrentCell The user's current cell
+     */
+    private void animatedBasedOnPosition(ImageView userImageView, Cell userCurrentCell) {
+        double newX = userCurrentCell.getPosition().getX() * 64;
+        double newY = userCurrentCell.getPosition().getY() * 64;
+        animateUser(userImageView, newX, newY);
     }
 
     /**

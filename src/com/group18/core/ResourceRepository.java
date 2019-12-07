@@ -44,6 +44,7 @@ public class ResourceRepository {
         ASSET_RESOURCES.put("Teleporter", ASSET_DIRECTORY + "/Cell/TeleporterCell.png");
         ASSET_RESOURCES.put("Token-Door", ASSET_DIRECTORY + "/Cell/TokenDoor.png");
         ASSET_RESOURCES.put("Wall", ASSET_DIRECTORY + "/Cell/WallCell.png");
+        ASSET_RESOURCES.put("Element-Ice", ASSET_DIRECTORY + "/Cell/IceCell.png");
 
         ASSET_RESOURCES.put("FireBoots", ASSET_DIRECTORY + "/Item/FireBoots.png");
         ASSET_RESOURCES.put("Flippers", ASSET_DIRECTORY + "/Item/Flippers.png");
@@ -52,6 +53,7 @@ public class ResourceRepository {
         ASSET_RESOURCES.put("Key-Red", ASSET_DIRECTORY + "/Item/KeyRed.png");
         ASSET_RESOURCES.put("Key-Yellow", ASSET_DIRECTORY + "/Item/KeyYellow.png");
         ASSET_RESOURCES.put("Token", ASSET_DIRECTORY + "/Item/Token.gif");
+        ASSET_RESOURCES.put("IceSkates", ASSET_DIRECTORY + "/Item/IceSkates.png");
 
     }
 
