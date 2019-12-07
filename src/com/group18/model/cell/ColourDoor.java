@@ -13,8 +13,9 @@ import java.awt.*;
  * @author RIYA GUPTA
  * */
 public class ColourDoor extends Wall implements Door, Actionable {
-     /**
-     * represents the colour of the door
+
+    /**
+     * Represents the colour of the door
      */
     private final Colour colour;
 
@@ -27,6 +28,7 @@ public class ColourDoor extends Wall implements Door, Actionable {
         super(point);
         this.colour = colour;
     }
+
     /**
      * represents whether user can open the door or not
      * @param user checks if it can open the door
@@ -36,6 +38,10 @@ public class ColourDoor extends Wall implements Door, Actionable {
         return user.hasKey(colour, getLevel().getCurrentLevel());
     }
 
+    /**
+     * Toggles the action on this door. Opening the door, if they can open it
+     * @param entity The entity in which the cell's action is toggled upon.
+     */
     public void toggleAction(Entity entity) {
         if (entity instanceof User) {
             User user = (User) entity;

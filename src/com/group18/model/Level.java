@@ -1,6 +1,7 @@
 package com.group18.model;
 
 import com.group18.controller.GameController;
+import com.group18.exception.InvalidLevelException;
 import com.group18.exception.InvalidMoveException;
 import com.group18.model.cell.*;
 import com.group18.model.entity.Enemy;
@@ -67,20 +68,43 @@ public class Level {
         this.currentLevel = level;
     }
 
+    /**
+     * Get the current graph associated with this Level
+     * @return The graph
+     */
     public Graph getGraph() {
         return graph;
     }
 
+    /**
+     * Reset this level's graph
+     */
     public void resetGraph() {
         this.graph = new Graph(this);
     }
 
+    /**
+     * Get this levels board width
+     * @return The board width
+     */
     public int getBoardWidth() {
         return boardWidth;
     }
 
+    /**
+     * Get this levels board height
+     * @return The board height
+     */
     public int getBoardHeight() {
         return boardHeight;
+    }
+
+    /**
+     * Get this level's current level number
+     * @return The level number
+     */
+    public int getCurrentLevel() {
+        return currentLevel;
     }
 
     /**
@@ -142,6 +166,11 @@ public class Level {
                 ((Element) newCell).toggleAction(user);
                 newCell.placePlayer(user);
                 user.setCurrentCell(newCell);
+
+                if (element.getElementType() == ElementType.ICE) {
+                    slide(user, direction);
+                }
+
             } else if (newCell instanceof Ground) {
                 ((Ground) newCell).toggleAction(user);
                 newCell.placePlayer(user);
@@ -171,10 +200,21 @@ public class Level {
         }
     }
 
-    public void replaceCell(Point point, Cell newCell) {
-        newCell.setCoordinates(point);
-        board[(int) point.getY()][(int) point.getX()] = newCell;
-        GameController.replaceCell(point);
+    private void slide(User user, Direction direction) throws InvalidMoveException {
+        Point newPosition = calculateNewPosition(user.getCurrentCell().getPosition(), direction);
+
+        Cell newCell = getCell(newPosition);
+        Cell oldCell = user.getCurrentCell();
+
+        if (newCell instanceof Element) {
+            if (((Element) newCell).getElementType().equals(ElementType.ICE)) {
+                oldCell.removeEntity(user);
+                newCell.placePlayer(user);
+                user.setCurrentCell(newCell);
+                slide(user, direction);
+            }
+        }
+
     }
 
 
@@ -216,10 +256,6 @@ public class Level {
         Point cellPosition = cell.getPosition();
 
         return getAdjacentCells(cellPosition);
-    }
-
-    public boolean isEnemyClose(User user) {
-        return false;
     }
 
     /**
@@ -275,9 +311,14 @@ public class Level {
             return true;
         }
 
+        boolean hasItem = false;
+        if (cell instanceof Ground) {
+            hasItem = ((Ground) cell).hasItem();
+        }
+
         // An enemy can not move on to a Wall, Goal, Element or Door cell.
         return !(cell instanceof Wall || cell instanceof Goal ||
-                cell instanceof Element || cell instanceof Door || cell instanceof Teleporter);
+                cell instanceof Element || cell instanceof Door || hasItem);
     }
 
     /**
@@ -312,18 +353,14 @@ public class Level {
     }
 
     /**
-     * Updates the state in the game controller
-     * @param state The new state of the game
+     * Replace the cell at a particular point
+     * @param point The point of the old cell
+     * @param newCell The new cell to be put on the point
      */
-    public void updateState(State state) {
-        //TODO update state in game controller
+    private void replaceCell(Point point, Cell newCell) {
+        newCell.setCoordinates(point);
+        board[(int) point.getY()][(int) point.getX()] = newCell;
+        GameController.replaceCell(point);
     }
 
-    /**
-     * Get this level's current level number
-     * @return The level number
-     */
-    public int getCurrentLevel() {
-        return currentLevel;
-    }
 }

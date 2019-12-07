@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import static com.group18.model.item.ElementItem.FIRE_BOOTS;
+import static com.group18.model.item.ElementItem.ICE_SKATES;
 import static java.util.logging.Level.WARNING;
 
 /**
@@ -46,6 +47,18 @@ public class LevelSaver {
                 String.format("%s%s-level-save%s.txt", SAVED_LEVEL_DIRECTORY, user.getUsername(), levelNumber);
         delete(levelFileName);
         createFile(level, levelFileName, user, currentTime);
+    }
+
+    /**
+     * Delete a previous saved level, if it already exists
+     * @param levelFileName The level file to be deleted
+     */
+    public static void delete(String levelFileName) {
+        try {
+            Files.deleteIfExists(Paths.get(levelFileName));
+        } catch (IOException ex) {
+            LOGGER.log(WARNING, "There was a problem deleting this file: " + levelFileName, ex);
+        }
     }
 
     private static void createFile(Level level, String levelFileName, User user, Long currentTime) {
@@ -143,8 +156,10 @@ public class LevelSaver {
                 if (item instanceof ElementItem) {
                     if (((ElementItem) item) == FIRE_BOOTS) {
                         return "FBI";
+                    } else if (((ElementItem) item) == ICE_SKATES) {
+                        return "ISI";
                     }
-                    //TODO:drt - Change if adding more elements/items
+
                     return "FI";
                 }
 
@@ -212,6 +227,9 @@ public class LevelSaver {
                 case WATER:
                     cellAcronym = "WTC";
                     break;
+                case ICE:
+                    cellAcronym = "IC";
+                    break;
                 default:
                     break;
             }
@@ -224,18 +242,6 @@ public class LevelSaver {
         }
 
         return cellAcronym;
-    }
-
-    /**
-     * Delete a previous saved level, if it already exists
-     * @param levelFileName The level file to be deleted
-     */
-    public static void delete(String levelFileName) {
-        try {
-            Files.deleteIfExists(Paths.get(levelFileName));
-        } catch (IOException ex) {
-            LOGGER.log(WARNING, "There was a problem deleting this file: " + levelFileName, ex);
-        }
     }
 
 

@@ -14,26 +14,32 @@ import java.util.*;
  * @author nothandotshuma
  */
 public class User extends Entity {
-    /**
-     * Stores the number of tokens the user gets.
-     */
-    private int tokens;
-    /**
-     * Stores the highest level achieved by the user.
-     */
-    private int highestLevel;
+
     /**
      * Stores the name of the user.
      */
     private final String username;
+
     /**
      * Instantiates an arraylist to store the user's inventory.
      */
     private final Map<Integer, List<Collectable>> inventory;
+
     /**
      * Instantiates a hashmap to store the top 3 quickest times the user has played.
      */
     private final Map<Integer, Long[]> quickestTimes;
+
+
+    /**
+     * Stores the number of tokens the user gets.
+     */
+    private int tokens;
+
+    /**
+     * Stores the highest level achieved by the user.
+     */
+    private int highestLevel;
 
     /**
      * Constructor to create a new user.

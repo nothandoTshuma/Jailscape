@@ -37,6 +37,58 @@ public class Graph {
     }
 
     /**
+     * Reset the nodes for this graph
+     * @param level The level associated with this graph
+     * @param points The points associated with this graph
+     */
+    public void resetNodes(Level level, List<Point> points) {
+        setNodes(level, points);
+    }
+
+    /**
+     * Gets all connections from a specific node
+     * @param node The node we want connections from
+     * @return A set of node connections
+     */
+    public Set<Node> getConnections(Node node) {
+        return connections.get(node.getPosition()).stream()
+                .map(this::getNode)
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Set all the nodes for this Graph
+     * @param level The level the graph will use represent all the nodes
+     * @param points All possible (x,y) points in the level
+     */
+    private void setNodes(Level level, List<Point> points) {
+        Set<Node> nodes = new HashSet<>();
+        Cell[][] cells = level.getBoard();
+
+        for (int i = 0; i < level.getBoardHeight(); i++) {
+            for (int j = 0; j < level.getBoardHeight(); j++) {
+                Cell cell = cells[i][j];
+                points.add(cell.getPosition());
+                nodes.add(cell);
+            }
+        }
+
+        this.nodes = nodes;
+    }
+
+    /**
+     * This gets a Node, which holds a specific Point
+     * @param point The point the node holds
+     * @return The desired node
+     */
+    private Node getNode(Point point) {
+        return nodes.stream()
+                .filter(node -> node.getPosition().equals(point))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No node found with that Point"));
+    }
+
+    /**
      * Set the connections for each node in this graph
      * @param level The level this graph will represent
      * @param points All possible (x,y) points in the level
@@ -73,55 +125,5 @@ public class Graph {
         this.connections = connections;
     }
 
-    /**
-     * Reset the nodes for this graph
-     * @param level The level associated with this graph
-     * @param points The points associated with this graph
-     */
-    public void resetNodes(Level level, List<Point> points) {
-        setNodes(level, points);
-    }
 
-    /**
-     * Set all the nodes for this Graph
-     * @param level The level the graph will use represent all the nodes
-     * @param points All possible (x,y) points in the level
-     */
-    private void setNodes(Level level, List<Point> points) {
-        Set<Node> nodes = new HashSet<>();
-        Cell[][] cells = level.getBoard();
-
-        for (int i = 0; i < level.getBoardHeight(); i++) {
-            for (int j = 0; j < level.getBoardHeight(); j++) {
-                Cell cell = cells[i][j];
-                points.add(cell.getPosition());
-                nodes.add(cell);
-            }
-        }
-
-        this.nodes = nodes;
-    }
-
-    /**
-     * This gets a Node, which holds a specific Point
-     * @param point The point the node holds
-     * @return The desired node
-     */
-    private Node getNode(Point point) {
-        return nodes.stream()
-                .filter(node -> node.getPosition().equals(point))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No node found with that Point"));
-    }
-
-    /**
-     * Gets all connections from a specific node
-     * @param node The node we want connections from
-     * @return A set of node connections
-     */
-    public Set<Node> getConnections(Node node) {
-        return connections.get(node.getPosition()).stream()
-                .map(this::getNode)
-                .collect(Collectors.toSet());
-    }
 }

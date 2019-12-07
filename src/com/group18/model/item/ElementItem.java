@@ -10,5 +10,6 @@ import java.io.Serializable;
  */
 public enum ElementItem implements Collectable, Serializable {
     FLIPPERS,
-    FIRE_BOOTS;
+    FIRE_BOOTS,
+    ICE_SKATES;
 }
