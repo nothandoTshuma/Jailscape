@@ -500,9 +500,9 @@ public class GameController extends BaseController {
 
         clip.yProperty().bind(Bindings.createDoubleBinding(() ->
                         clampRange(
-                                userImageView.getY() - scene.getHeight() / 2,
-                                0, boardPane.getHeight() - scene.getHeight()),
-                                userImageView.yProperty(), scene.heightProperty()));
+                                userImageView.getY() - (scene.getHeight() + 64) / 2,
+                                0, boardPane.getHeight() - scene.getHeight() + 64),
+                userImageView.yProperty(), scene.heightProperty()));
 
         boardPane.setClip(clip);
         boardPane.translateXProperty().bind(clip.xProperty().multiply(-1));
