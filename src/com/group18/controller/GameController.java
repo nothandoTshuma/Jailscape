@@ -146,6 +146,11 @@ public class GameController extends BaseController {
     private static Text tokens;
 
     /**
+     * The animation Timeline controlling the display of elapsed time
+     */
+    private static Timeline timeAnimation = new Timeline();
+
+    /**
      * Holds if the current animation of a user has been completed
      */
     private boolean animationCompleted = true;
@@ -179,11 +184,6 @@ public class GameController extends BaseController {
      * The current seconds passed, to be display to the user
      */
     private int seconds = 0;
-
-    /**
-     * The animation Timeline controlling the display of elapsed time
-     */
-    private Timeline timeAnimation;
 
 
     /**
@@ -250,6 +250,7 @@ public class GameController extends BaseController {
             setWinAlert(message, alert, user);
         }
         alert.showAndWait();
+
         Main.getPrimaryStage().setTitle("Main Menu");
         loadMainMenu(user);
     }
@@ -446,7 +447,6 @@ public class GameController extends BaseController {
      * @param timeDisplay The text in which the time will be display upon
      */
     private void animateTime(Text timeDisplay) {
-        timeAnimation = new Timeline();
         timeAnimation.setCycleCount(Animation.INDEFINITE);
         timeAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(1), e -> {
             seconds += 1;
