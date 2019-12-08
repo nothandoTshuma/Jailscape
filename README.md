@@ -1,7 +1,7 @@
 ## A2-230
 CS-230 A2 project
 
-https://github.com/CS-230-Group18/Jailscape
+
 
 > **Getting Started**
 
