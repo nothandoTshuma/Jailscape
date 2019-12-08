@@ -1,8 +1,6 @@
 ## A2-230
 CS-230 A2 project
 
-![](jailscape-readme-display.gif)
-
 > **Getting Started**
 
 To run the game, unzip the project files, then run this command in the command line (making sure you're in the current directory of the unzipped folder):
